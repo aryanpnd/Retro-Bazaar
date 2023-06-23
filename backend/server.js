@@ -6,8 +6,10 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const { productRoutes } = require('./routes/products');
 const { UserRoutes } = require('./routes/users');
-const { AuthRoutes } = require('./routes/auth');
+// const { AuthRoutes } = require('./routes/auth');
+const authRouter = require('./controller/auth/googleAuth/googleAuth');
 const cookieParser = require('cookie-parser');
+
 
 
 const app = express();
@@ -28,7 +30,7 @@ mongoose
 app.use(session({
     secret: 'your secret key',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     store: new MongoStore({ mongoUrl: mongoose.connection.client.s.url })
 }))
 
@@ -36,19 +38,43 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(passport.authenticate('session'));
+passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+      cb(null, { id: user.id, username: user.username, name: user.name });
+    });
+  });
+  
+  passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+      return cb(null, user);
+    });
+  });
 
+app.get('/', (req, res) => {
+    res.render(__dirname+'build.html');
+  });
 app.get('/loginpage', (req, res) => {
     res.sendFile(__dirname + '/loginPage.html')
 })
 app.get('/signuppage', (req, res) => {
     res.sendFile(__dirname + '/signupPage.html')
 })
-app.use(AuthRoutes)
+// app.use(AuthRoutes)
+app.use('/auth/google', authRouter);
 
-app.use('/', (req, res,next) => {
-    req.isAuthenticated() ? next() : res.redirect('/loginpage')
+// app.use('/', (req, res, next) => {
+//     if (!req.isAuthenticated()) {
+//         res.redirect('/loginpage')
+//     }
+//     else {
+//         next()
+//     }
+// })
+
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/build.html')
 })
-
 
 app.use('/api', productRoutes, UserRoutes);
 
