@@ -4,31 +4,45 @@ const { User } = require("../../../model/user");
 
 const googleAuthDal = {
     registerWithGoogle: async (oauthUser) => {
-      const isUserExists = await User.findOne({
-        accountId: oauthUser.id,
-        provider: oauthUser.provider,
-      });
-      if (isUserExists) {
-        const failure = {
-          message: 'User already Registered.',
-        };
-        return { failure };
-      }
-  
-      const user = new User({
-        accountId: oauthUser.id,
-        name: oauthUser.displayName,
-        provider: oauthUser.provider,
-        email: oauthUser.emails[0].value, //optional - storing it as extra info
-        photoURL: oauthUser.photos[0].value, //optional
-      });
-      await user.save();
-      const success = {
-        message: 'User Registered.',
-      };
-      return { success };
+        const isUserExists = await User.findOne({
+            accountId: oauthUser.id,
+            provider: oauthUser.provider,
+        });
+        if (!isUserExists) {
+            const isNewUser = await User.findOne({
+                email:oauthUser.email
+            });
+            if(!isNewUser){
+                const user = new User({
+                    accountId: oauthUser.id,
+                    name: oauthUser.displayName,
+                    provider: oauthUser.provider,
+                    email: oauthUser.emails[0].value, //optional - storing it as extra info
+                    photoURL: oauthUser.photos[0].value, //optional
+                });
+                await user.save();
+                const success = {
+                    message: 'User Registered.',
+                };
+                return { success };
+            }
+            else{
+                const failure = {
+                    message: 'User already Registered.',
+                };
+                return { failure };
+
+            }
+        }else{
+            const success = {
+                message: 'Wellcome',
+            };
+            return { success };
+        }
+
+
     },
-  
+
     // loginUser: async (oauthUser) => {
     //   const userExists = await User.findOne({ email: oauthUser.emails[0].value });
     //   if (userExists) {
@@ -43,8 +57,6 @@ const googleAuthDal = {
     //   return { failure };
     // },
 
+};
 
-  };
-  
-  module.exports = googleAuthDal;
-  
+module.exports = googleAuthDal;
