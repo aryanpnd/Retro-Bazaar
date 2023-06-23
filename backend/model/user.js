@@ -12,9 +12,11 @@ const validateEmail = function (email) {
 
 const userschema = new Schema({
 
-    profileUrl: { type: String },
+    photoURL: { type: String },
+    accountId: { type: String },
+    provider: { type: String },
     username: { type: String, required: [false, "Username name required"] },
-    name:{ type: String, required: [false, "First name required"] },
+    name: { type: String, required: [false, "First name required"] },
     lastname: { type: String },
     email: {
         type: String,
@@ -26,12 +28,12 @@ const userschema = new Schema({
 
 
 const options = {
-    usernameUnique:false,
-    
+    usernameUnique: false,
+
     // errorMessages: {
     //     UserExistsError: 'A user with the given Username is already registered',
     // }
-  };
+};
 // userschema.plugin(passportLocalMongoose,options)
 
 

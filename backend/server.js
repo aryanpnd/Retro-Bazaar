@@ -39,17 +39,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('session'));
-passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
-      cb(null, { id: user.id, username: user.username, name: user.name });
-    });
-  });
-  
-  passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
-      return cb(null, user);
-    });
-  });
+
 
 app.get('/', (req, res) => {
     res.render(__dirname+'build.html');
@@ -63,18 +53,16 @@ app.get('/signuppage', (req, res) => {
 // app.use(AuthRoutes)
 app.use('/auth/google', authRouter);
 
-// app.use('/', (req, res, next) => {
-//     if (!req.isAuthenticated()) {
-//         res.redirect('/loginpage')
-//     }
-//     else {
-//         next()
-//     }
-// })
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/build.html')
+app.use('/', (req, res, next) => {
+    if (!req.isAuthenticated()) {
+        res.redirect('/loginpage')
+    }
+    else {
+        next()
+    }
 })
+
 
 app.use('/api', productRoutes, UserRoutes);
 
