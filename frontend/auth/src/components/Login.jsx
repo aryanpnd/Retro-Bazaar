@@ -119,6 +119,7 @@ export default function Login() {
                 >
                     <Button className="border-gradient border-gradient-1" _hover={'none'}
                         onClick={()=>Navigate('/signup')}
+                        fontSize={['0.8rem','1rem']}
                     >Don't have an account? Signup insted</Button>
 
                     <Button className="border-gradient border-gradient-2" _hover={'none'}
