@@ -1,23 +1,16 @@
 const {User } = require('../model/user');
 
 const addUser = async (req, res, next) => {
-    const user = new User(req.body)
-    var token = jwt.sign({ email: req.body.email }, process.env.SECRET);
-    user.token = token;
-    await user.save()
-        .then((docs) => { res.status(200).send(`User registered successfully `) })
-        .catch((err) => { res.status(400).json({"error":err}) })
+    res.send('Not working')
 
 }
 
 // // get all the products
-// const getProducts = async (req, res) => {
-//     await Product.find()
-//         .then((docs) => { res.status(200).json(docs) })
-//         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
-//     // or
-//     // await Product.find({price:{$gte:req.body.price}}).then((s)=>res.json(s))
-// }
+const getUsersById = async (req, res) => {
+    await User.findOne({email:req.session.passport.user.email}).then((data)=>{
+        res.status(200).send(data);
+    }).catch((err)=>{res.status(200).send("some error occurred while fetching the data")})
+}
 
 
 // const getProductsById = async (req, res) => {
@@ -53,4 +46,4 @@ const addUser = async (req, res, next) => {
 
 // }
 
-module.exports = { addUser,}
+module.exports = { addUser,getUsersById}

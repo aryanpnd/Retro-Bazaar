@@ -1,6 +1,6 @@
 // google auth data access layer 
 
-const { User } = require("../../../model/user");
+const { User } = require("../../model/user");
 
 const googleAuthDal = {
     registerWithGoogle: async (oauthUser) => {

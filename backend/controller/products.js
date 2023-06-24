@@ -1,4 +1,5 @@
 const { productSchema, Product } = require('../model/products');
+const { User } = require('../model/user');
 
 
 // total count of products available in database
@@ -27,7 +28,6 @@ const addProducts = async (req, res, next) => {
 // get all the products
 const getProducts = async (req, res) => {
     let query = Product.find()
-
     // pagination
     if (req.query.pagesize) {
         const pageSize = req.query.pagesize // no of data in one page 

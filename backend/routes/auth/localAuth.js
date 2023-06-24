@@ -1,5 +1,5 @@
 const express = require('express');
-const { addUser, login } = require("../controller/auth/localAuth");
+const { addUser, login } = require("../../controller/auth/localAuth");
 
 
 const AuthRoutes = express.Router()
