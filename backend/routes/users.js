@@ -4,13 +4,13 @@ const { addUser, deleteUser, updateUser, patchUser, getUsers, getUsersById } = r
 const UserRoutes = express.Router()
 
 
-// UserRoutes.post("/register", addUser)
-    // .get("/users", getUsers)
-    // .get("/users/:id", getUsersById)
-    // .put("/users/:id", updateUser)
-    // .patch("/users/:id", patchUser)
-    // .delete("/users/:id", deleteUser)
+UserRoutes.post("/register", addUser)
+    .get("/users", getUsers)
+    .get("/users/:id", getUsersById)
+    .put("/users/:id", updateUser)
+    .patch("/users/:id", patchUser)
+    .delete("/users/:id", deleteUser)
     
-    // .use((req, res) => { res.status(404).sendFile("D:/myfiles/CS stuffs/Programming/nodejs/playground/restAPI/404.html") })
+    .use((req, res) => { res.status(404).sendFile("D:/myfiles/CS stuffs/Programming/nodejs/playground/restAPI/404.html") })
 
 module.exports = { UserRoutes }

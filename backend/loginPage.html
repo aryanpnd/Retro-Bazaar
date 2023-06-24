@@ -37,13 +37,13 @@
             <h1 class="fw-bold">Login</h1>
           </div>
 
-          <form id="loginForm" action="/login" method="POST">
+          <form id="loginForm" action="/auth/local/login" method="POST">
 
-
+<!-- 
             <div class="form-outline mb-4">
               <input type="text" name="username" id="username" class="form-control form-control-lg" required />
               <label class="form-label" for="email">username</label>
-            </div>
+            </div> -->
             
             <div class="form-outline mb-4">
               <input type="email" name="email" id="email" class="form-control form-control-lg" required />
@@ -79,17 +79,17 @@
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const username = document.getElementById('username').value;
+      // const username = document.getElementById('username').value;
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
 
       try {
-        const response = await fetch('/login', {
+        const response = await fetch('/auth/local/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ username,email, password }),
+          body: JSON.stringify({ email, password }),
         });
 
         if (response.ok) {

@@ -5,10 +5,12 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const { productRoutes } = require('./routes/products');
-const { UserRoutes } = require('./routes/users');
-// const { AuthRoutes } = require('./routes/auth');
-const authRouter = require('./controller/auth/googleAuth/googleAuth');
+// const { UserRoutes } = require('./routes/users');
+const googleAuthRouter = require('./routes/auth/googleAuth');
 const cookieParser = require('cookie-parser');
+const { localAuthRoutes } = require('./routes/auth/localAuth');
+const { User } = require('./model/user');
+// const { AuthRoutes } = require('./routes/auth/localAuth');
 
 
 
@@ -30,28 +32,33 @@ mongoose
 app.use(session({
     secret: 'your secret key',
     resave: false,
-    saveUninitialized: false,
-    store: new MongoStore({ mongoUrl: mongoose.connection.client.s.url })
+    saveUninitialized: true,
+    cookie: {
+        // maxAge: 1000* 60 * 60 *24 * 365 // one year
+        maxAge: 60000 // 60000 milliseconds 
+    },
+    store: new MongoStore({
+        mongoUrl: mongoose.connection.client.s.url,
+        ttl: 60000 // in seconds
+    })
 }))
 
+app.use(passport.authenticate('session'));
+app.use(passport.session());
 
 
 app.use(passport.initialize());
-app.use(passport.session());
-app.use(passport.authenticate('session'));
 
 
-app.get('/', (req, res) => {
-    res.render(__dirname+'build.html');
-  });
 app.get('/loginpage', (req, res) => {
     res.sendFile(__dirname + '/loginPage.html')
 })
 app.get('/signuppage', (req, res) => {
     res.sendFile(__dirname + '/signupPage.html')
 })
-// app.use(AuthRoutes)
-app.use('/auth/google', authRouter);
+
+app.use('/auth/local', localAuthRoutes)
+app.use('/auth/google', googleAuthRouter);
 
 
 app.use('/', (req, res, next) => {
@@ -64,7 +71,15 @@ app.use('/', (req, res, next) => {
 })
 
 
-app.use('/api', productRoutes, UserRoutes);
+
+
+app.get('/', async (req, res) => {
+    await User.findOne({ email: req.session.passport.user.email }).then((data) => {
+        res.status(200).send(data);
+    }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
+});
+
+app.use('/api', productRoutes);
 
 app.listen(process.env.PORT, () => {
     console.log(`Server started on port ${process.env.PORT}`);
