@@ -29,6 +29,7 @@ passport.use(
         async (accessToken, refreshToken, profile, done) => {
             await User.findOne({ email: profile.emails[0].value }).then((user) => {
                 if (!user.provider) {
+                    
                     return done(null, false, {
                         message: 'User already exists with a different provider.'
                     });
@@ -61,7 +62,7 @@ router.get(
 
 router.get(
     '/callback',
-    passport.authenticate('google', { failureRedirect: '/loginpage', successRedirect: '/auth/google/success' }), (req, res, next) => {
+    passport.authenticate('google', { failureRedirect: '/loginpage', successRedirect: '/' }), (req, res, next) => {
         try {
         } catch (error) {
 
@@ -69,12 +70,6 @@ router.get(
     }
 );
 
-router.get('/success', async (req, res) => {
-
-    await User.findOne({ email: req.session.passport.user.email }).then((data) => {
-        res.status(200).send(data);
-    }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
-});
 
 router.get('/error', (req, res) => res.send('Error logging in via Google..'));
 

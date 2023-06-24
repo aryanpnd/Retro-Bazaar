@@ -15,7 +15,7 @@ const userschema = new Schema({
     photoURL: { type: String },
     accountId: { type: String },
     provider: { type: String },
-    username: { type: String, required: [false, "Username name required"] },
+    // username: { type: String, required: [false, "Username name required"] },
     name: { type: String, required: [false, "First name required"] },
     lastname: { type: String },
     email: {
@@ -24,17 +24,8 @@ const userschema = new Schema({
         validate: [validateEmail, "Please enter a valid email"],
         unique: [true, "email already exists"]
     },
+    password:{type:String}
 });
-
-
-const options = {
-    usernameUnique: false,
-
-    // errorMessages: {
-    //     UserExistsError: 'A user with the given Username is already registered',
-    // }
-};
-// userschema.plugin(passportLocalMongoose,options)
 
 
 const User = mongoose.model('User', userschema);

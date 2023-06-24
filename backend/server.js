@@ -6,8 +6,10 @@ const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const { productRoutes } = require('./routes/products');
 // const { UserRoutes } = require('./routes/users');
-const authRouter = require('./routes/auth/googleAuth');
+const googleAuthRouter = require('./routes/auth/googleAuth');
 const cookieParser = require('cookie-parser');
+const { localAuthRoutes } = require('./routes/auth/localAuth');
+const { User } = require('./model/user');
 // const { AuthRoutes } = require('./routes/auth/localAuth');
 
 
@@ -33,11 +35,11 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         // maxAge: 1000* 60 * 60 *24 * 365 // one year
-        maxAge: 10000 // 10 SECONDS
+        maxAge: 60000 // 60000 milliseconds 
     },
     store: new MongoStore({
         mongoUrl: mongoose.connection.client.s.url,
-        ttl: 10
+        ttl: 60000 // in seconds
     })
 }))
 
@@ -55,8 +57,8 @@ app.get('/signuppage', (req, res) => {
     res.sendFile(__dirname + '/signupPage.html')
 })
 
-// app.use(AuthRoutes)
-app.use('/auth/google', authRouter);
+app.use('/auth/local', localAuthRoutes)
+app.use('/auth/google', googleAuthRouter);
 
 
 app.use('/', (req, res, next) => {
@@ -71,8 +73,10 @@ app.use('/', (req, res, next) => {
 
 
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/build.html');
+app.get('/', async (req, res) => {
+    await User.findOne({ email: req.session.passport.user.email }).then((data) => {
+        res.status(200).send(data);
+    }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
 });
 
 app.use('/api', productRoutes);
