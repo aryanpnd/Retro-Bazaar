@@ -77,13 +77,14 @@ export default function Signup() {
         pt={'3%'}
     >
         <Box
+            className='container-margin'
             m={'auto'}
             w={'88%'}
             h={'90%'}
             border={'0.2rem solid white'}
             padding={'2rem 1.2rem'}
             mb={'1rem'}
-            borderRadius={'6px'}
+            // borderRadius={'6px'}
         >
             <Box
                 color={'#FFFFFF'}

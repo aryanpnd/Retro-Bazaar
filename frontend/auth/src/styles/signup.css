@@ -69,3 +69,11 @@
 .signup-for-free:hover {
   background-position: right center; /* change the direction of the change here */
 }
+
+
+.container-margin{
+  border: 1px solid;
+  border-image-slice: 1;
+  background-color: transparent;
+  border-image-source: linear-gradient(to left, #c5a842,#13b634);
+}
