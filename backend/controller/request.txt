@@ -1,0 +1,13 @@
+parameter Id : :123 at http://localhost/products/:123 
+parameter Id : :123 at http://localhost/products/:123 
+parameter Id : 123 at http://localhost/products/123 
+parameter Id : 1 at http://localhost/products/1 
+parameter Id : 1 at http://localhost/products/1 
+parameter Id : 1dewd at http://localhost/products/1dewd 
+parameter Id : 1dewd at http://localhost/products/1dewd 
+parameter Id : 1dewd at http://localhost/products/1dewd 
+parameter Id : 1 at http://localhost/products/1 
+parameter Id : 2 at http://localhost/products/2 
+parameter Id : 3 at http://localhost/products/3 
+parameter Id : 3 at http://localhost/products/3 
+parameter Id : 5 at http://localhost/products/5 
