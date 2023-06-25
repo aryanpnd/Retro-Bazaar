@@ -29,8 +29,8 @@ export default function App() {
       <CacheProvider value={emotionCache}>
         <ChakraProvider theme={theme}>
           <Routes>
-            <Route exact path="/signup" element={<Signup />} />
-            <Route exact path="/login" element={<Login />} />
+            <Route exact path="auth/" element={<Login />} />
+            <Route exact path="auth/signup" element={<Signup />} />
           </Routes>
         </ChakraProvider>
       </CacheProvider>

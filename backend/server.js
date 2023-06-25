@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
 const { productRoutes } = require('./routes/products');
+const path = require('path')
 // const { UserRoutes } = require('./routes/users');
 const googleAuthRouter = require('./routes/auth/googleAuth');
 const cookieParser = require('cookie-parser');
@@ -48,6 +49,12 @@ app.use(passport.session());
 
 
 app.use(passport.initialize());
+
+
+app.use('/auth',express.static(path.join(__dirname, 'views/auth/build')))
+app.get('/auth/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/auth/build/index.html'))
+  })
 
 
 app.get('/loginpage', (req, res) => {
