@@ -1,5 +1,5 @@
-import { AbsoluteCenter, Box, Button, Divider, Flex, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import { AbsoluteCenter, Box, Button, Divider, Flex, Input, InputGroup, InputRightElement, Text, useToast } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import logoTransparent from '../assets/images/logoTransparent.png'
 import googleLogo from '../assets/images/googleLogo.svg'
@@ -7,16 +7,22 @@ import blobBall1 from '../assets/images/blobBall1.svg'
 import blobBall2 from '../assets/images/blobBall2.svg'
 import '../styles/login.css'
 import { color } from 'framer-motion'
+import { CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import axios from 'axios'
+import { hostUrl } from '../App'
 
 export default function Login() {
 
     const Navigate = useNavigate()
+    const toast = useToast()
 
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
 
     const [toggleBtn, setToggleBtn] = useState(false)
     const [emailFieldColor, setEmailFieldColor] = useState('')
+    const [inputError, setInputError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [inputData, setInputData] = useState({
         email: '',
@@ -28,23 +34,58 @@ export default function Login() {
         return emailRegex.test(email);
     }
 
-    const handleDataChange = (e) => {
-        if (e.target.name === 'email') {
-            const validEmail = inputData.email === '' || isValidEmail(inputData.email)
-            if (validEmail) {
-                setToggleBtn(false)
-                setEmailFieldColor('')
-            } else {
-                setToggleBtn(true)
-                setEmailFieldColor('red')
-            }
-        }
+    const handleDataChange = (e) => {        
         setInputData(prevData => {
             return {
                 ...prevData,
                 [e.target.name]: e.target.value
             }
         })
+    }
+    useEffect(() => {
+        const validEmail = inputData.email === '' || isValidEmail(inputData.email)
+        if (validEmail) {
+            setToggleBtn(false)
+            setEmailFieldColor('')
+            setInputError('')
+        } else {
+            setToggleBtn(true)
+            setEmailFieldColor('red')
+            setInputError('Please enter a valid email')
+        }
+      }, [inputData])
+
+
+      const handleSubmit = () => {
+        setLoading(true)
+        axios.post(`${hostUrl}/authapi/local/login`, inputData).then((res) => {
+            setLoading(false)
+            console.log(res)
+            toast({
+                title: res.data.message,
+                status: 'success',
+                duration: 2000,
+                isClosable: true,
+                position: 'top-right',
+                variant: 'solid',
+                containerStyle: { fontSize: '14px', },
+            })
+            setTimeout(() => { window.location.href = 'http://localhost:8080/'} , 2000)
+        }).catch((err) => {
+            console.log(err)
+            toast({
+                title: err.response.data.message,
+                description:'Try Again',
+                status: 'error',
+                duration: 4000,
+                isClosable: true,
+                position: 'top-right',
+                variant: 'solid',
+                containerStyle: { fontSize: '15px', },
+            })
+            setLoading(false)
+        })
+
     }
 
 
@@ -89,12 +130,17 @@ export default function Login() {
 
 
                     <Flex flexDir={'column'} justifyContent={'space-evenly'} gap={'1rem'} h={'50%'}>
-                        <Input h={'22%'} 
-                        borderColor={emailFieldColor} 
-                        borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' 
-                        focusBorderColor={emailFieldColor?"none":'pink.500'}   
-                        _hover={"none"}
-                        _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
+
+                        <InputGroup h={'22%'}>
+                            <Input h={'100%'}
+                                borderColor={emailFieldColor}
+                                focusBorderColor={emailFieldColor ? "none" : 'pink.500'}
+                                _hover={"none"}
+                                borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
+                            <InputRightElement h={'100%'} w={'12%'}>
+                                {emailFieldColor ? <CloseIcon color='red.500' /> : <CheckIcon color='green.500' />}
+                            </InputRightElement>
+                        </InputGroup>
 
 
                         <InputGroup size='md' h={'22%'}>
@@ -116,8 +162,10 @@ export default function Login() {
                             _hover={{ background: "linear-gradient(to left, #7928cab5, #ff00806b)" }}
                             _active={{ background: "linear-gradient(to left, #7928ca69, #ff008057)", transform: ' scale(0.8)' }}
                             transition={'background-color 0.5s, transform 0.2s;'}
+                            onClick={handleSubmit}
+                            isLoading={loading}
                         >
-                            <Text color={'whitesmoke'}>Sign in</Text>
+                            <Text color={'whitesmoke'}>{toggleBtn ? inputError : 'Sign in'}</Text>
 
                         </Button>
                     </Flex>
@@ -135,7 +183,7 @@ export default function Login() {
                     <Flex flexDir={'column'} justifyContent={'space-evenly'} gap={'1rem'} h={'85%'}>
 
                         <Button color={'whiteAlpha.800'} className='btn' borderRadius={'14px'} h={'40%'} variant='ghost' bg={'black'} fontSize={'1.3rem'} fontWeight={'semibold'} _hover={{ background: 'whitesmoke', color: 'black' }} _active={{ transform: ' scale(0.8)' }}
-                        onClick={()=>window.location.href= 'http://localhost:8080/auth/google'}
+                            onClick={() => window.location.href = 'http://localhost:8080/authapi/google'}
                             rightIcon={
                                 <img style={{ width: '2rem' }} src={googleLogo} alt="" />
                             }>

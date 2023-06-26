@@ -15,6 +15,7 @@ const theme = extendTheme({
     }),
   },
 });
+export const hostUrl = ''  
 
 export default function App() {
   return (

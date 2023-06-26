@@ -53,27 +53,20 @@ app.use(passport.session());
 app.use(passport.initialize());
 
 
-// app.use('/auth',express.static(path.join(__dirname, 'views/auth/build')))
-// app.get('/auth/*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'views/auth/build/index.html'))
-//   })
+app.use('/auth',express.static(path.join(__dirname, 'views/auth/build')))
+app.get('/auth/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/auth/build/index.html'))
+  })
 
+  
 
-app.get('/loginpage', (req, res) => {
-    console.log(req.session.messages)
-    res.sendFile(__dirname + '/loginPage.html')
-})
-app.get('/signuppage', (req, res) => {
-    res.sendFile(__dirname + '/signupPage.html')
-})
-
-app.use('/auth/local', localAuthRoutes)
-app.use('/auth/google', googleAuthRouter);
+app.use('/authapi/local', localAuthRoutes)
+app.use('/authapi/google', googleAuthRouter);
 
 
 app.use('/', (req, res, next) => {
     if (!req.isAuthenticated()) {
-        res.redirect('/loginpage')
+        res.redirect('/auth')
     }
     else {
         next()
@@ -82,10 +75,9 @@ app.use('/', (req, res, next) => {
 
 
 
-
 app.get('/', async (req, res) => {
     await User.findOne({ email: req.session.passport.user.email }).then((data) => {
-        console.log(req.session.messages)
+        // console.log(req.session.messages)
         res.status(200).json({data:data});
     }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
 });

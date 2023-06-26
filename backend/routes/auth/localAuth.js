@@ -25,12 +25,10 @@ passport.use(
 
                     const isAuthenticated = bcrypt.compareSync(password, user.password);
                     if (isAuthenticated) {
-                        return done(null, user);
+                        return done(null, user,{message:'Login Successful'});
                     }
                     else {
-                        console.log('hello')
-
-                        return done(null, false, { message: "Wrong password" });
+                        return done(null, false, { message: "Wrong Email or password" });
                     }
 
                 } else {
@@ -47,30 +45,49 @@ passport.use(
 
 
 
-localAuthRoutes.post("/login",
-    passport.authenticate("local", { failureRedirect: '/login', failureMessage: true }), function (req, res) {
-        res.status(200).send(req.user)
-    });
+localAuthRoutes.post("/login", function(req, res, next) {
+    passport.authenticate("local", function(err, user, info) {
+      if (err) {
+        return res.status(500).json({ message: "Internal server error" });
+      }
+      if (!user) {
+        return res.status(401).send(info);
+      }
+      req.logIn(user, function(err) {
+        if (err) {
+          return res.status(500).json({ message: "Internal server error" });
+        }
+        return res.status(200).json({ message: "Login successful" });
+      });
+    })(req, res, next);
+  });
 
 localAuthRoutes.post('/signup', async (req, res, next) => {
     try {
-        await User.findOne({ email: req.body.email })
-            .then((user) => {
-                const createUser = new User({
-                    name: req.body.name,
-                    email: req.body.email,
-                    password: req.body.password
-                })
+        const exists = await User.exists({ email: req.body.email });
+        if (exists) { res.json({ "message": "User already exists with the provided email address." }) }
+        else {
 
-                var hash = bcrypt.hashSync(req.body.password, 10);
-                createUser.password = hash
-                createUser.save().then((data) => {
-                    res.status(200).send('account created successfully')
-                }).catch((err) => res.status(400).send(err))
-            })
-            .catch((err) => {
-                res.send(err)
-            })
+            await User.findOne({ email: req.body.email })
+                .then((user) => {
+                    const createUser = new User({
+                        name: req.body.name,
+                        email: req.body.email,
+                        password: req.body.password
+                    })
+
+                    var hash = bcrypt.hashSync(req.body.password, 10);
+                    createUser.password = hash
+                    createUser.save().then((data) => {
+                        res.status(200).send('Account created successfully')
+                    }).catch((err) => {
+                        res.status(400).json(err)
+                    })
+                })
+                .catch((err) => {
+                    res.json(err)
+                })
+        }
     } catch (err) {
         res.status(500).send('Something went wrong from our end')
     }

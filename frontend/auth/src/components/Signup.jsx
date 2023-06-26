@@ -1,14 +1,17 @@
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text, border, useToast } from "@chakra-ui/react"
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text, border } from "@chakra-ui/react"
-import logoTransparent from '../assets/images/logoTransparent.png'
-import { ArrowForwardIcon } from '@chakra-ui/icons'
-
-import '../styles/signup.css'
 import { useNavigate } from 'react-router-dom'
+import logoTransparent from '../assets/images/logoTransparent.png'
+import { ArrowForwardIcon, CheckIcon, CloseIcon } from '@chakra-ui/icons'
+import '../styles/signup.css'
+import { hostUrl } from '../App';
+import axios, * as others from 'axios';
+
 
 export default function Signup() {
 
     const Navigate = useNavigate()
+    const toast = useToast()
 
     const [show, setShow] = useState(false)
     const handleClick = () => setShow(!show)
@@ -20,11 +23,12 @@ export default function Signup() {
     const [toggleBtn, setToggleBtn] = useState(true)
     const [passFieldColor, setPassFieldColor] = useState(undefined);
     const [emailFieldColor, setEmailFieldColor] = useState(undefined);
+    const [inputError, setInputError] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [inputData, setInputData] = useState({
         name: '',
         email: '',
-        phone: '',
         password: '',
         confirmPassword: ''
     })
@@ -43,33 +47,88 @@ export default function Signup() {
         return emailRegex.test(email);
     }
 
-    useEffect(() => {
-
+    const validateInputData = () => {
         const pass = inputData.password;
         const confpass = inputData.confirmPassword;
 
         const passMatched = pass === confpass;
-        const validEmail = inputData.email === '' || isValidEmail(inputData.email);
+        const validEmail = inputData.email === ' ' || isValidEmail(inputData.email);
 
         if (validEmail) {
             setEmailFieldColor('');
+            setInputError('')
         } else {
+            setInputError('Please enter a valid email')
             setEmailFieldColor('red');
         }
 
         if (passMatched) {
             setPassFieldColor('');
+            setInputError('')
         } else {
+            setInputError('Please match the both passowords')
             setPassFieldColor('red');
+
         }
-        if(validEmail && passMatched){
+        if (validEmail && passMatched) {
             setToggleBtn(false);
-        }else{
+        } else {
             setToggleBtn(true);
         }
+    }
+
+    useEffect(() => {
+
+        validateInputData()
     }, [inputData]);
+    useEffect(() => {
+
+        validateInputData()
+    }, []);
 
 
+    useEffect(() => {
+        const validEmail = inputData.email === '' || isValidEmail(inputData.email);
+
+        if (validEmail) {
+            setEmailFieldColor('');
+        } else {
+            setInputError('Please enter a valid email')
+        }
+
+    }, [inputData.email])
+
+
+    const handleSubmit = () => {
+        setLoading(true)
+        axios.post(`${hostUrl}/authapi/local/signup`, inputData).then((res) => {
+            setLoading(false)
+            toast({
+                title: 'Success',
+                description: res.data + ' ' + 'Please login',
+                status: 'success',
+                duration: 2000,
+                isClosable: true,
+                position: 'top-right',
+                variant: 'solid',
+                containerStyle: { fontSize: '14px', },
+            })
+            setTimeout(() => { Navigate('/auth') }, 2000)
+        }).catch((err) => {
+            toast({
+                title: err.response.data.error,
+                description: err.response.data.message,
+                status: 'error',
+                duration: 4000,
+                isClosable: true,
+                position: 'top-right',
+                variant: 'solid',
+                containerStyle: { fontSize: '14px', },
+            })
+            setLoading(false)
+        })
+
+    }
 
 
     return (
@@ -112,19 +171,24 @@ export default function Signup() {
 
 
 
-                    {/* Name input */}
                     <Flex flexDir={'column'} justifyContent={'space-evenly'} gap={'1rem'} h={['55%', '55%', '55%', '70%', '70%']}>
 
 
+                        {/* Name input */}
                         <Input h={'22%'} borderRadius={'14px'} onChange={handleDataChange} type='text' name='name' placeholder='Name' focusBorderColor='pink.500' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
 
 
                         {/* Email input */}
-                        <Input h={'22%'} 
-                        borderColor={emailFieldColor} 
-                        focusBorderColor= {emailFieldColor?"none":'pink.500'}  
-                        _hover={"none"}
-                        borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
+                        <InputGroup h={'22%'}>
+                            <Input h={'100%'}
+                                borderColor={emailFieldColor}
+                                focusBorderColor={emailFieldColor ? "none" : 'pink.500'}
+                                _hover={"none"}
+                                borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
+                            <InputRightElement h={'100%'} w={'12%'}>
+                                {emailFieldColor ? <CloseIcon color='red.500' /> : <CheckIcon color='green.500' />}
+                            </InputRightElement>
+                        </InputGroup>
 
 
 
@@ -158,8 +222,8 @@ export default function Signup() {
                             {/* password input field */}
                             <Input
                                 h={''}
-                                borderColor = {passFieldColor}
-                                focusBorderColor= {passFieldColor?"none":'pink.500'}  
+                                borderColor={passFieldColor}
+                                focusBorderColor={passFieldColor ? "none" : 'pink.500'}
                                 _hover={"none"}
                                 onChange={handleDataChange}
                                 type={show2 ? 'text' : 'password'}
@@ -169,10 +233,11 @@ export default function Signup() {
                                 _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
 
                             {/*Confirm password input field icon button */}
-                            <InputRightElement width='25%' height='100%'>
-                                <Button className='btn' borderRadius='10px' color={show2 ? 'teal.400' : 'pink.400'} h='70%' size='lg' variant='ghost' onClick={handleClick2}>
-                                    {show2 ? 'Hide' : 'Show'}
-                                </Button>
+                            <InputRightElement width='15%' height='100%'>
+                                {passFieldColor ?
+                                    <CloseIcon color='red.500' />
+                                    : <CheckIcon color='green.500' />}
+
                             </InputRightElement>
 
                         </InputGroup>
@@ -197,9 +262,11 @@ export default function Signup() {
                                 transform: 'translateY(-3px)'
                             }}
                             _active={{ transform: 'scale(0.9)' }}
-                            rightIcon={<ArrowForwardIcon color={'white'} />}
+                            rightIcon={toggleBtn ? '' : <ArrowForwardIcon color={'white'} />}
+                            isLoading={loading}
+                            onClick={handleSubmit}
                         >
-                            <Text color={'whitesmoke'}>Sign up</Text>
+                            <Text color={'whitesmoke'}>{toggleBtn ? inputError : 'Sign up'}</Text>
                         </Button>
                     </Flex>
                 </Flex>

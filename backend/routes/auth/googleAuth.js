@@ -24,7 +24,7 @@ passport.use(
         {
             clientID: "666453716775-6ucd83q73809j34tm7ehc3ssoon4jsu7.apps.googleusercontent.com",
             clientSecret: "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",
-            callbackURL: "http://localhost:8080/auth/google/callback"
+            callbackURL: "http://localhost:8080/authapi/google/callback"
         },
         async (accessToken, refreshToken, profile, done) => {
             await User.findOne({ email: profile.emails[0].value }).then((user) => {
@@ -62,7 +62,7 @@ router.get(
 
 router.get(
     '/callback',
-    passport.authenticate('google', { failureRedirect: '/loginpage', successRedirect: '/',failureMessage:true })
+    passport.authenticate('google', { failureRedirect: '/auth/', successRedirect: '/',failureMessage:true })
 );
 
 

@@ -16,13 +16,13 @@ const userschema = new Schema({
     accountId: { type: String },
     provider: { type: String },
     // username: { type: String, required: [false, "Username name required"] },
-    name: { type: String, required: [false, "First name required"] },
+    name: { type: String, required: [true, "Name required"] },
     lastname: { type: String },
     email: {
         type: String,
         required: [true, "Email required"],
         validate: [validateEmail, "Please enter a valid email"],
-        unique: [true, "email already exists"]
+        unique: [true, "Email already exists"]
     },
     password:{type:String}
 });
