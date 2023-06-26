@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Divider, Flex, Input, InputGroup, InputRightElement, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Input, InputGroup, InputRightElement, Text, border } from "@chakra-ui/react"
 import logoTransparent from '../assets/images/logoTransparent.png'
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 
@@ -52,21 +52,22 @@ export default function Signup() {
         const validEmail = inputData.email === '' || isValidEmail(inputData.email);
 
         if (validEmail) {
-            setToggleBtn(false);
             setEmailFieldColor('');
         } else {
-            setToggleBtn(true);
             setEmailFieldColor('red');
         }
 
         if (passMatched) {
-            setToggleBtn(false);
             setPassFieldColor('');
         } else {
-            setToggleBtn(true);
             setPassFieldColor('red');
         }
-    }, [inputData, passFieldColor, emailFieldColor]);
+        if(validEmail && passMatched){
+            setToggleBtn(false);
+        }else{
+            setToggleBtn(true);
+        }
+    }, [inputData]);
 
 
 
@@ -119,7 +120,11 @@ export default function Signup() {
 
 
                         {/* Email input */}
-                        <Input h={'22%'} borderColor={emailFieldColor} borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' focusBorderColor='pink.500' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
+                        <Input h={'22%'} 
+                        borderColor={emailFieldColor} 
+                        focusBorderColor= {emailFieldColor?"none":'pink.500'}  
+                        _hover={"none"}
+                        borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
 
 
 
@@ -128,10 +133,11 @@ export default function Signup() {
                             {/* password input field */}
                             <Input
                                 h={''}
-                                borderColor={''}
                                 onChange={handleDataChange}
                                 type={show ? 'text' : 'password'}
-                                placeholder='Password' borderRadius={'14px'} focusBorderColor='pink.500'
+                                name='password'
+                                focusBorderColor='pink.500'
+                                placeholder='Password' borderRadius={'14px'}
                                 _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
 
                             {/* password input field icon button */}
@@ -152,13 +158,14 @@ export default function Signup() {
                             {/* password input field */}
                             <Input
                                 h={''}
-                                borderColor={passFieldColor}
+                                borderColor = {passFieldColor}
+                                focusBorderColor= {passFieldColor?"none":'pink.500'}  
+                                _hover={"none"}
                                 onChange={handleDataChange}
                                 type={show2 ? 'text' : 'password'}
-                                name='password'
+                                name='confirmPassword'
                                 placeholder='Confirm password'
                                 borderRadius={'14px'}
-                                focusBorderColor='pink.500'
                                 _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
 
                             {/*Confirm password input field icon button */}

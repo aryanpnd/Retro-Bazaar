@@ -89,7 +89,12 @@ export default function Login() {
 
 
                     <Flex flexDir={'column'} justifyContent={'space-evenly'} gap={'1rem'} h={'50%'}>
-                        <Input h={'22%'} borderColor={emailFieldColor} borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' focusBorderColor='pink.500' _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
+                        <Input h={'22%'} 
+                        borderColor={emailFieldColor} 
+                        borderRadius={'14px'} onChange={handleDataChange} type='email' name='email' placeholder='Email' 
+                        focusBorderColor={emailFieldColor?"none":'pink.500'}   
+                        _hover={"none"}
+                        _placeholder={{ fontWeight: 'bold', color: '#f5f5f5db' }} />
 
 
                         <InputGroup size='md' h={'22%'}>

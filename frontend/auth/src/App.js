@@ -1,7 +1,5 @@
 import React from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
-import createCache from "@emotion/cache";
-import { CacheProvider } from "@emotion/react";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
@@ -21,12 +19,12 @@ const theme = extendTheme({
 export default function App() {
   return (
     <Router>
-        <ChakraProvider theme={theme}>
-          <Routes>
-            <Route exact path="auth/" element={<Login />} />
-            <Route exact path="auth/signup" element={<Signup />} />
-          </Routes>
-        </ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <Routes>
+          <Route exact path="auth/" element={<Login />} />
+          <Route exact path="auth/signup" element={<Signup />} />
+        </Routes>
+      </ChakraProvider>
     </Router>
   );
 }
