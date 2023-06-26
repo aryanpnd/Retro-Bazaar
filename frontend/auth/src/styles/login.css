@@ -1,37 +1,3 @@
-.signin-page-input-text{
-  color: #FFFFFF;
-  font-size: 1.1rem;
+.btn{
+    -webkit-tap-highlight-color: transparent;
 }
-
-.signin-page-input-field{
-    margin-top: 0.5rem;
-    margin-bottom: 1.1rem;
-    color: #ffffff;
-    width: 15rem;
-}
-
-.forgotPassword{
-    transition: 0.5s;
-    text-align: right;
-    margin-right: 5%;
-}
-
-.forgotPassword:hover{
-    cursor: pointer;
-    color: #bec99d;
-    letter-spacing: 0.1rem;
-}
-
-.signin-btn{
-    color: black;
-    background: transparent;
-
-    transition: 0.5s;
-    background-size: 200% auto;
-    border-radius: 4px;
-    background-image: linear-gradient(to right, #01c29a 0%, #e8bc70 51%, #e8cd70 100%);
-}
-
-.signin-btn:hover {
-    background-position: right center; /* change the direction of the change here */
-  }

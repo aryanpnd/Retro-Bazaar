@@ -62,12 +62,7 @@ router.get(
 
 router.get(
     '/callback',
-    passport.authenticate('google', { failureRedirect: '/loginpage', successRedirect: '/' }), (req, res, next) => {
-        try {
-        } catch (error) {
-
-        }
-    }
+    passport.authenticate('google', { failureRedirect: '/loginpage', successRedirect: '/',failureMessage:true })
 );
 
 

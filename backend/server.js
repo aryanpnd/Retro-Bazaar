@@ -4,6 +4,7 @@ const session = require('express-session');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const passport = require('passport');
+const cors = require('cors');
 const { productRoutes } = require('./routes/products');
 const path = require('path')
 // const { UserRoutes } = require('./routes/users');
@@ -16,6 +17,7 @@ const { User } = require('./model/user');
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -51,13 +53,14 @@ app.use(passport.session());
 app.use(passport.initialize());
 
 
-app.use('/auth',express.static(path.join(__dirname, 'views/auth/build')))
-app.get('/auth/*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'views/auth/build/index.html'))
-  })
+// app.use('/auth',express.static(path.join(__dirname, 'views/auth/build')))
+// app.get('/auth/*', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'views/auth/build/index.html'))
+//   })
 
 
 app.get('/loginpage', (req, res) => {
+    console.log(req.session.messages)
     res.sendFile(__dirname + '/loginPage.html')
 })
 app.get('/signuppage', (req, res) => {
@@ -82,7 +85,8 @@ app.use('/', (req, res, next) => {
 
 app.get('/', async (req, res) => {
     await User.findOne({ email: req.session.passport.user.email }).then((data) => {
-        res.status(200).send(data);
+        console.log(req.session.messages)
+        res.status(200).json({data:data});
     }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
 });
 
