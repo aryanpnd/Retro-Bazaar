@@ -7,9 +7,8 @@
 }
 
 .otp-modal-container{
-    background-color: black;
     min-width: 32%;
-    height: 40%;
+    min-height: 40%;
     margin: auto;
     background-color:  #232c3e;
     border: 1px solid none;
@@ -25,16 +24,14 @@
     width: 100%;
     padding-bottom: 0.2rem;
     border-bottom: 2px solid rgba(174, 169, 169, 0.64) ;
+    padding-left: 0.3rem;
 }
 
 .number-input-field-conatiner{
     margin: auto;
     display: flex;
     margin-top: 5rem;
-}
-
-.number-input-field{
-    margin: auto;
+    justify-content: center;
 }
 
 .number-input-field input{
@@ -58,9 +55,7 @@
     font-size: 1.2rem;
 }
 
-.otp-back-btn{
-    margin-right: 1rem;
-}
+
 
 .send-otp-btn, .otp-back-btn{
   float: right  ;
@@ -74,9 +69,58 @@
   border-radius: 10px;
   background-image: linear-gradient(to right, #1c263c 0%, #181e2b 51%, #232c3e 100%);
   box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5); 
+  margin: auto;
+}
+
+.otp-back-btn{
+    margin-right: 1rem;
 }
 
 .send-otp-btn:hover, .otp-back-btn:hover{
     background-position: right center;
     cursor: pointer;
+}
+
+.captcha-container{
+    margin: 2rem;
+}
+
+.tel-Input-for-otp{
+    font-size: 2rem;
+    background-color: #2a344a;
+    border-radius: 6px;
+    padding: 0.6rem 1rem;
+    width:50%;
+    color: #FFFFFF;
+    border: none;
+    border-bottom: 2px solid white;
+    letter-spacing: 0.2rem;
+}
+
+.tel-Input-for-otp::-webkit-outer-spin-button,
+.tel-Input-for-otp::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+@media only screen and (max-width: 500px) {
+    :root{
+        font-size: 10px;
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    .otp-modal-container{
+        width: 70%;
+    }
+    .tel-Input-for-otp{
+        font-size: 1.8rem;
+    }
+}
+
+@media only screen and (max-width: 390px) {
+    .number-input-field input{
+        width: 28px !important;
+        height: 28px !important;
+    }
 }
