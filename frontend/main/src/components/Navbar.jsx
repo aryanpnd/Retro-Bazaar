@@ -33,13 +33,7 @@ function Navbar() {
         <>
             {/* mobile navbar */}
             <div className="top-nav-container-mob">
-                {search ? <input className='top-nav-input' variant='filled' placeholder='Search Around You' focusBorderColor='#00ADB5'
-                    style={{
-                        borderRadius: "20px",
-                        height: "60%",
-                        width: "90%",
-                        background: "#2c2c2c",
-                    }} />
+                {search ? <input className='top-nav-mob-input' placeholder='Search Around You' />
                     :
                     <>
                         <SearchOutline
@@ -119,12 +113,7 @@ function Navbar() {
             <div div className="navbar-container-pc" >
                 <div className="navbar-container-pc-left">
                     retroBazaar
-                    <input placeholder='Search'
-                        style={{
-                            width: "75%",
-                            borderRadius: '20px',
-                            background: "#2c2c2c"
-                        }} />
+                    <input className='pc-left-navbar-input' placeholder='Search' />
                 </div>
 
                 <div className="navbar-container-pc-center">
@@ -136,7 +125,7 @@ function Navbar() {
                                 height="2rem"
                                 width="2rem"
                             /></span>
-                        <span className='pc-navbar-icon-text' style={{ marginLeft: "5%" }}>home</span>
+                        <span className='pc-navbar-icon-text'>home</span>
                     </div>
                     <div className='pc-center-navbar-element'>
                         <span className='icon'>
@@ -146,7 +135,7 @@ function Navbar() {
                                 height="2rem"
                                 width="2rem"
                             /></span>
-                        <span className='pc-navbar-icon-text' style={{ marginLeft: "5%" }}>chat</span>
+                        <span className='pc-navbar-icon-text'>chat</span>
                     </div>
                     <div className='pc-center-navbar-element'>
                         <HeartOutline
@@ -155,7 +144,7 @@ function Navbar() {
                             height="2.2rem"
                             width="2.2rem"
                         />
-                        <span className='pc-navbar-icon-text' style={{ marginLeft: "5%" }}>wishlist</span>
+                        <span className='pc-navbar-icon-text'>wishlist</span>
                     </div>
                     <div className='pc-center-navbar-element'>
                         <CartOutline
@@ -163,7 +152,7 @@ function Navbar() {
                             title={"home"}
                             height="2.2rem"
                             width="2.2rem"
-                        /><span className='pc-navbar-icon-text' style={{ marginLeft: "5%" }}>cart</span>
+                        /><span className='pc-navbar-icon-text'>cart</span>
                     </div>
                 </div>
                 <div className="navbar-container-pc-right">
