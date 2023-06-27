@@ -12,6 +12,14 @@
     align-items: center;
 }
 
+.top-nav-mob-input{
+    border-radius: 20px;
+    height: 60%;
+    width: 90%;
+    background: #2c2c2c;
+    color: white;
+}
+
 .top-nav-title{
     font-size: 1.7rem;
 }
@@ -108,6 +116,13 @@
     align-items: center;
 }
 
+.pc-left-navbar-input{
+    width: 75%;
+    border-radius: 20px;
+    background: #2c2c2c;
+    color: white;
+}
+
 .navbar-container-pc-center{
     width: 30%;
     display: flex;
@@ -127,6 +142,10 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+.pc-navbar-icon-text{
+    margin-left: 5%;
 }
 
 
