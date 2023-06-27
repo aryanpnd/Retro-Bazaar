@@ -64,22 +64,23 @@ app.use('/authapi/local', localAuthRoutes)
 app.use('/authapi/google', googleAuthRouter);
 
 
-app.use('/', (req, res, next) => {
-    if (!req.isAuthenticated()) {
-        res.redirect('/auth')
-    }
-    else {
-        next()
-    }
-})
+// app.use('/', (req, res, next) => {
+//     if (!req.isAuthenticated()) {
+//         res.redirect('/auth')
+//     }
+//     else {
+//         next()
+//     }
+// })
 
 
 
 app.get('/', async (req, res) => {
-    await User.findOne({ email: req.session.passport.user.email }).then((data) => {
-        // console.log(req.session.messages)
-        res.status(200).json({data:data});
-    }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
+    // await User.findOne({ email: req.session.passport.user.email }).then((data) => {
+    //     // console.log(req.session.messages)
+    //     res.status(200).json({data:data});
+    // }).catch((err) => { res.status(200).send("some error occurred while fetching the data") })
+    res.json({"data":{"_id":"6496f649b6142a28aaad9a29","photoURL":"https://lh3.googleusercontent.com/a/AAcHTtc4u0dOJSt4F00vM3dOmWNuguVuiYHgD1fqAy0N=s96-c","accountId":"102623149057499821727","provider":"google","name":"Riya Singh","email":"gamerriyasingh9870@gmail.com","__v":0}})
 });
 
 app.use('/api', productRoutes);

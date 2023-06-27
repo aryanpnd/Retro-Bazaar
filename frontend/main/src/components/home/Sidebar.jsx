@@ -1,6 +1,6 @@
 import React from 'react'
 import '../../css/Sidebar.css'
-import { AddCircleOutline, BagOutline, SettingsOutline } from 'react-ionicons'
+// import { AddCircleOutline, BagOutline, SettingsOutline } from 'react-ionicons'
 
 function Sidebar() {
     return (
@@ -11,44 +11,44 @@ function Sidebar() {
                         <div >
                             Sell Now
                         </div>
-                        <AddCircleOutline
+                        {/* <AddCircleOutline
                             color={'#00000'}
                             title={"sell"}
                             height="2.3rem"
                             width="2.3rem"
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="sidebar-content">
                     <div className='sidebar-content-item'>
-                        <BagOutline
+                        {/* <BagOutline
                             color={'#ffffff'}
                             title={"categories"}
                             height="2rem"
                             width="2rem"
-                        />
+                        /> */}
                         <div className='sidebar-text'>
                             Categories
                         </div>
                     </div>
                     <div className='sidebar-content-item'>
-                        <BagOutline
+                        {/* <BagOutline
                             color={'#ffffff'}
                             title={"categories"}
                             height="2rem"
                             width="2rem"
-                        />
+                        /> */}
                         <div className='sidebar-text'>
                             Categories
                         </div>
                     </div>
                     <div className='sidebar-content-item'>
-                        <BagOutline
+                        {/* <BagOutline
                             color={'#ffffff'}
                             title={"categories"}
                             height="2rem"
                             width="2rem"
-                        />
+                        /> */}
                         <div className='sidebar-text'>
                             Categories
                         </div>
@@ -59,12 +59,12 @@ function Sidebar() {
                 {/* <hr /> */}
                 <div className="sidebar-footer">
                     <div className='sidebar-content-item'>
-                        <SettingsOutline
+                        {/* <SettingsOutline
                             color={'#ffffff'}
                             title={"settings"}
                             height="2rem"
                             width="2rem"
-                        />
+                        /> */}
                         <div className='sidebar-text'>Settings</div>
                     </div>
                 </div>

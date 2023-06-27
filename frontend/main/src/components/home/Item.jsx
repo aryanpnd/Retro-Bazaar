@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Heart, HeartOutline } from 'react-ionicons'
+// import { Heart, HeartOutline } from 'react-ionicons'
 import '../../css/Item.css'
 
 function Item({ id, name, description, price, date, image }) {
@@ -19,17 +19,20 @@ function Item({ id, name, description, price, date, image }) {
                         alt=''
                     />
                     <div className='item-img-wishlist' onClick={toggleWishlist}>
-                        {wishlist ? <Heart
+                        {/* {wishlist ? 
+                        <Heart
                             color={'#ff2171'}
                             title={"heart"}
                             height="2rem"
                             width="2rem"
-                        /> : <HeartOutline
+                        /> : 
+                        <HeartOutline
                             color={'#ff2171'}
                             title={"heart"}
                             height="2rem"
                             width="2rem"
-                        />}
+                        />
+                        } */}
                     </div>
 
                 </div>
