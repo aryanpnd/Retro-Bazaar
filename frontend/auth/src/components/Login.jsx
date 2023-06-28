@@ -92,6 +92,7 @@ export default function Login() {
     return (
 
         <Flex
+        className='login'
             justifyContent={'center'}
             alignItems={'center'}
             w={'100%'}
@@ -100,14 +101,14 @@ export default function Login() {
             color={'white'}
         >
             <Box position={'absolute'} w={['25%', '20%', '20%', '15%', '10%']} top={'1rem'} left={'1rem'}>
-                <img src={logoTransparent} alt="" />
+                <img draggable={false} src={logoTransparent} alt="" />
             </Box>
 
             <Box position={'absolute'} display={['none', 'none', 'none', 'block', 'block']} w={'25%'} top={'-10rem'} right={'-10rem'}>
-                <img src={blobBall1} alt="" />
+                <img draggable={false} src={blobBall1} alt="" />
             </Box>
             <Box position={'absolute'} display={['none', 'none', 'none', 'block', 'block']} w={'25%'} bottom={'-10rem'} left={'-10rem'}>
-                <img src={blobBall2} alt="" />
+                <img draggable={false} src={blobBall2} alt="" />
             </Box>
 
             <Flex flexDir={'column'} justifyContent={'space-between'} w={['90%', '90%', '40%', '30%', '30%']} h={'90%'}>
@@ -116,6 +117,7 @@ export default function Login() {
 
                     <Box h={['30%', '30%', '30%', '45%', '45%']}>
                         <Text
+                        
                             bgGradient='linear(to-l, #7928CA, #FF0080)'
                             bgClip='text'
                             fontSize='350%'
@@ -185,7 +187,7 @@ export default function Login() {
                         <Button color={'whiteAlpha.800'} className='btn' borderRadius={'14px'} h={'40%'} variant='ghost' bg={'black'} fontSize={'1.3rem'} fontWeight={'semibold'} _hover={{ background: 'whitesmoke', color: 'black' }} _active={{ transform: ' scale(0.8)' }}
                             onClick={() => window.location.href = 'http://localhost:8080/authapi/google'}
                             rightIcon={
-                                <img style={{ width: '2rem' }} src={googleLogo} alt="" />
+                                <img draggable={false} style={{ width: '2rem' }} src={googleLogo} alt="" />
                             }>
                             Continue with Google
                         </Button>
