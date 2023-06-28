@@ -8,7 +8,8 @@ function Navbar() {
 
     const [active, setActive] = useState("profile");
     const [search, setSearch] = useState(false);
-    const [userData, setUserData] = useState('')
+    const [userData, setUserData] = useState(undefined)
+    const [userName, setUserName] = useState(undefined)
 
 
     function handleHome() {
@@ -32,9 +33,10 @@ function Navbar() {
     }
 
     const appLoads = ()=>{
-        axios.get(`${apiURL}`)
+        axios.get(`${apiURL}/api/getUserInfo`)
           .then( (response) =>{
             setUserData(response.data.data.photoURL)
+            setUserName(response.data.data.name)
           })
           .catch( (error) =>{
             console.log(error);
@@ -118,7 +120,7 @@ function Navbar() {
                     <li className={`bottom-nav-list ${active === "profile" ? "active" : ""} `} onClick={handleProfile}>
                         <span className='linkspan'>
                             <span className='bottom-nav-icon'>
-                                <img style={{ height: "2.2rem", width: "2.2rem", borderRadius: "100%" }} src={`${userData}`} alt='' />
+                                <img style={{ height: "2.2rem", width: "2.2rem", borderRadius: "100%" }} src={`${userData?userData:`https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                             </span>
                             <span className='text'>Reddy</span>
                         </span>
@@ -177,7 +179,7 @@ function Navbar() {
                     </div>
                 </div>
                 <div className="navbar-container-pc-right">
-                    <img style={{ height: "3rem", width: "3rem" }} src={`${userData}`} alt='' />
+                    <img style={{ height: "3rem", width: "3rem" }}  src={`${userData?userData:`https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`}  alt='' />
                 </div>
             </div >
         </>

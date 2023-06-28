@@ -143,7 +143,7 @@ export default function Signup() {
 
             {/* Logo image */}
             <Box position={'absolute'} w={['25%', '20%', '20%', '15%', '10%']} top={'1rem'} left={'1rem'}>
-                <img src={logoTransparent} alt="" />
+                <img draggable={false} src={logoTransparent} alt="" />
             </Box>
 
 
@@ -246,19 +246,20 @@ export default function Signup() {
 
                         {/* Submit buttom */}
                         <Button
-                            color={'whiteAlpha.700'}
+                            color={'#266cc799'}
                             className='btn'
                             mt={'1.5rem'}
                             isDisabled={toggleBtn}
                             borderRadius={'14px'}
                             h={'24%'}
                             fontSize={'1.6rem'}
+                            
                             fontWeight={'extrabold'}
                             variant='ghost'
                             bg={'black'}
                             _hover={{
-                                background: 'gray.800',
-                                color: 'black',
+                                background: 'linear-gradient(to left, #7928ca75, #ff008069)',
+                                color: 'white',
                                 transform: 'translateY(-3px)'
                             }}
                             _active={{ transform: 'scale(0.9)' }}
