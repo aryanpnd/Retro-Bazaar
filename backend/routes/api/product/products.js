@@ -1,15 +1,19 @@
 const express = require('express');
-const { addProducts, deleteProduct, updateProduct, patchProduct, getProducts, getProductsById, totalProducts } = require("../../../controller/products")
+const { addProduct, getProducts, totalProducts, getProductSpecificField, searchItems } = require("../../../controller/products");
+const { devInsertMany } = require('./productsDEV');
 const productRoutes = express.Router()
 
 
 productRoutes.get("/totalproducts", totalProducts)
-    .post("/addproducts", addProducts)
+    .get("/getProductSpecificField", getProductSpecificField)
     .get("/products", getProducts)
-    .get("/products/:id", getProductsById)
-    .put("/replaceProducts/:id", updateProduct)
-    .patch("/updateProducts/:id", patchProduct)
-    .delete("/deleteProducts/:id", deleteProduct)
+    .get("/products/search", searchItems)
+    .post("/addproduct", addProduct)
+    // .get("/products/:id", getProductsById)
+    // .put("/replaceProducts/:id", updateProduct)
+    // .patch("/updateProducts/:id", patchProduct)
+    // .delete("/deleteProducts/:id", deleteProduct)
+    .post("/dev/devInsertMany", devInsertMany)
 
 
 module.exports = { productRoutes }
