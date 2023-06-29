@@ -1,5 +1,4 @@
-const { Product } = require("../model/products");
-const { Wishlist } = require("../model/wishlist");
+const { Wishlist } = require("../../model/wishlist");
 
 
 // **NOTE** we are finding user's whishlist by object UID and not email is due to security issues 
@@ -27,7 +26,7 @@ const getWishlist = (req, res, next) => {
 }
 
 // add to cart
-// the code uses the some() method to iterate over the wishlist.products array and checks if any element in the array is equal to the productId using the equals() method of the ObjectId class. This allows you to compare ObjectIds directly.
+// the code uses the "some()" (we can use "find()" as well)  function to iterate over the wishlist.products array and checks if any element in the array is equal to the productId using the equals() method of the ObjectId class. This allows you to compare ObjectIds directly.
 const addToWishlist = (req, res, next) => {
     const productId = req.body.productId;
 

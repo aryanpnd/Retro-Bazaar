@@ -1,5 +1,4 @@
-const { productSchema, Product } = require('../model/products');
-const { User } = require('../model/user');
+const { Product } = require('../../model/products');
 
 
 // total count of products available in database
@@ -20,7 +19,7 @@ const getProductSpecificField = async (req, res) => {
             const distinctCategories = await Product.distinct(req.query.field);
             res.status(200).json(distinctCategories);
         }
-        else{
+        else {
             const distinctCategories = await Product.find().select(req.query.field);
             res.status(200).json(distinctCategories);
         }
@@ -71,22 +70,22 @@ const getProducts = async (req, res) => {
 // search in products
 const searchItems = async (req, res) => {
     const searchQuery = req.query.query;
-  
+
     try {
-      const documents = await Product.find({
-        $or: [
-          { title: { $regex: new RegExp(searchQuery, 'i') } },
-          { description: { $regex: new RegExp(searchQuery, 'i') } },
-          { category: { $regex: new RegExp(searchQuery, 'i') } }
-        ]
-      });
-  
-      res.status(200).json(documents);
+        const documents = await Product.find({
+            $or: [
+                { title: { $regex: new RegExp(searchQuery, 'i') } },
+                { description: { $regex: new RegExp(searchQuery, 'i') } },
+                { category: { $regex: new RegExp(searchQuery, 'i') } }
+            ]
+        });
+
+        res.status(200).json(documents);
     } catch (err) {
-      res.status(400).send(`Some error occurred: ${err}`);
+        res.status(400).send(`Some error occurred: ${err}`);
     }
-  };
-  
+};
+
 
 
 
@@ -106,23 +105,33 @@ const addProduct = async (req, res, next) => {
 
 
 const deleteProduct = async (req, res) => {
-    const reqId = req.params.id
-    await Product.findByIdAndRemove(reqId)
-        .then((docs) => { res.status(200).send(`Deleted in products list at product Id:${reqId}`) })
+    const userId = req.session.passport.user.id
+    const productId = req.body.productid
+    await Product.find({ postedBy: userId })
+        .then(async (docs) => {
+            const isUserProduct = docs.find(id => id._id.equals(productId)) //we're using equals() because the _id is a class so it will give blank value if we use "==="
+            if (isUserProduct) {
+                await Product.findByIdAndDelete(productId).then(() => res.status(200).send('deleted successfully')).catch((err) => res.send(err))
+            }
+            else{
+                res.send('Item does not exists')
+            }
+        })
         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
-
 }
 
 
 
 const deleteAllProducts = async (req, res) => {
-    const reqId = req.params.id
-    await Product.findByIdAndRemove(reqId)
-        .then((docs) => { res.status(200).send(`Deleted in products list at product Id:${reqId}`) })
+    const userId = req.session.passport.user.id
+    await Product.deleteMany({ postedBy: userId })
+        .then( (docs) => {
+           res.send('All your posted products have been successfully removed from your account')
+        })
         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
 
 }
 
 
 
-module.exports = { totalProducts, getProductSpecificField, addProduct, deleteProduct, updateProduct, patchProduct, getProducts,searchItems }
+module.exports = { totalProducts, getProductSpecificField, getProducts, searchItems }
