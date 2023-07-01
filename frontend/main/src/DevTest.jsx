@@ -7,15 +7,15 @@ export default function DevTest() {
     const [password, setpassword] = useState('')
 
     const handleSubmit = async () => {
-        await axios.post('http://localhost:8080/authapi/local/login',{
-            withCredentials: true,
+        await axios.post('https://retro-bazaar-production.up.railway.app/authapi/local/login',{
+
             email: email,
             password: password
         }).then( (res) => {
-                axios.get('http://localhost:8080/api/getUserInfo',{withCredentials: true}).then((res) => console.log(res))
-                console.log(res)
-            })
-        console.log(sessionStorage)
+            console.log(res)
+        axios.get('https://retro-bazaar-production.up.railway.app/api/getUserInfo').then((res) => console.log(res))
+        })
+        // console.log(sessionStorage)
 
     }
     const handleChangeEmail = (e) => {
