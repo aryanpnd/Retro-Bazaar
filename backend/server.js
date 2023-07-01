@@ -21,7 +21,7 @@ const app = express();
 app.use(cors({
     origin: "http://localhost:3000", // allow to server to accept request from different origin
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    // credentials: true, // allow session cookie from browser to pass through
+    credentials: true, // allow session cookie from browser to pass through
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -50,8 +50,8 @@ app.use(session({
         // maxAge: 60000 // 60000 milliseconds or 60 sec
         maxAge: 1000 * 60 * 60 * 24, // one day
 
-        sameSite: 'none', //required when deploying
-        secure:  true //required when deploying
+        // sameSite: 'none', //required when deploying
+        // secure:  true //required when deploying
     },
     store: new MongoStore({
         mongoUrl: mongoose.connection.client.s.url,
@@ -61,7 +61,7 @@ app.use(session({
 
 
 // intializing passport middlewares
-app.enable('trust proxy') // required when deploying
+// app.enable('trust proxy') // required when deploying
 app.use(passport.authenticate('session'));
 app.use(passport.session());
 app.use(passport.initialize());

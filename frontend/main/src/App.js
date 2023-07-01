@@ -8,9 +8,9 @@ export const apiURL = "http://localhost:8080"
 function App() {
   return (
     <>
-      {/* <Navbar />
-      <Home /> */}
-      <DevTest/>
+      <Navbar />
+      <Home />
+      {/* <DevTest/> */}
     </>
   );
 }

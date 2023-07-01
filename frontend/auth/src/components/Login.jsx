@@ -70,7 +70,7 @@ export default function Login() {
                 variant: 'solid',
                 containerStyle: { fontSize: '14px', },
             })
-            setTimeout(() => { window.location.href = 'http://localhost:8080/'} , 2000)
+            setTimeout(() => { window.location.href = '/'} , 2000)
         }).catch((err) => {
             console.log(err)
             toast({
