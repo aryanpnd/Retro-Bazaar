@@ -61,7 +61,7 @@ app.use(session({
 
 
 // intializing passport middlewares
-// app.enable('trust proxy') // required when deploying
+app.enable('trust proxy') // required when deploying
 app.use(passport.authenticate('session'));
 app.use(passport.session());
 app.use(passport.initialize());
