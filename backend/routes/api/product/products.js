@@ -8,9 +8,6 @@ productRoutes.get("/totalproducts", totalProducts)
     .get("/products", getProducts)
     .get("/products/search", searchItems)
 
-    // .get("/products/:id", getProductsById)
-    // .put("/replaceProducts/:id", updateProduct)
-    // .patch("/updateProducts/:id", patchProduct)
 
 
 module.exports = { productRoutes }
