@@ -1,0 +1,1 @@
+1. For CORS issue, set {withCredentials: true} with axios to be able to set the session 
