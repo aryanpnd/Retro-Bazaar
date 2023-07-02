@@ -1,16 +1,18 @@
-import './App.css';
-import DevTest from './DevTest';
-import Navbar from './components/Navbar';
-import Home from './pages/Home';
+import "./App.css";
+import DevTest from "./DevTest";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Wishlist from "./components/wishlist/Wishlist";
 
-export const apiURL = "http://localhost:8080"
+export const apiURL = "http://localhost:8080";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Home />
-      {/* <DevTest/> */}
+      {/* <Navbar /> */}
+      <Wishlist />
+      {/* <Home /> */}
+      {/* <DevTest /> */}
     </>
   );
 }
