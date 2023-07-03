@@ -46,7 +46,7 @@ function Item({ id, name, description, price, category, date, image, userImage, 
                     <div className='item-img-wishlist' onClick={toggleWishlist}>
                         {wishlist ?
                             <HeartFilled style={{ color: '#bf0b0b', fontSize: "1.8rem" }} /> :
-                            <HeartOutlined style={{ color: 'white', fontSize: "1.8rem" }} />
+                            <HeartOutlined style={{ color: 'red', fontSize: "1.8rem" }} />
                         }
                     </div>
 
