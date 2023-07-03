@@ -1,7 +1,7 @@
 /* mobile view */
 
 .top-nav-container-mob {
-    background: #1c1c1c;
+    background: hsl(250, 24%, 9%);
     position: fixed;
     width: 100%;
     top: 0%;
@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #1c1c1c;
+    background-color: hsl(250, 24%, 9%);
     color: white;
 }
 
@@ -97,7 +97,7 @@
 
 .navbar-container-pc {
     height: 10%;
-    background-color: #1c1c1c;
+    background-color: hsl(250, 24%, 9%);
     color: rgb(232, 232, 232);
     display: flex;
     width: 100%;
