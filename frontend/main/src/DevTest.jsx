@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useState } from 'react'
+import { apiURL } from './App'
 
 export default function DevTest() {
 
@@ -8,14 +9,12 @@ export default function DevTest() {
 
     const handleSubmit = async () => {
         await axios.post('http://localhost:8080/authapi/local/login',{
-            withCredentials: true,
             email: email,
             password: password
-        }).then( (res) => {
+        },{ withCredentials: true}).then( (res) => {
                 axios.get('http://localhost:8080/api/getUserInfo',{withCredentials: true}).then((res) => console.log(res))
                 console.log(res)
             })
-        console.log(sessionStorage)
 
     }
     const handleChangeEmail = (e) => {
