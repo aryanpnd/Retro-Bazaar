@@ -185,7 +185,7 @@ export default function Login() {
                     <Flex flexDir={'column'} justifyContent={'space-evenly'} gap={'1rem'} h={'85%'}>
 
                         <Button color={'whiteAlpha.800'} className='btn' borderRadius={'14px'} h={'40%'} variant='ghost' bg={'black'} fontSize={'1.3rem'} fontWeight={'semibold'} _hover={{ background: 'whitesmoke', color: 'black' }} _active={{ transform: ' scale(0.8)' }}
-                            onClick={() => window.location.href = 'http://localhost:8080/authapi/google'}
+                            onClick={() => window.location.href = '/authapi/google'}
                             rightIcon={
                                 <img draggable={false} style={{ width: '2rem' }} src={googleLogo} alt="" />
                             }>

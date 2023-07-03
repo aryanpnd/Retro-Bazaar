@@ -33,7 +33,7 @@ const addToWishlist = (req, res, next) => {
     Wishlist.findOne({ uid: req.session.passport.user.id })
         .then(wishlist => {
             const isProductInWishlist = wishlist.products.some(product => product.equals(productId));
-
+            
             if (!isProductInWishlist) {
                 wishlist.products.push(productId);
                 wishlist.save()
@@ -48,7 +48,7 @@ const addToWishlist = (req, res, next) => {
             }
         })
         .catch(error => {
-            res.send(error);
+            res.send("error");
         });
 }
 
@@ -58,7 +58,7 @@ const addToWishlist = (req, res, next) => {
 const deleteOneFromWishlist = (req, res, next) => {
     Wishlist.findOne({ uid: req.session.passport.user.id })
         .then(async wishlist => {
-            const itemIndex = wishlist.products.indexOf(req.body.productId)
+            const itemIndex = wishlist.products.indexOf(req.query.productId)
             if (itemIndex !== -1) {
                 wishlist.products.splice(itemIndex, 1)
                 wishlist.save()

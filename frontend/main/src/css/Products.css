@@ -1,53 +1,89 @@
-.products-container{
-    margin: auto;
-    width: 83%;
-    margin-left: 17%;
-    height: 100%;
-    color: white;
-    padding-top: 5rem ;
+.products-container {
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  color: white;
+  padding-top: 4.2rem;
 }
 
-.products-card-wrapper{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    /* margin: 50px; */
+.products-card-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* margin: 50px; */
 }
 
-.products-categories Button{
-    display: block;
-    color: white;
+.slider {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
 }
 
-.products-categories {
-    overflow-x: hidden;
-  }
+.category-button {
+  display: block;
+  color: white;
+  background: transparent;
+  border: 1px solid #808080ba;
+  width: inherit;
+  padding: 1%;
+  border-radius: 11px;
+  cursor: pointer;
+}
+
+.category-button:hover {
+  background: #ffffff2e;
+  border: none;
+  transition: ease 0.2s;
+}
+
+.category-button:active {
+  transform: scale(0.9);
+}
+
+.selected-category-button {
+  display: block;
+  color: white;
+  width: inherit;
+  padding: 1%;
+  border-radius: 11px;
+  background: linear-gradient(to left, rgb(121, 40, 202), rgb(255, 0, 128));
+  border: none;
+}
 
 .slider-container {
-    display: flex;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-  }
-  
-.slider {
-    display: flex;
-    gap: 10px;
-    padding: 10px;
-  }
+  display: flex;
+  overflow-x: scroll;
+  scroll-behavior: smooth;
+}
 
 .slider-container::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-    background: transparent;
+  height: 3px;
+  opacity: 0px;
+  background-color: transparent;
+
+}
+
+.slider-container:hover::-webkit-scrollbar {
+  height: 3px;
+  opacity: 5;
+  background-color: #8f54a0;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
+
+.slider-container:hover::-webkit-scrollbar-thumb {
+  width: 16px;
+  background-color: #8f54a0;
+  border-radius: 10px;
+  border: 3px solid #ffffff;
+}
+
+
+@media(max-width:1000px) {
+  .products-container {
+    margin-left: auto;
   }
-
-
-
-
-  @media(max-width:1000px){
-    .products-container{
-        margin-left:auto;
-    }
 }

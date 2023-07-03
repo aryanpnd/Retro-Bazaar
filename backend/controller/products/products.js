@@ -33,13 +33,26 @@ const getProductSpecificField = async (req, res) => {
 
 // get all the products
 const getProducts = async (req, res) => {
-    let query = Product.find()
-
     // get products sorted
     if (req.query.pagesize && req.query.sortby) {
         const pageSize = req.query.pagesize // no of data in one page 
         const pageNo = req.query.pageno // which no of page needed 
-        const product = query
+        const product = Product.find()
+            .sort({ [req.query.sortby]: req.query.order })
+            .skip(pageSize * (pageNo - 1))
+            .limit(pageSize)
+            .populate("postedBy", { password: 0, _id: 0 })
+            .exec()
+        await product
+            .then((docs) => { res.status(200).json(docs) })
+            .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+    }
+
+    // get products by category
+    else if(req.query.category){
+        const pageSize = req.query.pagesize // no of data in one page 
+        const pageNo = req.query.pageno // which no of page needed 
+        const product = Product.find({category:req.query.category})
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -54,7 +67,7 @@ const getProducts = async (req, res) => {
     else {
         const pageSize = req.query.pagesize
         const pageNo = req.query.pageno
-        const product = query
+        const product = Product.find()
             .sort({ date: -1 })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
