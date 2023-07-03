@@ -38,13 +38,13 @@ const addToWishlist = (req, res, next) => {
                 wishlist.products.push(productId);
                 wishlist.save()
                     .then(() => {
-                        res.send('Item added to the wishlist');
+                        res.send('added to the wishlist');
                     })
                     .catch(error => {
                         res.send(error);
                     });
             } else {
-                res.send('Item is already present in the wishlist');
+                res.send('already present in the wishlist');
             }
         })
         .catch(error => {
@@ -62,7 +62,7 @@ const deleteOneFromWishlist = (req, res, next) => {
             if (itemIndex !== -1) {
                 wishlist.products.splice(itemIndex, 1)
                 wishlist.save()
-                res.send('Item deleted from the wishlist successfully')
+                res.send('deleted from the wishlist')
             }
             else {
                 res.send('item not in the wishlist')
