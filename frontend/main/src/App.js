@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Wishlist from "./components/wishlist/Wishlist";
 import { ToastContainer } from "react-toastify";
 
-export const apiURL = "http://localhost:8080";
+export const apiURL = "";
 // export const apiURL = "";
 
 function App() {

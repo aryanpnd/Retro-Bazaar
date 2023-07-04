@@ -66,6 +66,7 @@ function Navbar() {
         axios.get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
             .then((response) => {
                 setUserData(response.data.data.photoURL)
+                console.log(response.data.data.photoURL)
                 setUserName(response.data.data.name)
             })
             .catch((error) => {
@@ -74,6 +75,7 @@ function Navbar() {
     }
     useEffect(() => {
         appLoads()
+        
     }, [])
 
 
