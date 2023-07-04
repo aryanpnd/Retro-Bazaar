@@ -1,0 +1,81 @@
+styles.css .modal-open {
+    background-color: rgba(150, 147, 147, 0.7);
+}
+
+
+
+.modal {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background: #13111ccf;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content {
+    background-color: #221f31;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.model-heading {
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+button.closeModal {
+    height: 3rem;
+    border: none;
+    background: #1a1729;
+    border-radius: 10px;
+}
+
+.model-body {
+    padding: 0.8rem 0.8rem 1.8rem 0.8rem;
+}
+
+.model-body-button {
+    background: transparent;
+    border: 1px solid white;
+    border-radius: 15px;
+    margin-right: 0.8rem;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    color: #bdbdbd;
+}
+.model-body-button-active {
+    background: #eeedef;
+    border: 1px solid white;
+    border-radius: 15px;
+    margin-right: 0.8rem;
+    font-size: 0.9rem;
+    padding: 0.5rem;
+    color: #000;
+}
+
+.model-botttom {
+    height: 20%;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.model-botttom button {
+    width: 90%;
+    height: 2.8rem;
+    border: none;
+    font-size: 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #8b2be2;
+    color: white;
+}

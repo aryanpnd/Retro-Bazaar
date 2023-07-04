@@ -55,7 +55,8 @@ app.use(session({
     },
     store: new MongoStore({
         mongoUrl: mongoose.connection.client.s.url,
-        ttl: 60 * 60 * 24 // time to live (in seconds)
+        // ttl: 10// time to live (in seconds)
+        // ttl: 60 * 60 * 24 // time to live (in seconds)
     }) // store session on mongodb even if the servers stops , the session will be store there but they get duplicated after every refresh or a request
 }))
 

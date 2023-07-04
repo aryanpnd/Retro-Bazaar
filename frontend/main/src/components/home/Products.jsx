@@ -7,8 +7,9 @@ import { apiURL } from '../../App'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Categories from './categories'
-import { DeleteFilled } from '@ant-design/icons'
+import { DeleteFilled,FilterOutlined } from '@ant-design/icons'
 import ProductsCardSkeleton from '../miscellaneous/productsCardSkeleton/productsCardSkeleton'
+import FilterButtonModal from '../miscellaneous/filterButtonModal/filterButtonModal'
 
 function Products() {
 
@@ -68,10 +69,24 @@ function Products() {
         <>
 
             <div className="products-container">
-                <div className="products-list">
 
+                <div className='product-list-head'>
                     <Categories setFetching={setFetching} wishlistData={wishlistData} setWishlistData={setWishlistData}
                         setProductData={setProductData} availableCategories={availableCategories} />
+
+                    <div className='filter-container'>
+                        <FilterButtonModal setProductData={setProductData}>
+                            {(openModal) => (
+                                <button className='filter-button' onClick={openModal}>
+                                    <FilterOutlined /> Filter
+                                </button>
+                            )}
+                        </FilterButtonModal>
+                    </div>
+
+                </div>
+
+                <div className="products-list">
 
                     <div className="products-card-wrapper">
                         {fetching ?
