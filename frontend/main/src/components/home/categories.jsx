@@ -1,10 +1,13 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { apiURL } from '../../App';
+import { productsContext } from '../../contexts/productsContext';
 
 export default function Categories({ availableCategories, setProductData, wishlistData, setWishlistData,setFetching }) {
     const [scrollLeft, setScrollLeft] = useState(0);
     const [selected, setselected] = useState('')
+
+    const {category, setCategory} = useContext(productsContext)
 
     const handleWheelScroll = (event) => {
         const { deltaX } = event;
@@ -16,6 +19,7 @@ export default function Categories({ availableCategories, setProductData, wishli
         // await axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
         //     setWishlistData(data.data.products)
         // })
+        setCategory(category)
         await axios.get(`${apiURL}/api/products?category=${category}`, { withCredentials: true }).then((data) => {
             setProductData(data.data)
             category === '' ? setselected('') : setselected(data.data[0].category)

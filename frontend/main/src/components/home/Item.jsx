@@ -58,18 +58,14 @@ function Item({ id, name, description, price, category, date, image, userImage, 
                                 loading={true}
                                 size={20}
                                 speedMultiplier={5}
-                                aria-label="Loading Spinner"
-                                data-testid="loader"
                             /> :
                             <HeartFilled style={{ color: '#bf0b0b', fontSize: "1.8rem" }} /> :
                             spinnerLoading ?
                             <ClockLoader
-                                color={'grey'}
+                                color={'#21b94f'}
                                 loading={true}
                                 size={20}
                                 speedMultiplier={5}
-                                aria-label="Loading Spinner"
-                                data-testid="loader"
                             /> :
                             <HeartFilled style={{ color: 'grey', fontSize: "1.8rem" }} />
                         }
