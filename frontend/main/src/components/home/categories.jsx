@@ -11,12 +11,12 @@ export default function Categories({ availableCategories, setProductData, wishli
         setScrollLeft((prevScrollLeft) => prevScrollLeft + deltaX);
     };
 
-    const toggleCategory = (category) => {
+    const toggleCategory = async (category) => {
         setFetching(false)
-        axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
-            setWishlistData(data.data.products)
-        })
-        axios.get(`${apiURL}/api/products?category=${category}`, { withCredentials: true }).then((data) => {
+        // await axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
+        //     setWishlistData(data.data.products)
+        // })
+        await axios.get(`${apiURL}/api/products?category=${category}`, { withCredentials: true }).then((data) => {
             setProductData(data.data)
             category === '' ? setselected('') : setselected(data.data[0].category)
             setFetching(true)
