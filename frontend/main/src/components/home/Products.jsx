@@ -40,7 +40,7 @@ function Products() {
 
     const sendToast = (name, type) => {
         type ?
-            toast.success(`${name} added to the wishlist`, {
+            toast.success(`${name}`, {
                 position: "top-right",
                 autoClose: 2500,
                 hideProgressBar: false,
