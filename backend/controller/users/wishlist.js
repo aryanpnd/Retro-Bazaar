@@ -65,7 +65,7 @@ const deleteOneFromWishlist = (req, res, next) => {
                 res.send('deleted from the wishlist')
             }
             else {
-                res.send('item not in the wishlist')
+                res.send('is not in the wishlist')
             }
         })
         .catch(error => {

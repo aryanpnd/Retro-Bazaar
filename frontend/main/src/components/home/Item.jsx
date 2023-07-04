@@ -23,14 +23,17 @@ function Item({ id, name, description, price, category, date, image, userImage, 
     async function toggleWishlist() {
 
         if (!wishlist) {
-            axios.post(`${apiURL}/api/addToWishlist`, { "productId": id }, { withCredentials: true }).then((res)=>console.log(res))
-            setWishlist(true)
-            sendToast(name,image)
+            await axios.post(`${apiURL}/api/addToWishlist`, { "productId": id }, { withCredentials: true }).then((res)=>{
+                setWishlist(true)
+                sendToast(`${name} ${res.data}`,true)
+            })
         }
         else {
             console.log(`${apiURL}/api/deleteOneFromWishlist`)
-            axios.delete(`${apiURL}/api/deleteOneFromWishlist?productId=${id}`, { withCredentials: true }, )
-            setWishlist(false)
+            await axios.delete(`${apiURL}/api/deleteOneFromWishlist?productId=${id}`, { withCredentials: true }, ).then((res)=>{
+                setWishlist(false)
+                sendToast(`${name} ${res.data}`,false)
+            })
         }
     }
     
@@ -46,7 +49,7 @@ function Item({ id, name, description, price, category, date, image, userImage, 
                     <div className='item-img-wishlist' onClick={toggleWishlist}>
                         {wishlist ?
                             <HeartFilled style={{ color: '#bf0b0b', fontSize: "1.8rem" }} /> :
-                            <HeartOutlined style={{ color: 'red', fontSize: "1.8rem" }} />
+                            <HeartFilled style={{ color: 'grey', fontSize: "1.8rem" }} />
                         }
                     </div>
 

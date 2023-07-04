@@ -7,6 +7,8 @@ import { apiURL } from '../../App'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Categories from './categories'
+import { DeleteFilled } from '@ant-design/icons'
+import ProductsCardSkeleton from '../miscellaneous/productsCardSkeleton/productsCardSkeleton'
 
 function Products() {
 
@@ -17,9 +19,9 @@ function Products() {
     const [fetching, setFetching] = useState(false)
 
     const fetchData = async () => {
-        axios.get(`${apiURL}/api/totalproducts`, { withCredentials: true }).then((data) => {
-            settotalProducts(data.data)
-        })
+        // axios.get(`${apiURL}/api/totalproducts`, { withCredentials: true }).then((data) => {
+        //     settotalProducts(data.data)
+        // })
         await axios.get(`${apiURL}/api/products`, { withCredentials: true }).then((data) => {
             setProductData(data.data)
         })
@@ -36,31 +38,44 @@ function Products() {
         fetchData()
     }, [])
 
-    const sendToast = (name,thumbnail)=>{
-        toast.success( `${name} added to wishlist`, {
-            icon: <img style={{width:'2.2rem',height:'2.2rem',borderRadius:"5px",position:'absolute',left:'-0.6rem',bottom:'-1rem'}} src={thumbnail} alt="" />,
-            position: "top-right",
-            autoClose: 2500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme:"dark",
-            });
+    const sendToast = (name, type) => {
+        type ?
+            toast.success(`${name} added to the wishlist`, {
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
+            :
+            toast.error(`${name}`, {
+                icon: <DeleteFilled style={{ color: "#c91d23" }} />,
+                position: "top-right",
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+            })
     }
 
     return (
         <>
-        <ToastContainer />
+
             <div className="products-container">
                 <div className="products-list">
 
-                    <Categories setProductData={setProductData} availableCategories={availableCategories} />
+                    <Categories setFetching={setFetching} wishlistData={wishlistData} setWishlistData={setWishlistData}
+                        setProductData={setProductData} availableCategories={availableCategories} />
 
                     <div className="products-card-wrapper">
-                        {fetching &&
-                            productData.map(p => <>
+                        {fetching ?
+                            productData.map(p =>
                                 <Item
                                     key={p._id}
                                     id={p._id}
@@ -75,7 +90,9 @@ function Products() {
                                     wishlistData={wishlistData}
                                     sendToast={sendToast}
                                 />
-                            </>)
+                            )
+                            :
+                            <ProductsCardSkeleton count={9} />
                         }
                     </div>
                 </div>

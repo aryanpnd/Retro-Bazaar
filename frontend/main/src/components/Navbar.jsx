@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import '../css/Navbar.css'
 import '../css/sellButton.css'
-import { FieldTimeOutlined, HeartOutlined, HomeOutlined, HomeTwoTone, MessageOutlined, SearchOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, FieldTimeOutlined, HeartOutlined, HomeFilled, HomeOutlined, HomeTwoTone, MessageOutlined, SearchOutlined } from '@ant-design/icons';
 import { apiURL } from '../App';
 import axios from 'axios';
 
@@ -11,6 +11,35 @@ function Navbar() {
     const [search, setSearch] = useState(false);
     const [userData, setUserData] = useState(undefined)
     const [userName, setUserName] = useState(undefined)
+
+
+    const [show, setShow] = useState(true);
+    const [lastScrollY, setLastScrollY] = useState(0);
+  
+    const controlNavbar = () => {
+      if (typeof window !== 'undefined') { 
+        if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
+          setShow(false); 
+        } else { // if scroll up show the navbar
+          setShow(true);  
+        }
+  
+        // remember current page location to use in the next move
+        setLastScrollY(window.scrollY); 
+      }
+    };
+  
+    useEffect(() => {
+      if (typeof window !== 'undefined') {
+        window.addEventListener('scroll', controlNavbar);
+  
+        // cleanup function
+        return () => {
+          window.removeEventListener('scroll', controlNavbar);
+        };
+      }
+    }, [lastScrollY]);
+  
 
 
     function handleHome() {
@@ -68,7 +97,7 @@ function Navbar() {
                     </>
                 }
             </div>
-            <div className="bottom-nav-container-mob">
+            <div className={show  ? 'bottom-nav-container-mob' : 'bottom-nav-container-mob-none'}>
                 <ul>
                     <li className={`bottom-nav-list ${active === "home" ? "active" : ""} `} onClick={handleHome}>
                         <div className='linkdiv'>
@@ -116,7 +145,7 @@ function Navbar() {
 
                 <div className="navbar-container-pc-center">
                     <div className='pc-center-navbar-element-selected'>
-                        {<HomeTwoTone style={{ color: 'black', fontSize: '1.4rem' }} />}
+                        {<HomeFilled style={{ color: 'white', fontSize: '1.4rem' }} />}
                         <div className='pc-navbar-icon-text'>home</div>
                     </div>
                     <div className='pc-center-navbar-element'>
@@ -130,9 +159,10 @@ function Navbar() {
                 </div>
                 <div className="navbar-container-pc-right">
                     <button className='sellBtn'>Sell Now</button>
-                    <img style={{ height: "3rem", width: "3rem",borderRadius:"25px",border:"2px solid" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
+                    <img style={{ height: "3rem", width: "3rem", borderRadius: "25px", border: "2px solid" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                 </div>
             </div >
+
         </>
     )
 }
