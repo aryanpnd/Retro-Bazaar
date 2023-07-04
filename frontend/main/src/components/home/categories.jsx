@@ -15,11 +15,11 @@ export default function Categories({ availableCategories, setProductData, wishli
         setFetching(false)
         axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
             setWishlistData(data.data.products)
-            axios.get(`${apiURL}/api/products?category=${category}`, { withCredentials: true }).then((data) => {
-                setProductData(data.data)
-                category === '' ? setselected('') : setselected(data.data[0].category)
-                setFetching(true)
-            })
+        })
+        axios.get(`${apiURL}/api/products?category=${category}`, { withCredentials: true }).then((data) => {
+            setProductData(data.data)
+            category === '' ? setselected('') : setselected(data.data[0].category)
+            setFetching(true)
         })
 
     }
