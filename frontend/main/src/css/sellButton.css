@@ -65,3 +65,29 @@
     --border-width: 5px;
     transform: scale(0.8);
    }
+
+   @media(max-width:1000px) {
+    .sellBtn, .sellBtn::after {
+        box-sizing: border-box;
+        transform: scale(0.8);
+    }
+    .sellBtn {
+        --border-radius: 15px;
+        --border-width: 4px;
+        appearance: none;
+        position: relative;
+        padding: 1em 2em;
+        border: 0;
+        background-color: transparent;
+        font-size: 18px;
+        font-weight: 500;
+        color: #fff;
+        z-index: 2;
+        transform: scale(0.8);
+        cursor: pointer;
+    }
+    .sellBtn:active {
+        --border-width: 5px;
+        transform: scale(0.7);
+       }
+  }

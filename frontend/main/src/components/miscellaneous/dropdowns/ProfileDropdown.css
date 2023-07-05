@@ -1,6 +1,7 @@
 .dropdown {
   position: relative;
   display: inline-block;
+  z-index: 100;
 }
 
 .dropdown-toggle {
@@ -10,13 +11,14 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .dropdown-menu {
   position: absolute;
   right: 15px;
   width: 10rem;
-  background-color: hsl(256.85deg 42.88% 9.47%);
+  background-color: hsl(256.85deg 37.38% 14.44%);
   border-radius: 8px;
   padding: 8px;
   box-shadow: 0px 0px 9px 0px black;

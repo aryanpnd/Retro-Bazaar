@@ -4,11 +4,12 @@ export const productsContext = createContext();
 
 export const ProductsContextProvider = ({ children }) => {
   
+  const [productData, setProductData] = useState([])
   const [category, setCategory] = useState('')
 
   return (
     <productsContext.Provider
-      value={{category, setCategory}}>
+      value={{productData, setProductData,category, setCategory}}>
 
       {children}
     </productsContext.Provider>

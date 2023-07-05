@@ -1,25 +1,21 @@
 import React, { useContext, useState } from 'react';
 import './filterButtonModal.css';
-import { CloseOutlined,LoadingOutlined  } from '@ant-design/icons'
+import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 import axios from 'axios';
 import { apiURL } from '../../../App';
 import { productsContext } from '../../../contexts/productsContext';
 
-const FilterButtonModal = ({ children, setProductData }) => {
+const FilterButtonModal = ({ setProductData, modal, setModal }) => {
 
-    const { category, setCategory } = useContext(productsContext)
+    const { category } = useContext(productsContext)
 
-    const [modalOpen, setModalOpen] = useState(false);
     const [sortby, setSortby] = useState('date')
     const [orderby, setOrderby] = useState(1)
     const [loading, setloading] = useState(false)
 
-    const openModal = () => {
-        setModalOpen(true);
-    };
 
     const closeModal = () => {
-        setModalOpen(false);
+        setModal(false)
     };
 
     const fetch = async () => {
@@ -35,11 +31,11 @@ const FilterButtonModal = ({ children, setProductData }) => {
 
 
     return (
-        <div className={`filter-container app ${modalOpen ? 'modal-open' : ''}`}>
-            {children(openModal)}
+        <>
+            {/* {children(openModal)} */}
 
-            {modalOpen && (
-                <div className="modal">
+            {modal && (
+                <div className= {` app ${modal ? 'modal-open' : ''} modal`}>
                     <div className="modal-content">
 
                         <div className='model-heading'>
@@ -68,7 +64,7 @@ const FilterButtonModal = ({ children, setProductData }) => {
                     </div>
                 </div>
             )}
-        </div>
+        </>
     );
 };
 

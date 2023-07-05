@@ -19,10 +19,18 @@ const check = async (req, res, next) => {
 // getting the user wishlist
 const getWishlist = (req, res, next) => {
 
-    Wishlist.findOne({ uid: req.session.passport.user.id }).populate('products').exec().then(wishlist => {
-        if (!wishlist) res.send('wishlist not found')
-        else { res.send(wishlist) }
-    })
+    Wishlist.findOne({ uid: req.session.passport.user.id })
+        .populate({
+            path: 'products',
+            populate: {
+                path: 'postedBy',
+                model: 'User',
+                select: '-password -_id -accountId -provider'
+            },
+        }).exec().then(wishlist => {
+            if (!wishlist) res.send('wishlist not found')
+            else { res.send(wishlist) }
+        })
 }
 
 // add to cart
@@ -33,7 +41,7 @@ const addToWishlist = (req, res, next) => {
     Wishlist.findOne({ uid: req.session.passport.user.id })
         .then(wishlist => {
             const isProductInWishlist = wishlist.products.some(product => product.equals(productId));
-            
+
             if (!isProductInWishlist) {
                 wishlist.products.push(productId);
                 wishlist.save()
