@@ -1,14 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../Navbar";
-import Card from "../../components/wishlist/Card";
+import Card from "./Card";
 import "../../css/wishlist.css";
+import { apiURL } from "../../App";
 import {
   DownOutlined,
   FilterOutlined,
   ShoppingCartOutlined,
 } from "@ant-design/icons";
+import axios from "axios";
+
+// mraligator@aligator.com
+// XTjB7vu@MPfZM
 
 export default function Wishlist() {
+  const [wishlistDataFetched, setWishlistDataFetched] = useState(false);
+  const [wishlistArray, setWishlistArray] = useState([]);
+
+  useEffect(() => {
+    fetchWishlist();
+  }, []);
+
+  const fetchWishlist = async () => {
+    const res = await axios.get(`${apiURL}/api/getWishlist`, {
+      withCredentials: true,
+    });
+    setWishlistArray(res.data.products);
+    setWishlistDataFetched(true);
+  };
+
+  const makeCards = () => {
+    if (wishlistDataFetched) {
+      return wishlistArray.map((item) => {
+        return (
+          <Card
+            key={item._id}
+            thumbnail={item.thumbnail}
+            title={item.title}
+            description={item.description}
+            price={item.price}
+            category={item.category}
+            date={item.date.split("T")[0]}
+          />
+        );
+      });
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -28,16 +66,7 @@ export default function Wishlist() {
         </div>
       </div>
       <div className="wishlist-cards-wrapper">
-        <div className="wishlist-cards-container">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        <div className="wishlist-cards-container">{makeCards()}</div>
       </div>
     </>
   );
