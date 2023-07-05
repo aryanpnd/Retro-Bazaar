@@ -12,7 +12,7 @@ function Item({ id, name, description, price, category, date, image, userImage, 
     const [spinnerLoading, setSpinnerLoading] = useState(false)
 
     useEffect(() => {
-        const isExists = wishlistData.find(item => item._id === id)
+        const isExists = wishlistData?.find(item => item._id === id)
         if (isExists) {
             setWishlist(true)
         }
@@ -68,9 +68,6 @@ function Item({ id, name, description, price, category, date, image, userImage, 
                                 speedMultiplier={5}
                             /> :
                             <HeartFilled style={{ color: 'grey', fontSize: "1.8rem" }} />
-                        }
-                        {
-
                         }
                     </div>
 

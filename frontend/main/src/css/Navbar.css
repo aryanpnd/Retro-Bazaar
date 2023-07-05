@@ -32,10 +32,10 @@
     left: 3%;
     border-radius: 15px;
     width: 95%;
-    height: 7%;
+    height: 9%;
     display: flex;
-    align-items: center;
     background-color: #1b1925;
+    align-items: center;
     color: white;
 }
 .bottom-nav-container-mob-none {
@@ -52,6 +52,7 @@ display: none;
 
 .bottom-nav-container-mob ul li {
     position: relative;
+    display: flex;
     list-style: none;
     width: 20%;
 }
@@ -90,6 +91,10 @@ display: none;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     transform: translateY(0px);
+}
+
+.filterBtn-mob-none{
+    display: none;
 }
 
 .bottom-nav-container-mob ul li.active .text {

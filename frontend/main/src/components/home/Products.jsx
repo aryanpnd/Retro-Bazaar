@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "../../css/Products.css"
 import data from '../../assets/data/FakeData.json'
 import Item from './Item'
@@ -7,13 +7,16 @@ import { apiURL } from '../../App'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Categories from './categories'
-import { DeleteFilled,FilterOutlined } from '@ant-design/icons'
+import { DeleteFilled, FilterOutlined } from '@ant-design/icons'
 import ProductsCardSkeleton from '../miscellaneous/productsCardSkeleton/productsCardSkeleton'
 import FilterButtonModal from '../miscellaneous/filterButtonModal/filterButtonModal'
+import { productsContext } from '../../contexts/productsContext'
 
 function Products() {
 
-    const [productData, setProductData] = useState([])
+    const { productData, setProductData } = useContext(productsContext)
+
+    const [modal, setModal] = useState(false)
     const [availableCategories, setavailableCategories] = useState([])
     const [totalProducts, settotalProducts] = useState(0)
     const [wishlistData, setWishlistData] = useState()
@@ -65,6 +68,8 @@ function Products() {
             })
     }
 
+
+
     return (
         <>
 
@@ -72,16 +77,13 @@ function Products() {
 
                 <div className='product-list-head'>
                     <Categories setFetching={setFetching} wishlistData={wishlistData} setWishlistData={setWishlistData}
-                        setProductData={setProductData} availableCategories={availableCategories} />
+                        availableCategories={availableCategories} />
 
                     <div className='filter-container'>
-                        <FilterButtonModal setProductData={setProductData}>
-                            {(openModal) => (
-                                <button className='filter-button' onClick={openModal}>
-                                    <FilterOutlined /> Filter
-                                </button>
-                            )}
-                        </FilterButtonModal>
+                        <button className='filter-button' onClick={()=>setModal(!modal)}>
+                            <FilterOutlined /> Filter
+                        </button>
+                        <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
                     </div>
 
                 </div>

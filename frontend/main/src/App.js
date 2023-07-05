@@ -1,22 +1,24 @@
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import DevTest from "./DevTest";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Wishlist from "./components/wishlist/Wishlist";
+import Wishlist from "./pages/Wishlist";
 import { ToastContainer } from "react-toastify";
 
-export const apiURL = "http://localhost:8080";
-// export const apiURL = "";
+// export const apiURL = "http://localhost:8080";
+export const apiURL = "";
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
       <ToastContainer />
       <Navbar />
-      {/* <Wishlist /> */}
-      <Home />
-      {/* <DevTest /> */}
-    </>
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="/wishlist" element={<Wishlist />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

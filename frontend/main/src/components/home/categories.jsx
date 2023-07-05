@@ -3,11 +3,11 @@ import React, { useContext, useState } from 'react'
 import { apiURL } from '../../App';
 import { productsContext } from '../../contexts/productsContext';
 
-export default function Categories({ availableCategories, setProductData, wishlistData, setWishlistData,setFetching }) {
+export default function Categories({ availableCategories, wishlistData, setWishlistData,setFetching }) {
     const [scrollLeft, setScrollLeft] = useState(0);
     const [selected, setselected] = useState('')
 
-    const {category, setCategory} = useContext(productsContext)
+    const { setCategory, setProductData} = useContext(productsContext)
 
     const handleWheelScroll = (event) => {
         const { deltaX } = event;

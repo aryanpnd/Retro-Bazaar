@@ -1,18 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../css/Navbar.css'
 import '../css/sellButton.css'
-import { ArrowDownOutlined, ArrowUpOutlined, FieldTimeOutlined, HeartOutlined, HomeFilled, HomeOutlined, HomeTwoTone, MessageOutlined, SearchOutlined } from '@ant-design/icons';
+import { FilterOutlined, HeartOutlined, HomeFilled, HomeOutlined, MessageOutlined, SearchOutlined } from '@ant-design/icons';
 import { apiURL } from '../App';
 import axios from 'axios';
 import ProfileDropdown from './miscellaneous/dropdowns/ProfileDropdown';
+import { useMatch, useNavigate } from 'react-router-dom';
+import { productsContext } from '../contexts/productsContext';
+import FilterButtonModal from './miscellaneous/filterButtonModal/filterButtonModal';
 
 function Navbar() {
+    const { productData, setProductData } = useContext(productsContext)
+    const navigate = useNavigate()
 
-    const [active, setActive] = useState("profile");
+    const [active, setActive] = useState();
+    const [modal, setModal] = useState(false)
     const [search, setSearch] = useState(false);
     const [userData, setUserData] = useState(undefined)
     const [userName, setUserName] = useState(undefined)
 
+    const home = useMatch('/');
+    const wishlist = useMatch('/wishlist');
 
     const [show, setShow] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
@@ -42,22 +50,6 @@ function Navbar() {
     }, [lastScrollY]);
 
 
-
-    function handleHome() {
-        setActive("home")
-    }
-    function handleAbout() {
-        setActive("about")
-    }
-    function handleCart() {
-        setActive("cart")
-    }
-    function handleProfile() {
-        setActive("profile")
-    }
-    function handleSoon() {
-        setActive("soon")
-    }
 
     function toggleSearch() {
         setSearch(!search)
@@ -100,26 +92,34 @@ function Navbar() {
                     </>
                 }
             </div>
+
             <div className={show ? 'bottom-nav-container-mob' : 'bottom-nav-container-mob-none'}>
                 <ul>
-                    <li className={`bottom-nav-list ${active === "home" ? "active" : ""} `} onClick={handleHome}>
-                        <div className='linkdiv'>
-                            <span className='bottom-nav-icon'>
-                                <HomeOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }}
-                                />
-                            </span>
-                            <span className='text'>Home</span>
-                        </div>
-                    </li>
-                    <li className={`bottom-nav-list ${active === "soon" ? "active" : ""} `} onClick={handleSoon}>
+                    <li className={`bottom-nav-list ${home ? "active" : ""} `} onClick={() => navigate('/')}>
                         <span className='linkspan'>
                             <span className='bottom-nav-icon'>
-                                <FieldTimeOutlined style={{ fontSize: '1.5rem' }} />
+                                <HomeOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
                             </span>
-                            <span className='text'>Soon</span>
+                            <span className='text'>Home</span>
                         </span>
                     </li>
-                    <li className={`bottom-nav-list ${active === "about" ? "active" : ""} `} onClick={handleAbout}>
+
+                    <li >
+                        <span className='linkspan'>
+                            <span className={wishlist?'filterBtn-mob-none':''}  onClick={() => setModal(!modal)}>
+                                <FilterOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
+                            </span>
+                            <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
+                        </span>
+                    </li>
+
+                    <li >
+                        <span className='linkspan'>
+                            <button className='sellBtn'>Sell Now</button>
+                        </span>
+                    </li>
+
+                    <li className={`bottom-nav-list ${wishlist ? "active" : ""} `} onClick={() => navigate('/wishlist')}>
                         <span className='linkspan'>
                             <span className='bottom-nav-icon'>
                                 <HeartOutlined style={{ fontSize: '1.5rem' }} />
@@ -127,14 +127,11 @@ function Navbar() {
                             <span className='text'>Wishlist</span>
                         </span>
                     </li>
-                    <li className={`bottom-nav-list ${active === "profile" ? "active" : ""} `} onClick={handleProfile}>
+                    <li className={`bottom-nav-list ${active === "profile" ? "active" : ""} `} >
                         <span className='linkspan'>
-                            <span className='bottom-nav-icon'>
                             <ProfileDropdown position={'top'}>
                                 <img style={{ height: "2.2rem", width: "2.2rem", borderRadius: "100%" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                             </ProfileDropdown>
-                            </span>
-                            <span className='text'>Reddy</span>
                         </span>
                     </li>
                 </ul>
@@ -149,17 +146,19 @@ function Navbar() {
                 </div>
 
                 <div className="navbar-container-pc-center">
-                    <div className='pc-center-navbar-element-selected'>
+                    <div className={`pc-center-navbar-element${home ? '-selected' : ''}`} onClick={() => navigate('/')}>
                         {<HomeFilled style={{ color: 'white', fontSize: '1.4rem' }} />}
                         <div className='pc-navbar-icon-text'>home</div>
                     </div>
+
+                    <div className={`pc-center-navbar-element${wishlist ? '-selected' : ''}`} onClick={() => navigate('/wishlist')}>
+                        {<HeartOutlined style={{ color: '#ffffff', fontSize: '1.4rem' }} />}
+                        <div className='pc-navbar-icon-text'>wishlist</div>
+                    </div>
+
                     <div className='pc-center-navbar-element'>
                         {<MessageOutlined style={{ color: '#ffffff', fontSize: '1.4rem' }} />}
                         <div className='pc-navbar-icon-text'>chat</div>
-                    </div>
-                    <div className='pc-center-navbar-element'>
-                        {<HeartOutlined style={{ color: '#ffffff', fontSize: '1.4rem' }} />}
-                        <div className='pc-navbar-icon-text'>wishlist</div>
                     </div>
                 </div>
                 <div className="navbar-container-pc-right">

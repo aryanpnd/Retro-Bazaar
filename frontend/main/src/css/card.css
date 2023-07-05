@@ -15,6 +15,13 @@
     transform: translate(0px, -8px);
 }
 
+.delete-icon{
+    color: grey;
+    font-size: 1.3rem;
+}
+.delete-icon:hover{
+    color: #c90000;
+}
 
 .wishlist-card-item-img-wrapper {
     width: 100%;
@@ -112,7 +119,6 @@
     color: white;
     cursor: pointer;
 }
-
 /* media queries */
 
 @media(max-width:1200px) {
