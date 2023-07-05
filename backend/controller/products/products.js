@@ -33,11 +33,12 @@ const getProductSpecificField = async (req, res) => {
 
 // get all the products
 const getProducts = async (req, res) => {
-    // get products sorted
-    if (req.query.pagesize && req.query.sortby) {
+    
+    // get products by category and sorted both
+    if (req.query.sortby && req.query.category) {
         const pageSize = req.query.pagesize // no of data in one page 
         const pageNo = req.query.pageno // which no of page needed 
-        const product = Product.find()
+        const product = Product.find({category:req.query.category})
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -53,6 +54,20 @@ const getProducts = async (req, res) => {
         const pageSize = req.query.pagesize // no of data in one page 
         const pageNo = req.query.pageno // which no of page needed 
         const product = Product.find({category:req.query.category})
+            // .sort({ [req.query.sortby]: req.query.order })
+            .skip(pageSize * (pageNo - 1))
+            .limit(pageSize)
+            .populate("postedBy", { password: 0, _id: 0 })
+            .exec()
+        await product
+            .then((docs) => { res.status(200).json(docs) })
+            .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
+    }
+    // get products sorted
+    else if (req.query.sortby) {
+        const pageSize = req.query.pagesize // no of data in one page 
+        const pageNo = req.query.pageno // which no of page needed 
+        const product = Product.find()
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -62,6 +77,7 @@ const getProducts = async (req, res) => {
             .then((docs) => { res.status(200).json(docs) })
             .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
     }
+
 
     // get products as default (sorted by date , newer first)
     else {

@@ -11,12 +11,11 @@ export const apiURL = "http://localhost:8080";
 function App() {
   return (
     <>
-            <ToastContainer />
-      <Navbar />
-      {/* <Wishlist /> */}
-      <Home />
+      {/* <ToastContainer /> */}
+      {/* <Navbar /> */}
+      <Wishlist />
+      {/* <Home /> */}
       {/* <DevTest /> */}
-
     </>
   );
 }
