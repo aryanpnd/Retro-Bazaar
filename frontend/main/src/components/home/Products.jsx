@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "../../css/Products.css"
 import data from '../../assets/data/FakeData.json'
-import Item from './Item'
+import Item from '../miscellaneous/productCards/Item'
 import axios from 'axios'
 import { apiURL } from '../../App'
 import { ToastContainer, toast } from 'react-toastify'

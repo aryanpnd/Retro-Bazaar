@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 // import { Heart, HeartOutline } from 'react-ionicons'
-import '../../css/Item.css'
+import './Item.css'
 import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 import axios from 'axios'
-import { apiURL } from '../../App'
+import { apiURL } from '../../../App'
 import { ClipLoader, ClockLoader } from 'react-spinners'
 
 function Item({ id, name, description, price, category, date, image, userImage, userName, wishlistData, sendToast }) {

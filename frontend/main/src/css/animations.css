@@ -1,5 +1,5 @@
 .scaleBigAnim{
-    animation: scaleBig 1s ease 0s 1 normal forwards;
+    animation: scaleBig 0.4s ease 0s 1 normal forwards;
 }
 
 @keyframes scaleBig {
