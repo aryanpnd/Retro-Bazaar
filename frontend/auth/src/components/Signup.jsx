@@ -113,7 +113,7 @@ export default function Signup() {
                 variant: 'solid',
                 containerStyle: { fontSize: '14px', },
             })
-            setTimeout(() => { Navigate('/auth') }, 2000)
+            Navigate('/auth')
         }).catch((err) => {
             toast({
                 title: err.response.data.error,

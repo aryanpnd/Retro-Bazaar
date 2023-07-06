@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "../../css/Products.css"
 import data from '../../assets/data/FakeData.json'
-import Item from './Item'
+import Item from '../miscellaneous/productCards/Item'
 import axios from 'axios'
 import { apiURL } from '../../App'
 import { ToastContainer, toast } from 'react-toastify'
@@ -22,24 +22,18 @@ function Products() {
     const [wishlistData, setWishlistData] = useState()
     const [fetching, setFetching] = useState(false)
 
-    const fetchData = async () => {
-        // axios.get(`${apiURL}/api/totalproducts`, { withCredentials: true }).then((data) => {
-        //     settotalProducts(data.data)
-        // })
-        await axios.get(`${apiURL}/api/products`, { withCredentials: true }).then((data) => {
+    useEffect(() => {
+        axios.get(`${apiURL}/api/products`, { withCredentials: true }).then((data) => {
             setProductData(data.data)
         })
-        await axios.get(`${apiURL}/api/getProductSpecificField?field=category&distinct=true`, { withCredentials: true }).then((data) => {
+
+        axios.get(`${apiURL}/api/getProductSpecificField?field=category&distinct=true`, { withCredentials: true }).then((data) => {
             setavailableCategories(data.data)
         })
-        // fecting wishlist
-        await axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
+        axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
             setWishlistData(data.data.products)
             setFetching(true)
         })
-    }
-    useEffect(() => {
-        fetchData()
     }, [])
 
     const sendToast = (name, type) => {
@@ -80,7 +74,7 @@ function Products() {
                         availableCategories={availableCategories} />
 
                     <div className='filter-container'>
-                        <button className='filter-button' onClick={()=>setModal(!modal)}>
+                        <button className='filter-button' onClick={() => setModal(!modal)}>
                             <FilterOutlined /> Filter
                         </button>
                         <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />

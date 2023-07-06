@@ -1,0 +1,13 @@
+.scaleBigAnim{
+    animation: scaleBig 0.4s ease 0s 1 normal forwards;
+}
+
+@keyframes scaleBig {
+	0% {
+		transform: scale(0.7);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}

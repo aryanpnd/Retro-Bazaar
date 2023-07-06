@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Card from "../components/wishlist/Card";
+import Card from "../components/miscellaneous/productCards/Card";
 import "../css/wishlist.css";
 import { apiURL } from "../App";
 import {

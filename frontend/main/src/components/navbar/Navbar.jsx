@@ -1,19 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import '../css/Navbar.css'
-import '../css/sellButton.css'
+import '../../css/Navbar.css'
+import '../../css/sellButton.css'
 import { FilterOutlined, HeartOutlined, HomeFilled, HomeOutlined, MessageOutlined, SearchOutlined } from '@ant-design/icons';
-import { apiURL } from '../App';
+import { apiURL } from '../../App';
 import axios from 'axios';
-import ProfileDropdown from './miscellaneous/dropdowns/ProfileDropdown';
+import ProfileDropdown from '../miscellaneous/dropdowns/ProfileDropdown';
 import { useMatch, useNavigate } from 'react-router-dom';
-import { productsContext } from '../contexts/productsContext';
-import FilterButtonModal from './miscellaneous/filterButtonModal/filterButtonModal';
+import { productsContext } from '../../contexts/productsContext';
+import FilterButtonModal from '../miscellaneous/filterButtonModal/filterButtonModal';
+import Searchbar from '../miscellaneous/searchbar/Searchbar';
 
 function Navbar() {
     const { productData, setProductData } = useContext(productsContext)
     const navigate = useNavigate()
 
-    const [active, setActive] = useState();
     const [modal, setModal] = useState(false)
     const [search, setSearch] = useState(false);
     const [userData, setUserData] = useState(undefined)
@@ -51,10 +51,6 @@ function Navbar() {
 
 
 
-    function toggleSearch() {
-        setSearch(!search)
-    }
-
     const appLoads = () => {
         axios.get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
             .then((response) => {
@@ -76,21 +72,13 @@ function Navbar() {
         <>
             {/* mobile navbar */}
             <div className="top-nav-container-mob">
-                {search ? <input className='top-nav-mob-input' placeholder='Search Around You' />
-                    :
-                    <>
-                        <SearchOutlined
-                            style={{ color: '#00ADB5', fontSize: '2rem' }}
-                            onClick={toggleSearch}
-                        />
+                <div className="top-nav-title" style={{ display: search ? 'none' : '' }} > retroBazaar </div>
 
-                        <div className="top-nav-title"
-                            onClick={toggleSearch}
-                        >
-                            retroBazaar
-                        </div>
-                    </>
-                }
+                <Searchbar search={search} setSearch={setSearch} />
+                {/* <div style={{width:'29%',height:'100%',display:'flex',justifyContent:'center',alignItems:"center"}}>
+                </div> */}
+
+                <MessageOutlined style={{ display: search ? 'none' : '', color: 'aqua' }} />
             </div>
 
             <div className={show ? 'bottom-nav-container-mob' : 'bottom-nav-container-mob-none'}>
@@ -106,7 +94,7 @@ function Navbar() {
 
                     <li >
                         <span className='linkspan'>
-                            <span className={wishlist?'filterBtn-mob-none':''}  onClick={() => setModal(!modal)}>
+                            <span className={wishlist ? 'filterBtn-mob-none' : ''} onClick={() => setModal(!modal)}>
                                 <FilterOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
                             </span>
                             <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
@@ -127,7 +115,7 @@ function Navbar() {
                             <span className='text'>Wishlist</span>
                         </span>
                     </li>
-                    <li className={`bottom-nav-list ${active === "profile" ? "active" : ""} `} >
+                    <li>
                         <span className='linkspan'>
                             <ProfileDropdown position={'top'}>
                                 <img style={{ height: "2.2rem", width: "2.2rem", borderRadius: "100%" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
@@ -142,7 +130,7 @@ function Navbar() {
             <div div className="navbar-container-pc" >
                 <div className="navbar-container-pc-left">
                     retroBazaar
-                    <input className='pc-left-navbar-input' placeholder='Search' />
+                    <Searchbar />
                 </div>
 
                 <div className="navbar-container-pc-center">
