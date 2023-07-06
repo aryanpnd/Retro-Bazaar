@@ -8,8 +8,11 @@ import { ClipLoader, ClockLoader } from 'react-spinners'
 
 function Item({ id, name, description, price, category, date, image, userImage, userName, wishlistData, sendToast }) {
 
+
+
     const [wishlist, setWishlist] = useState(false)
     const [spinnerLoading, setSpinnerLoading] = useState(false)
+    const [dateAgo, setDateAgo] = useState(0)
 
     useEffect(() => {
         const isExists = wishlistData?.find(item => item._id === id)
@@ -19,7 +22,12 @@ function Item({ id, name, description, price, category, date, image, userImage, 
         else {
             setWishlist(false)
         }
+        const nowDate = new Date()
+        const nowDateis = new Date(nowDate.toISOString().split('T')[0])
+        const thenDate = new Date(date.split('T')[0])
+        setDateAgo((nowDateis - thenDate) / (1000 * 60 * 60 * 24))
     }, [])
+
 
 
     async function toggleWishlist() {
@@ -61,14 +69,19 @@ function Item({ id, name, description, price, category, date, image, userImage, 
                             /> :
                             <HeartFilled style={{ color: '#bf0b0b', fontSize: "1.8rem" }} /> :
                             spinnerLoading ?
-                            <ClockLoader
-                                color={'#21b94f'}
-                                loading={true}
-                                size={20}
-                                speedMultiplier={5}
-                            /> :
-                            <HeartFilled style={{ color: 'grey', fontSize: "1.8rem" }} />
+                                <ClockLoader
+                                    color={'#21b94f'}
+                                    loading={true}
+                                    size={20}
+                                    speedMultiplier={5}
+                                /> :
+                                <HeartFilled style={{ color: 'grey', fontSize: "1.8rem" }} />
                         }
+                    </div>
+
+                    <div className='item-img-product-info'>
+                        <div></div>
+                        <div className='postedDate'>{dateAgo} Days ago</div>
                     </div>
 
                 </div>
@@ -85,7 +98,7 @@ function Item({ id, name, description, price, category, date, image, userImage, 
                 </div>
                 <div className="item-date-and-category-container">
                     <div className='item-category'>{category}</div>
-                    <div className='item-date'>{date.split('T')[0]}</div>
+                    <div className='item-postedby'>Posted by</div>
                 </div>
                 <div className="item-Bottom-container">
                     <button className='item-view-now-btn' >Chat Now</button>

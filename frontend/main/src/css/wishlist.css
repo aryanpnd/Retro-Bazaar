@@ -57,10 +57,10 @@
 .addProductBtn{
     border: none;
     color: white;
-    width: 50%;
+    width: 100%;
     font-weight: 600;
     font-family: 'Quicksand', sans-serif;
     height: 48%;
     border-radius: 8px;
-    background: #8f54a0;
+    background: #7d00a1;
 }

@@ -1,6 +1,5 @@
 import React from 'react'
 import '../../css/Sidebar.css'
-// import { AddCircleOutline, BagOutline, SettingsOutline } from 'react-ionicons'
 
 function Sidebar() {
     return (

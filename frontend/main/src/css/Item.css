@@ -36,6 +36,23 @@
     top: 10px;
     right: 10px;
 }
+.item-img-product-info {
+    position: absolute;
+    display: flex;
+    bottom: 1px;
+    width: 95%;
+    padding: 2.3%;
+    height: 13%;
+    justify-content: space-between;
+}
+.postedDate {
+    padding: 1.5%;
+    font-size: 90%;
+    height: 62%;
+    background: grey;
+    border-radius: 8px;
+    font-weight: 100;
+}
 
 .item-title-header-container {
     display: flex;
@@ -89,9 +106,10 @@
     text-overflow: ellipsis;
 }
 
-.item-date {
+.item-postedby {
     white-space: nowrap;
     overflow: hidden;
+    color: #fffffff2;
     text-overflow: ellipsis;
 }
 
