@@ -1,7 +1,5 @@
 import React from 'react'
-import Products from '../components/home/Products'
-import "../css/Home.css"
-import Sidebar from '../components/home/Sidebar'
+import Products from './Products'
 
 
 function Home() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Card from "../components/miscellaneous/productCards/Card";
-import "../css/wishlist.css";
-import { apiURL } from "../App";
+import Card from "../miscellaneous/productCards/Card";
+import "./wishlist.css";
+import { apiURL } from "../../App";
 import {
   DeleteOutlined,
   DownOutlined,
@@ -9,7 +9,7 @@ import {
   ShoppingCartOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
-import ProductsCardSkeleton from "../components/miscellaneous/productsCardSkeleton/productsCardSkeleton";
+import ProductsCardSkeleton from "../miscellaneous/productsCardSkeleton/productsCardSkeleton";
 import { useNavigate } from "react-router-dom";
 
 
