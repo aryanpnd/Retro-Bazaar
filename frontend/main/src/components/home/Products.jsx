@@ -1,10 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import "../../css/Products.css"
-import data from '../../assets/data/FakeData.json'
+import "./styles/Products.css"
 import Item from '../miscellaneous/productCards/Item'
 import axios from 'axios'
 import { apiURL } from '../../App'
-import { ToastContainer, toast } from 'react-toastify'
+import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import Categories from './categories'
 import { DeleteFilled, FilterOutlined } from '@ant-design/icons'

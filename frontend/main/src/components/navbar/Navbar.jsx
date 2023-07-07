@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import '../../css/Navbar.css'
-import '../../css/sellButton.css'
+import './Navbar.css'
+import './sellButton.css'
 import { FilterOutlined, HeartOutlined, HomeFilled, HomeOutlined, MessageOutlined, SearchOutlined } from '@ant-design/icons';
 import { apiURL } from '../../App';
 import axios from 'axios';
