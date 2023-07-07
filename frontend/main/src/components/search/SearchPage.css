@@ -1,0 +1,37 @@
+.search-head {
+    width: 90%;
+    height: 8%;
+    display: flex;
+    padding-left: 5%;
+    padding-right: 5%;
+    justify-content: space-between;
+}
+.results-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filter-container-search {
+    width: 18%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+  }
+
+  .filter-button-search{
+    color: #332d2d;
+    font-weight: 900;
+    height: 85%;
+    width: 100%;
+    font-family: 'Quicksand', sans-serif;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+}
+
+.no-result-found {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}

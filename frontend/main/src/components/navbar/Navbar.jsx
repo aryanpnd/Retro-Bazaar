@@ -11,7 +11,7 @@ import FilterButtonModal from '../miscellaneous/filterButtonModal/filterButtonMo
 import Searchbar from '../miscellaneous/searchbar/Searchbar';
 
 function Navbar() {
-    const { productData, setProductData } = useContext(productsContext)
+    const {  setProductData } = useContext(productsContext)
     const navigate = useNavigate()
 
     const [modal, setModal] = useState(false)
@@ -75,8 +75,6 @@ function Navbar() {
                 <div className="top-nav-title" style={{ display: search ? 'none' : '' }} > retroBazaar </div>
 
                 <Searchbar search={search} setSearch={setSearch} />
-                {/* <div style={{width:'29%',height:'100%',display:'flex',justifyContent:'center',alignItems:"center"}}>
-                </div> */}
 
                 <MessageOutlined style={{ display: search ? 'none' : '', color: 'aqua' }} />
             </div>
@@ -152,7 +150,7 @@ function Navbar() {
                 <div className="navbar-container-pc-right">
                     <button className='sellBtn'>Sell Now</button>
                     <ProfileDropdown position={'bottom'}>
-                        <img style={{ height: "3rem", width: "3rem", borderRadius: "25px", border: "2px solid" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
+                        <img style={{ height: "3rem", width: "3rem", borderRadius: "25px", border: "2px solid",transform:'scale(0.9)' }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                     </ProfileDropdown>
                 </div>
             </div >

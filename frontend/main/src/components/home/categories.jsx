@@ -3,26 +3,23 @@ import React, { useContext, useState } from 'react'
 import { apiURL } from '../../App';
 import { productsContext } from '../../contexts/productsContext';
 
-export default function Categories({ availableCategories, wishlistData, setWishlistData,setFetching }) {
+export default function Categories({ setFetching }) {
     const [scrollLeft, setScrollLeft] = useState(0);
     const [selected, setselected] = useState('')
 
-    const { setCategory, setProductData} = useContext(productsContext)
+    const { category,setCategory, setProductData,setSelectedCategory} = useContext(productsContext)
 
     const handleWheelScroll = (event) => {
         const { deltaX } = event;
         setScrollLeft((prevScrollLeft) => prevScrollLeft + deltaX);
     };
 
-    const toggleCategory = async (category) => {
+    const toggleCategory = async (categorySelected) => {
         setFetching(false)
-        // await axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
-        //     setWishlistData(data.data.products)
-        // })
-        setCategory(category)
-        await axios.get(`${apiURL}/api/products?category=${category}`, { withCredentials: true }).then((data) => {
+        setSelectedCategory(categorySelected)
+        await axios.get(`${apiURL}/api/products?category=${categorySelected}`, { withCredentials: true }).then((data) => {
             setProductData(data.data)
-            category === '' ? setselected('') : setselected(data.data[0].category)
+            categorySelected === '' ? setselected('') : setselected(data.data[0].category)
             setFetching(true)
         })
 
@@ -36,12 +33,13 @@ export default function Categories({ availableCategories, wishlistData, setWishl
                     <div className="slider">
                         <button className={selected === '' ? `selected-category-button` : `category-button`} onClick={() => toggleCategory('')}>All Products</button>
                         {
-                            availableCategories.map((data, index) => (
+                            category?.map((data, index) => (
                                 <button className={data === selected ? `selected-category-button` : `category-button`} key={index} onClick={() => toggleCategory(data)}>{data}</button>
                             ))
                         }
                     </div>
                 </div>
-            </div></>
+            </div>
+            </>
     )
 }
