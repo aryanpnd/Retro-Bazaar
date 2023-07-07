@@ -16,8 +16,6 @@ function Products() {
     const { productData, setProductData } = useContext(productsContext)
 
     const [modal, setModal] = useState(false)
-    const [availableCategories, setavailableCategories] = useState([])
-    const [totalProducts, settotalProducts] = useState(0)
     const [wishlistData, setWishlistData] = useState()
     const [fetching, setFetching] = useState(false)
 
@@ -26,9 +24,6 @@ function Products() {
             setProductData(data.data)
         })
 
-        axios.get(`${apiURL}/api/getProductSpecificField?field=category&distinct=true`, { withCredentials: true }).then((data) => {
-            setavailableCategories(data.data)
-        })
         axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
             setWishlistData(data.data.products)
             setFetching(true)
@@ -69,8 +64,7 @@ function Products() {
             <div className="products-container">
 
                 <div className='product-list-head'>
-                    <Categories setFetching={setFetching} wishlistData={wishlistData} setWishlistData={setWishlistData}
-                        availableCategories={availableCategories} />
+                    <Categories setFetching={setFetching} />
 
                     <div className='filter-container'>
                         <button className='filter-button' onClick={() => setModal(!modal)}>

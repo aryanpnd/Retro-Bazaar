@@ -33,12 +33,12 @@ const getProductSpecificField = async (req, res) => {
 
 // get all the products
 const getProducts = async (req, res) => {
-    
+
     // get products by category and sorted both
     if (req.query.sortby && req.query.category) {
         const pageSize = req.query.pagesize // no of data in one page 
         const pageNo = req.query.pageno // which no of page needed 
-        const product = Product.find({category:req.query.category})
+        const product = Product.find({ category: req.query.category })
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -50,10 +50,10 @@ const getProducts = async (req, res) => {
     }
 
     // get products by category
-    else if(req.query.category){
+    else if (req.query.category) {
         const pageSize = req.query.pagesize // no of data in one page 
         const pageNo = req.query.pageno // which no of page needed 
-        const product = Product.find({category:req.query.category})
+        const product = Product.find({ category: req.query.category })
             // .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -98,18 +98,27 @@ const getProducts = async (req, res) => {
 
 // search in products
 const searchItems = async (req, res) => {
-    const searchQuery = req.query.query;
+    const searchQuery = req.query.q;
+    const searchLogic = {
+        $or: [
+            { title: { $regex: new RegExp(searchQuery, 'i') } },
+            { description: { $regex: new RegExp(searchQuery, 'i') } },
+            { category: { $regex: new RegExp(searchQuery, 'i') } }
+        ]
+    }
 
     try {
-        const documents = await Product.find({
-            $or: [
-                { title: { $regex: new RegExp(searchQuery, 'i') } },
-                { description: { $regex: new RegExp(searchQuery, 'i') } },
-                { category: { $regex: new RegExp(searchQuery, 'i') } }
-            ]
-        });
+        Product.countDocuments(searchLogic).then((data) => {
 
-        res.status(200).json(documents);
+            Product.find(searchLogic)
+                .populate("postedBy", { password: 0, _id: 0 })
+                .sort({ [req.query.sortby]: req.query.order })
+                .exec().then((documents) => {
+
+                    res.status(200).json({ products: documents, count: data });
+                })
+        })
+
     } catch (err) {
         res.status(400).send(`Some error occurred: ${err}`);
     }
@@ -142,7 +151,7 @@ const deleteProduct = async (req, res) => {
             if (isUserProduct) {
                 await Product.findByIdAndDelete(productId).then(() => res.status(200).send('deleted successfully')).catch((err) => res.send(err))
             }
-            else{
+            else {
                 res.send('Item does not exists')
             }
         })
@@ -154,8 +163,8 @@ const deleteProduct = async (req, res) => {
 const deleteAllProducts = async (req, res) => {
     const userId = req.session.passport.user.id
     await Product.deleteMany({ postedBy: userId })
-        .then( (docs) => {
-           res.send('All your posted products have been successfully removed from your account')
+        .then((docs) => {
+            res.send('All your posted products have been successfully removed from your account')
         })
         .catch((err) => { res.status(400).send(`Some error occured <br/> ${err}`) })
 

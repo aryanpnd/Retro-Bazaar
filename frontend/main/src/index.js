@@ -4,15 +4,40 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ProductsContextProvider } from './contexts/productsContext';
+import { Link, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import Home from './components/home/Home';
+import Wishlist from './components/wishlist/Wishlist';
+import Navbar from './components/navbar/Navbar';
+import SearchPage from './components/search/SearchPage';
+
+
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: (<App />),
+        children: [
+            {
+                path: "",
+                element: (<Home />)
+            },
+            {
+                path: "/wishlist",
+                element: (<Wishlist />)
+            },
+            {
+                path: "/search/:query",
+                element: (<SearchPage />)
+            },
+        ]
+    }
+
+]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <ProductsContextProvider>
-    <App />
+        <RouterProvider router={router} />
     </ProductsContextProvider>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
