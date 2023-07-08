@@ -23,6 +23,7 @@ export default function SearchPage() {
     const [modal, setModal] = useState(false)
 
     useEffect(() => {
+        setFetching(false)
         axios.get(`${apiURL}/api/getWishlist`, { withCredentials: true }).then((data) => {
             setWishlistData(data.data.products)
             setFetching(true)
