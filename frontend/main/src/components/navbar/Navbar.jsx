@@ -101,7 +101,7 @@ function Navbar() {
 
                     <li >
                         <span className='linkspan'>
-                            <button className='sellBtn'>Sell Now</button>
+                            <button className='sellBtn' onClick={()=>navigate('/sell')}>Sell Now</button>
                         </span>
                     </li>
 
@@ -148,7 +148,7 @@ function Navbar() {
                     </div>
                 </div>
                 <div className="navbar-container-pc-right">
-                    <button className='sellBtn'>Sell Now</button>
+                    <button className='sellBtn' onClick={()=>navigate('/sell')}>Sell Now</button>
                     <ProfileDropdown position={'bottom'}>
                         <img style={{ height: "3rem", width: "3rem", borderRadius: "25px", border: "2px solid",transform:'scale(0.9)' }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                     </ProfileDropdown>

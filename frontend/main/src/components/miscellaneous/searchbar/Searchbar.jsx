@@ -73,7 +73,6 @@ export default function ({ search, setSearch }) {
                   style={{ height: "70%", width: '60%' }}
                   className='pc-left-navbar-input' type="text" placeholder='Search'
                   onChange={handleInput}
-                  onClick={() => navigate(`/search/${searchInput}`)}
                 />
 
                 <button type='submit'

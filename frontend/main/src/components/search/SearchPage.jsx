@@ -70,7 +70,7 @@ export default function SearchPage() {
 
                 <div className="search-head">
                     <div className="results-container">
-                        <span style={{ marginRight: '10%', fontWeight: '900' }}>
+                        <span style={{ marginRight: '10%', fontWeight: '900',background:"grey",padding:"5px",borderRadius:"8px" }}>
                             {searchedProductsCount + " "}results found for "{params.query}"
                         </span>
                     </div>
