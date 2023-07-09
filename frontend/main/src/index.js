@@ -9,6 +9,7 @@ import Home from './components/home/Home';
 import Wishlist from './components/wishlist/Wishlist';
 import Navbar from './components/navbar/Navbar';
 import SearchPage from './components/search/SearchPage';
+import SellPage from './components/sell/SellPage';
 
 
 const router = createBrowserRouter([
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
             {
                 path: "/search/:query",
                 element: (<SearchPage />)
+            },
+            {
+                path: "/sell",
+                element: (<SellPage />)
             },
         ]
     }

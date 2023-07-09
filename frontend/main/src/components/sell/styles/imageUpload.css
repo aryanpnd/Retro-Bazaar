@@ -1,0 +1,30 @@
+.sell-image-box{
+    display: flex;
+    height: 40%;
+    width: 35%;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.preview-upload-label {
+    display: flex;
+    border: 1px dashed;
+    height: 80%;
+    border-radius: 5px;
+}
+
+.preview-upload-label-img {
+    height: 100%;
+    width: 100%;
+    object-fit: fill;
+    border-radius: 5px;
+}
+
+.image-delete-btn {
+    height: 17%;
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    background: #e31d1a;
+}
