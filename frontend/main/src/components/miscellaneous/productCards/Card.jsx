@@ -5,6 +5,7 @@ import { apiURL } from "../../../App";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ClockLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
 
 export default function Card({
   id,
@@ -16,6 +17,8 @@ export default function Card({
   date,
   userImage, userName, wishlistArray, setWishlistArray
 }) {
+
+  const navigate = useNavigate()
 
   const [loading, setLoading] = useState(false)
   const [dateAgo, setDateAgo] = useState(0)
@@ -95,7 +98,14 @@ export default function Card({
           <div className='item-postedby'>Posted by</div>
         </div>
         <div className="item-Bottom-container">
-          <button className='item-view-now-btn' >Chat Now</button>
+        <button
+            className="item-view-now-btn"
+            onClick={() => {
+              navigate("/viewproduct/" + id);
+            }}
+          >
+            View details
+          </button>
           <img className='item-user-profile' style={{ height: "2.2rem", width: "2.2rem", borderRadius: "100%", border: '1px solid' }} src={`${userImage ? userImage : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
         </div>
       </div>

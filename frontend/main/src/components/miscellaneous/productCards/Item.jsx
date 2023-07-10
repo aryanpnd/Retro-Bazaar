@@ -120,7 +120,7 @@ function Item({
               navigate("/viewproduct/" + productId);
             }}
           >
-            Chat Now
+            View details
           </button>
           <img
             className="item-user-profile"

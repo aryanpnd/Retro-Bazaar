@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import { DeleteFilled, FileImageOutlined } from '@ant-design/icons'
 import './styles/imageUpload.css'
+import axios from 'axios';
 
-export default function ImageUpload({ num }) {
+export default function ImageUpload({ num ,setImage, image}) {
     const [previewSource, setPreviewSource] = useState(null);
+
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
+        setImage([...image,e.target.files[0]])
         previewFile(file);
     };
 
@@ -24,6 +27,10 @@ export default function ImageUpload({ num }) {
         }
     };
 
+
+
+
+
     const deleteImage = () => {
         setPreviewSource(null)
         document.getElementById(`preview-upload-input-${num}`).value = null
@@ -33,9 +40,9 @@ export default function ImageUpload({ num }) {
         <div className='sell-image-box'>
             <label className='preview-upload-label' htmlFor={`preview-upload-input-${num}`}>
 
-                <img style={{ display: previewSource ? '' : 'none' }} 
-                className='preview-upload-label-img' src={previewSource}
-                alt="" />
+                <img style={{ display: previewSource ? '' : 'none' }}
+                    className='preview-upload-label-img' src={previewSource}
+                    alt="" />
 
                 <div style={{
                     display: previewSource ? 'none' : 'flex',
