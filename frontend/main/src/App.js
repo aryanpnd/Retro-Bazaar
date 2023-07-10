@@ -4,8 +4,11 @@ import DevTest from "./DevTest";
 import Navbar from "./components/navbar/Navbar";
 import Home from "./components/home/Home";
 import Wishlist from "./components/wishlist/Wishlist";
+import UserProfile from "./components/profile/UserProfile";
+import Product from "./components/product/Product";
+
 import { ToastContainer } from "react-toastify";
-import './css/animations.css'
+import "./css/animations.css";
 import { useContext, useEffect } from "react";
 import { productsContext } from "./contexts/productsContext";
 import axios from "axios";
@@ -14,21 +17,25 @@ import axios from "axios";
 export const apiURL = "";
 
 function App() {
-  const { setCategory } = useContext(productsContext)
+  const { setCategory } = useContext(productsContext);
 
   useEffect(() => {
-
-    axios.get(`${apiURL}/api/getProductSpecificField?field=category&distinct=true`, { withCredentials: true }).then((data) => {
-      setCategory(data.data)
-    })
-  }, [])
-
+    axios
+      .get(
+        `${apiURL}/api/getProductSpecificField?field=category&distinct=true`,
+        { withCredentials: true }
+      )
+      .then((data) => {
+        setCategory(data.data);
+      });
+  }, []);
 
   return (
     <>
       <ToastContainer />
       <Navbar />
-      <Outlet />
+      <Product />
+      {/* <Outlet /> */}
     </>
   );
 }
