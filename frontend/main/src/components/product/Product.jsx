@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./product.css";
 import { LeftCircleOutlined } from "@ant-design/icons";
 import MyCarousel from "./Carousel";
+import { useParams } from "react-router-dom";
 
 function Product() {
+  const params = useParams();
+
+  useEffect(() => {
+    const productId = params.query;
+    console.log("id", productId);
+  }, []);
+
   return (
     <>
       <div className="prodct-wrapper">
