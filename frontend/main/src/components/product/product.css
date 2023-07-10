@@ -5,6 +5,18 @@
     --product-page-card-color: #13111c;
 }
 
+.lottie-loader-container{
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+}
+
+.lottie-loader-inner-wrapper{
+    width: calc(20*var(--product-page-font-size));
+    margin: auto;
+}
+
 .prodct-wrapper{
     display: flex;
     margin-top: calc(5.5*var(--product-page-font-size));

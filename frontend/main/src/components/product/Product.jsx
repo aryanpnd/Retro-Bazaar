@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import "./product.css";
 import { LeftCircleOutlined } from "@ant-design/icons";
 import MyCarousel from "./Carousel";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { apiURL } from "../../App";
+import Lottie from "lottie-react";
+import loader from "../../assets/lottie/cart-icon-loader.json";
 
 function Product() {
   const params = useParams();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getData = async () => {
@@ -36,13 +40,24 @@ function Product() {
 
   return (
     <>
-      {!loading && (
+      {loading ? (
+        <div className="lottie-loader-container">
+          <div className="lottie-loader-inner-wrapper">
+            <Lottie animationData={loader} loop={true} />
+          </div>
+        </div>
+      ) : (
         <div className="prodct-wrapper">
           <div className="product-images">
             <MyCarousel imageArray={data.images} />
           </div>
           <div className="product-details">
-            <div className="product-back-btn">
+            <div
+              className="product-back-btn"
+              onClick={() => {
+                navigate("/");
+              }}
+            >
               <LeftCircleOutlined />
               <span>Back to product list</span>
             </div>
@@ -85,13 +100,15 @@ function Product() {
 
             <div className="product-info-card">
               <div className="product-title">
-                Posted By: <span className="product-owner">Shashwat Singh</span>
+                Posted By:{" "}
+                <span className="product-owner">{data.postedBy.name}</span>
               </div>
               <div className="product-owner-details">
-                Email: <span>vnsshashwat@gmail.com</span>
+                Email: <span>{data.postedBy.email}</span>
               </div>
               <div className="product-owner-details">
-                Phone number: <span>9140062947</span>
+                Phone number:{" "}
+                <span>{data.postedBy.phone ? data.postedBy.phone : "NA"}</span>
               </div>
             </div>
           </div>
