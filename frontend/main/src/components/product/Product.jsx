@@ -12,7 +12,8 @@ function Product() {
         </div>
         <div className="product-details">
           <div className="product-back-btn">
-            <LeftCircleOutlined /> Back to product list
+            <LeftCircleOutlined />
+            <span>Back to product list</span>
           </div>
           <div className="product-category-path">
             category {">"} sub-category{" "}
