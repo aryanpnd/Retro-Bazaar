@@ -1,41 +1,27 @@
 import { Carousel } from "react-carousel-minimal";
 
-function MyCarousel() {
+function MyCarousel({ imageArray }) {
+  const data = imageArray.map((link) => {
+    return { image: link, caption: "" };
+  });
+
   // const data = [
   //   {
   //     image:
-  //       "https://images.prismic.io/yse-paris-production/3b7b9970-69a1-4bef-a25f-52799df5d636_yse-ensemble-lingerie-soir-de-rencontre-noir+%2815%29.jpg?auto=compress,format?auto=compress,format&fit=max&w=1280&q=50",
+  //       "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
   //     caption: "",
   //   },
   //   {
   //     image:
-  //       "https://d26oc3sg82pgk3.cloudfront.net/files/media/edit/image/46407/large_thumb%403x.jpg",
+  //       "https://cdn.britannica.com/s:800x450,c:crop/35/204435-138-2F2B745A/Time-lapse-hyper-lapse-Isle-Skye-Scotland.jpg",
   //     caption: "",
   //   },
   //   {
   //     image:
-  //       "https://cdn2.stylecraze.com/wp-content/uploads/2017/02/Types-Of-Lingerie-How-To-Choose-Lingerie-For-Your-Body-Type.jpg",
+  //       "https://static2.tripoto.com/media/filter/tst/img/735873/TripDocument/1537686560_1537686557954.jpg",
   //     caption: "",
   //   },
   // ];
-
-  const data = [
-    {
-      image:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
-      caption: "",
-    },
-    {
-      image:
-        "https://cdn.britannica.com/s:800x450,c:crop/35/204435-138-2F2B745A/Time-lapse-hyper-lapse-Isle-Skye-Scotland.jpg",
-      caption: "",
-    },
-    {
-      image:
-        "https://static2.tripoto.com/media/filter/tst/img/735873/TripDocument/1537686560_1537686557954.jpg",
-      caption: "",
-    },
-  ];
 
   const captionStyle = {
     fontSize: "2em",
