@@ -140,4 +140,13 @@
     .sell-image-container {
         width: 100%;
     }
+    .sell-images-box {
+        display: flex;
+        height: 25rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+        overflow-y: scroll;
+        margin: 3rem 0;
+        justify-content: space-around;
+    }
 }
