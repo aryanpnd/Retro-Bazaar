@@ -11,14 +11,14 @@
 }
 
 .user-profile-card{
-    margin-left: auto;
-    margin-right: auto;
+    margin: auto;
     background: var(--user-profile-bg-color-card);
     border-radius: 12px;
     width: calc(32*var(--userprofile-font-size));
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: calc(3*var(--userprofile-font-size));
 }
 
 .user-profile-card .profile-photo-container{
@@ -64,4 +64,53 @@
 
 .user-profile-edit-btn:hover{
     cursor: pointer;
+}
+
+.user-profile-product-wrapper{
+    margin: 0 auto;
+}
+
+.user-profile-number-products{
+    font-size: calc(1.4*var(--userprofile-font-size));   
+    font-weight: bold;
+    margin-top: calc(1.4*var(--userprofile-font-size)); 
+}
+
+.user-profile-number-products span{
+    font-weight:normal;
+    font-weight: bolder;
+}
+
+.link-to-self-product{
+    font-size: calc(1.2*var(--userprofile-font-size));  
+    margin-top: calc(1*var(--userprofile-font-size));
+    
+}
+
+.link-to-self-product:hover{
+    cursor: pointer;
+}
+
+@media (max-width: 1160px){
+    .user-profile-container{
+        flex-direction: column;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 720px){
+    :root{
+        --userprofile-font-size: 13px;
+    }
+}
+
+
+@media (max-width: 460px){
+    :root{
+        --userprofile-font-size: 10px;
+    }
+
+    .user-profile-card{
+        width: 90%;
+    }
 }
