@@ -11,7 +11,7 @@ export default function SellPage() {
       console.log("please upload atleast two images");
       return;
     }
-    image.map((image) => {
+    image?.map((image) => {
       const formData = new FormData();
       formData.append("file", image);
       formData.append("upload_preset", "retroBazaarTest");
@@ -96,9 +96,7 @@ export default function SellPage() {
             </div>
             <button className="sell-preview-btn">Preview</button>
           </form>
-          <button className="sell-preview-btn" onClick={upload}>
-            Preview
-          </button>
+          {/* <button className='sell-preview-btn' onClick={upload}>Preview</button> */}
         </div>
       </div>
       <div className="fake-container-sell-2"></div>
