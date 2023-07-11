@@ -11,7 +11,7 @@ export default function SellPage() {
             console.log('please upload atleast two images')
             return
         }
-        image.map((image) => {
+        image?.map((image) => {
             const formData = new FormData()
             formData.append("file", image)
             formData.append("upload_preset", "retroBazaarTest")

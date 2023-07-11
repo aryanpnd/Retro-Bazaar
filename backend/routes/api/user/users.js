@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserInfo, signOutUser } = require('../../../controller/users/users');
+const { getUserInfo, signOutUser, changeUserName } = require('../../../controller/users/users');
 const { getUserProducts,addProduct, deleteProduct, deleteAllProducts } = require('../../../controller/users/userProducts');
 
 const UserRoutes = express.Router()
@@ -11,6 +11,7 @@ UserRoutes
     .post("/addproduct", addProduct)
     .delete("/deleteProduct", deleteProduct)
     .delete("/deleteAllProducts", deleteAllProducts)
+    .put("/changeUserName", changeUserName)
     .get("/signOutUser", signOutUser)
 
 
