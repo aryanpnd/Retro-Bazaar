@@ -1,0 +1,67 @@
+:root{
+    --userprofile-font-size: 16px;
+    --user-profile-bg-color-card:#13111c;
+}
+
+.user-profile-container{
+    font-size: calc(1*var(--userprofile-font-size));   
+    margin-top: calc(4*var(--userprofile-font-size));
+    padding: calc(2*var(--userprofile-font-size));  
+    display: flex; 
+}
+
+.user-profile-card{
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--user-profile-bg-color-card);
+    border-radius: 12px;
+    width: calc(32*var(--userprofile-font-size));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-profile-card .profile-photo-container{
+    width: calc(10*var(--userprofile-font-size));
+    height: calc(10*var(--userprofile-font-size));
+    border-radius: 50%;
+    margin: calc(2*var(--userprofile-font-size));;
+}
+
+.user-profile-card .profile-photo-container{
+    background: #000;
+}
+
+.profile-photo-container img{
+    width: inherit;
+    height: inherit;
+    border-radius:inherit
+}
+
+.user-profile-right-container{
+    width:60%
+}
+
+.user-profile-card .user-profile-details{
+    font-size: calc(1.4*var(--userprofile-font-size));   
+    font-weight: bold;
+    width: 80%;
+    text-align: left;
+    /* margin-left: calc(5*var(--userprofile-font-size)); */
+    margin-bottom: calc(1.4*var(--userprofile-font-size));   
+}
+
+.user-profile-card .user-profile-details span{
+    font-weight: normal;
+    margin-left: 3px;
+    
+}
+
+.user-profile-edit-btn{
+    float: right;
+
+}
+
+.user-profile-edit-btn:hover{
+    cursor: pointer;
+}

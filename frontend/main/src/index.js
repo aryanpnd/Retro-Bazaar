@@ -11,6 +11,7 @@ import Navbar from "./components/navbar/Navbar";
 import SearchPage from "./components/search/SearchPage";
 import SellPage from "./components/sell/SellPage";
 import Product from "./components/product/Product";
+import UserProfile from "./components/profile/UserProfile";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/viewproduct/:query",
         element: <Product />,
+      },
+      {
+        path: "/myprofile",
+        element: <UserProfile />,
       },
     ],
   },
