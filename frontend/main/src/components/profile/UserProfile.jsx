@@ -4,10 +4,13 @@ import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { apiURL } from "../../App";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import loader from "../../assets/lottie/cart-icon-loader.json";
 
 function UserProfile() {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(true);
   const [editable, setEditable] = useState("false");
   const [productCount, setProductCount] = useState(0);
   const [productData, setProductData] = useState([]);
@@ -18,26 +21,37 @@ function UserProfile() {
   });
 
   useEffect(() => {
+    setLoading(true);
     getUserDetails();
     getProductsByUser();
   }, []);
 
   const getUserDetails = async () => {
-    const res = await axios.get(apiURL + "/api/getUserInfo", {
-      withCredentials: true,
-    });
-    const data = res.data.data;
-    setUserInfo(data);
+    try {
+      const res = await axios.get(apiURL + "/api/getUserInfo", {
+        withCredentials: true,
+      });
+      const data = res.data.data;
+      setUserInfo(data);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
   };
 
   const getProductsByUser = async () => {
-    const res = await axios.get(`${apiURL}/api/getUserProducts`, {
-      withCredentials: true,
-    });
+    try {
+      const res = await axios.get(`${apiURL}/api/getUserProducts`, {
+        withCredentials: true,
+      });
 
-    const products = res.data;
-    setProductData(products);
-    setProductCount(products.length);
+      const products = res.data;
+      setProductData(products);
+      setProductCount(products.length);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
   };
 
   const changeUserName = async () => {
@@ -61,9 +75,16 @@ function UserProfile() {
     } catch (err) {
       console.log(err);
     }
+    setLoading(false);
   };
 
-  return (
+  return loading ? (
+    <div className="lottie-loader-container">
+      <div className="lottie-loader-inner-wrapper">
+        <Lottie animationData={loader} loop={true} />
+      </div>
+    </div>
+  ) : (
     <div className="user-profile-container">
       <div className="user-profile-card">
         <div className="profile-photo-container">
