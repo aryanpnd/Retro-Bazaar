@@ -1,27 +1,30 @@
-import React, { useEffect, useState } from 'react'
-import './ProfileDropdown.css';
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
-import axios from 'axios';
-import { apiURL } from '../../../App';
+import React, { useEffect, useState } from "react";
+import "./ProfileDropdown.css";
+import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import axios from "axios";
+import { apiURL } from "../../../App";
+import { useNavigate } from "react-router-dom";
 
 export default function ProfileDropdown({ children, position }) {
+  const navigate = useNavigate();
+
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (!event.target.closest('.dropdown')) {
+      if (!event.target.closest(".dropdown")) {
         setIsOpen(false);
       }
     };
 
     if (isOpen) {
-      document.addEventListener('click', handleOutsideClick);
+      document.addEventListener("click", handleOutsideClick);
     } else {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener("click", handleOutsideClick);
     }
 
     return () => {
-      document.removeEventListener('click', handleOutsideClick);
+      document.removeEventListener("click", handleOutsideClick);
     };
   }, [isOpen]);
 
@@ -29,36 +32,49 @@ export default function ProfileDropdown({ children, position }) {
     setIsOpen(!isOpen);
   };
 
-  const dropdownMenuStyle = {
+  const dropdownMenuStyle = {};
 
-  };
-
-  if (position === 'bottom') {
-    dropdownMenuStyle.top = '100%';
+  if (position === "bottom") {
+    dropdownMenuStyle.top = "100%";
   } else {
-    dropdownMenuStyle.bottom = '100%';
+    dropdownMenuStyle.bottom = "100%";
   }
 
-
   const signOut = () => {
-    axios.get(`${apiURL}/api/signOutUser`, { withCredentials: true })
+    axios
+      .get(`${apiURL}/api/signOutUser`, { withCredentials: true })
       .then(() => {
-        window.location.href = '/auth'
+        window.location.href = "/auth";
       })
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
   return (
-    <div style={{ cursor: 'pointer'}} className={`dropdown ${isOpen ? 'open' : ''}`}>
-      <div style={{ borderRadius: '25px' }} onClick={toggleDropdown}>
+    <div
+      style={{ cursor: "pointer" }}
+      className={`dropdown ${isOpen ? "open" : ""}`}
+    >
+      <div style={{ borderRadius: "25px" }} onClick={toggleDropdown}>
         {children}
       </div>
       <div style={dropdownMenuStyle} className="dropdown-menu">
-        <button ><span> <UserOutlined /> </span> My profile</button>
-        <button onClick={signOut} ><span> <LogoutOutlined /> </span>Logout</button>
+        <button onClick={() => navigate("/myprofile")}>
+          <span>
+            {" "}
+            <UserOutlined />{" "}
+          </span>{" "}
+          My profile
+        </button>
+        <button onClick={signOut}>
+          <span>
+            {" "}
+            <LogoutOutlined />{" "}
+          </span>
+          Logout
+        </button>
       </div>
     </div>
-  )
+  );
 }
