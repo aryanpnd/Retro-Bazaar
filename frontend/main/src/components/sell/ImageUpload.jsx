@@ -4,12 +4,14 @@ import './styles/imageUpload.css'
 import axios from 'axios';
 
 export default function ImageUpload({ num ,setImage, image}) {
+    const [thisImage, setThisImage] = useState(null)
     const [previewSource, setPreviewSource] = useState(null);
 
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
         setImage([...image,e.target.files[0]])
+        setThisImage(e.target.files[0])
         previewFile(file);
     };
 
@@ -30,14 +32,17 @@ export default function ImageUpload({ num ,setImage, image}) {
 
 
 
-
     const deleteImage = () => {
         setPreviewSource(null)
         document.getElementById(`preview-upload-input-${num}`).value = null
+        const imageIndex = image.indexOf(thisImage)
+        const fakeArray = image
+        fakeArray.splice(imageIndex,1)
+        setImage(fakeArray)
     }
 
     return (
-        <div className='sell-image-box'>
+        <div style={{display:''}} className='sell-image-box'>
             <label className='preview-upload-label' htmlFor={`preview-upload-input-${num}`}>
 
                 <img style={{ display: previewSource ? '' : 'none' }}
