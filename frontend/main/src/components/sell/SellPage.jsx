@@ -11,18 +11,10 @@ import { apiURL } from "../../App";
 export default function SellPage() {
 
   const [modal, setModal] = useState(false)
-  const [user, setuser] = useState({name:'',photoUrl:''})
+  const [user, setuser] = useState({ name: '', photoUrl: '' })
   const [previewSource, setPreviewSource] = useState(null);
   const [image, setImage] = useState([]);
   const [inputData, setinputData] = useState({})
-
-  useEffect(() => {
-    axios.get(`${apiURL}/api/getUserInfo`,{withCredentials:true}).then((res)=>{
-      setuser(res.data.data)
-    })
-  }, [])
-
- 
   const [formData, setFormData] = useState({
     title: null,
     description: null,
@@ -31,13 +23,24 @@ export default function SellPage() {
     quantity: null,
     brand: null,
     location: null,
-    thumbnail:null,
-    images:[],
-    imagesPublicId:[]
-});
+    thumbnail: null,
+    images: [],
+    imagesPublicId: []
+  });
+  let images = []
+  let imagesPublicId = []
+
+
+  // getting user data for preview card
+  useEffect(() => {
+    axios.get(`${apiURL}/api/getUserInfo`, { withCredentials: true }).then((res) => {
+      setuser(res.data.data)
+    })
+  }, [])
 
 
 
+  // handling modal and error toasts
   const handleModal = () => {
     if (image.length <= 1) {
       toast.warning(`Please upload atleast two images`, {
@@ -74,15 +77,17 @@ export default function SellPage() {
   };
 
 
-  const handleUpload = async () => {
+
+  // handling image upload 
+  const handleImageUpload = async () => {
     for (const img of image) {
       const formData = new FormData();
       formData.append("file", img);
       formData.append("upload_preset", "retroBazaarTest");
       formData.append("cloud_name", "dnoycwhjx");
-  
+
       try {
-        const res = await axios.post(
+        await axios.post(
           "https://api.cloudinary.com/v1_1/dnoycwhjx/image/upload/",
           formData,
           {
@@ -90,20 +95,42 @@ export default function SellPage() {
               console.log((ProgressEvent.loaded / ProgressEvent.total) * 100);
             },
           }
-        );
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          images: [...prevFormData.images, res.data.secure_url],
-          imagesPublicId: [...prevFormData.imagesPublicId, res.data.public_id],
-        }));
+        ).then((res) => {
+          images = [...images, res.data.secure_url]
+          imagesPublicId = [...imagesPublicId, res.data.public_id]
+        })
       } catch (error) {
         console.error(error);
       }
     }
-    
-    console.log(formData);
+
   };
-  
+
+  // submitting data to server
+  const handleSubmitData = async () => {
+    await axios
+      .post(`${apiURL}/api/addproduct`, {
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        price: formData.price,
+        quantity: formData.quantity,
+        brand: formData.brand,
+        location: formData.location,
+        thumbnail:images[0],
+        images: images,
+        imagesPublicId: imagesPublicId
+      }, { withCredentials: true })
+      .then((res) => console.log(res));
+  }
+
+
+  // doing this separating and using normal array instead of usestate is because of async behaviour during data post 
+  const handleUpload = async () => {
+    await handleImageUpload();
+    await handleSubmitData()
+  };
+
 
   return (
     <div className="sell-container">
@@ -127,7 +154,7 @@ export default function SellPage() {
 
         <div className="sell-form-container">
           <div className="sell-product-details-heading">Product details</div>
-          <FormInputs modal={modal} setModal={setModal} handleModal={handleModal} setFormData={setFormData}/>
+          <FormInputs modal={modal} setModal={setModal} handleModal={handleModal} setFormData={setFormData} />
 
           {/* <button className='sell-preview-btn' onClick={upload}>Preview</button> */}
 
