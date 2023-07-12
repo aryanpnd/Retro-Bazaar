@@ -29,9 +29,6 @@ export default function ImageUpload({ num ,setImage, image}) {
         }
     };
 
-
-
-
     const deleteImage = () => {
         setPreviewSource(null)
         document.getElementById(`preview-upload-input-${num}`).value = null

@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Categories from "./categories";
 import { DeleteFilled, FilterOutlined } from "@ant-design/icons";
 import ProductsCardSkeleton from "../miscellaneous/productsCardSkeleton/productsCardSkeleton";
-import FilterButtonModal from "../miscellaneous/filterButtonModal/filterButtonModal";
+import FilterButtonModal from "../miscellaneous/modal/filterButtonModal";
 import { productsContext } from "../../contexts/productsContext";
 
 function Products() {

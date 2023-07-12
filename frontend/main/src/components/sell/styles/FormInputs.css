@@ -1,0 +1,88 @@
+.sell-inputs-container {
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5rem;
+    height: 85%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sell-inputs-container input ,select {
+    border-radius: 13px;
+    background: #6b616970;
+    border: none;
+    outline: none;
+    height: 2.8rem;
+    padding: 1rem;
+    color: white;
+}
+ option {
+    background: #13111c;
+    color: white;
+}
+
+.sell-inputs-container input:focus,select:focus {
+    border: 2px solid #7d22e2;
+    background: transparent;
+}
+
+.sell-inputs-container input[type='radio'] {
+    display: none;
+}
+
+.sell-inputs-container label {
+    padding: 0 1rem;
+    color: #ff4d4d;
+}
+
+.sell-location-btn label {
+    display: inline-block;
+    background-color: transparent;
+    padding: 4px 11px;
+    border-radius: 5px;
+    width: 40%;
+    border: 1px solid #737373;
+    color: white;
+    font-family: Arial;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 3px;
+}
+
+.sell-location-btn input[type='radio']:checked+label {
+    background: #ef7f1a;
+    border: 1px solid #ef7f1a;
+    border: none;
+}
+
+
+.sell-location-btn {
+    display: flex;
+    justify-content: space-around;
+}
+
+.sell-preview-btn {
+    margin: 1rem 0rem 1rem 0;
+    padding: 1rem;
+    height: 8%;
+    border-radius: 8px;
+    background: linear-gradient(to left, rgb(121, 40, 202), rgb(255, 0, 128));
+    color: white;
+    border: none;
+    transition: 0.3s;
+}
+
+.fake-form-div{
+    margin: 1rem 0rem 1rem 0;
+    padding: 1.5rem;
+    height: 10%;
+    background-color: transparent;
+}
+
+/* media queries */
+@media(min-width:1000px){
+    .sell-preview-btn {
+        padding: 1rem 0 2rem 0;
+    }
+}
