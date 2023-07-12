@@ -20,6 +20,7 @@ function Item({
   wishlistData,
   sendToast,
   productId,
+  show
 }) {
   const navigate = useNavigate();
   const [wishlist, setWishlist] = useState(false);
@@ -27,6 +28,8 @@ function Item({
   const [dateAgo, setDateAgo] = useState(0);
 
   useEffect(() => {
+    if (show) return // for the preview in sell product section
+
     const isExists = wishlistData?.find((item) => item._id === id);
     if (isExists) {
       setWishlist(true);
@@ -40,6 +43,7 @@ function Item({
   }, []);
 
   async function toggleWishlist() {
+    if(show) return
     setSpinnerLoading(true);
 
     if (!wishlist) {
@@ -117,6 +121,7 @@ function Item({
           <button
             className="item-view-now-btn"
             onClick={() => {
+              if(show)return
               navigate("/viewproduct/" + productId);
             }}
           >
@@ -130,11 +135,10 @@ function Item({
               borderRadius: "100%",
               border: "1px solid",
             }}
-            src={`${
-              userImage
+            src={`${userImage
                 ? userImage
                 : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
-            }`}
+              }`}
             alt=""
           />
         </div>

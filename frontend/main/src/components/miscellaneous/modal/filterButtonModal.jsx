@@ -47,14 +47,14 @@ const FilterButtonModal = ({ setProductData, modal, setModal, search,searchQuery
 
             {modal && (
                 <div className={` app ${modal ? 'modal-open' : ''} modal`}>
-                    <div className="modal-content">
+                    <div className="filter-modal-content">
 
-                        <div className='model-heading'>
+                        <div className='filter-model-heading'>
                             Filter
                             <button className='closeModal' onClick={closeModal}><CloseOutlined style={{ color: 'white', fontSize: '2rem', fontWeight: 'bolder' }} /></button>
                         </div>
 
-                        <div className='model-body'>
+                        <div className='filter-model-body'>
                             <h3>Sort by</h3>
                             <div>
                                 <button className={`model-body-button${sortby === 'price' ? '-active' : ''}`} onClick={() => setSortby('price')}>Price</button>

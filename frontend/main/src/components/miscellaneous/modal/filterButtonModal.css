@@ -17,13 +17,13 @@
     transition: background-color 0.3s ease;
 }
 
-.modal-content {
+.filter-modal-content {
     background-color: #221f31;
     padding: 1rem;
     border-radius: 10px;
 }
 
-.model-heading {
+.filter-model-heading {
     display: flex;
     justify-content: space-between;
     height: 10%;
@@ -38,7 +38,7 @@ button.closeModal {
     border-radius: 10px;
 }
 
-.model-body {
+.filter-model-body {
     padding: 0.8rem 0.8rem 1.8rem 0.8rem;
 }
 

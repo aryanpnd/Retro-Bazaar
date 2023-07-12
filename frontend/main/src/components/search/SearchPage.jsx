@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import Item from '../miscellaneous/productCards/Item';
 import axios from 'axios';
 import { apiURL } from '../../App';
-import FilterButtonModal from '../miscellaneous/filterButtonModal/filterButtonModal';
+import FilterButtonModal from '../miscellaneous/modal/filterButtonModal';
 import ProductsCardSkeleton from '../miscellaneous/productsCardSkeleton/productsCardSkeleton';
 import { DeleteFilled, FilterOutlined } from '@ant-design/icons';
 import Lottie from "lottie-react";
@@ -98,6 +98,7 @@ export default function SearchPage() {
                                 searchedProducts.map(p =>
                                     <Item
                                         key={p._id}
+                                        productId={p._id}
                                         id={p._id}
                                         name={p.title}
                                         description={p.description}

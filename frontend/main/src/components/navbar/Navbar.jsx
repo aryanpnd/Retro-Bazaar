@@ -7,7 +7,7 @@ import axios from 'axios';
 import ProfileDropdown from '../miscellaneous/dropdowns/ProfileDropdown';
 import { useMatch, useNavigate } from 'react-router-dom';
 import { productsContext } from '../../contexts/productsContext';
-import FilterButtonModal from '../miscellaneous/filterButtonModal/filterButtonModal';
+import FilterButtonModal from '../miscellaneous/modal/filterButtonModal';
 import Searchbar from '../miscellaneous/searchbar/Searchbar';
 
 function Navbar() {
