@@ -108,7 +108,7 @@ function Item({
         </div>
         <div className="item-title-header-container">
           <div className="item-title">{name}</div>
-          <div className="item-price">{price}</div>
+          <div className="item-price">₹{price}</div>
         </div>
         <div className="item-description-container">
           <div className="item-description">{description}</div>

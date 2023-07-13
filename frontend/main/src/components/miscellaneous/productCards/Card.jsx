@@ -87,7 +87,7 @@ export default function Card({
             {title}
           </div>
           <div className="item-price">
-            {price}
+          ₹{price}
           </div>
         </div>
         <div className="item-description-container">
