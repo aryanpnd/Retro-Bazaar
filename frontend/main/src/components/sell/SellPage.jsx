@@ -7,14 +7,20 @@ import Modal from "../miscellaneous/modal/Modal";
 import Item from "../miscellaneous/productCards/Item";
 import { toast } from "react-toastify";
 import { apiURL } from "../../App";
+import Lottie from "lottie-react";
+import loader from "../../assets/lottie/cart-icon-loader.json";
+import { BeatLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
+
 
 export default function SellPage() {
+
+  const navigate = useNavigate()
 
   const [modal, setModal] = useState(false)
   const [user, setuser] = useState({ name: '', photoUrl: '' })
   const [previewSource, setPreviewSource] = useState(null);
   const [image, setImage] = useState([]);
-  const [inputData, setinputData] = useState({})
   const [formData, setFormData] = useState({
     title: null,
     description: null,
@@ -29,7 +35,8 @@ export default function SellPage() {
   });
   let images = []
   let imagesPublicId = []
-
+  const [imageUploadLoading, setImageUploadLoading] = useState(false)
+  const [dataUploadLoading, setDataUploadLoading] = useState(false)
 
   // getting user data for preview card
   useEffect(() => {
@@ -80,6 +87,7 @@ export default function SellPage() {
 
   // handling image upload 
   const handleImageUpload = async () => {
+    setImageUploadLoading(true)
     for (const img of image) {
       const formData = new FormData();
       formData.append("file", img);
@@ -98,16 +106,43 @@ export default function SellPage() {
         ).then((res) => {
           images = [...images, res.data.secure_url]
           imagesPublicId = [...imagesPublicId, res.data.public_id]
+          setImageUploadLoading(false)
+        }).catch((err) => {
+          console.error(err);
+          setImageUploadLoading(false)
+          toast.error(`Some error occurred while uploading the images`, {
+            position: "top-center",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          })
         })
       } catch (error) {
         console.error(error);
+        setImageUploadLoading(false)
+        toast.error(`Some error occurred while uploading the images`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
       }
     }
 
   };
 
+
   // submitting data to server
   const handleSubmitData = async () => {
+    setDataUploadLoading(true)
     await axios
       .post(`${apiURL}/api/addproduct`, {
         title: formData.title,
@@ -117,11 +152,40 @@ export default function SellPage() {
         quantity: formData.quantity,
         brand: formData.brand,
         location: formData.location,
-        thumbnail:images[0],
+        thumbnail: images[0],
         images: images,
         imagesPublicId: imagesPublicId
       }, { withCredentials: true })
-      .then((res) => console.log(res));
+      .then((res) => {
+        setDataUploadLoading(false)
+        toast.success(`Your product has been added successfully`, {
+          position: "top-center",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
+        setTimeout(() => {
+          navigate('/')
+        }, 1000);
+      })
+      .catch((err) => {
+        console.log(err)
+        setDataUploadLoading(false)
+        toast.error(`Some error occurred while uploading the product`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
+      })
   }
 
 
@@ -159,21 +223,55 @@ export default function SellPage() {
           {/* <button className='sell-preview-btn' onClick={upload}>Preview</button> */}
 
           <Modal setModal={setModal} modal={modal} title={'Preview'} height={'100%'} width={'100%'}>
-            <Item
-              show={true}
-              name={formData.title}
-              description={formData.description}
-              price={formData.price}
-              date={0}
-              image={previewSource}
-              category={formData.category}
-              userImage={user.photoUrl}
-              userName={user.name}
-              wishlistData={() => { }}
-              sendToast={() => { }}
-              productId={'p._id'}
-            />
-            <button className='sell-preview-btn' style={{ fontSize: "1.2rem" }} onClick={handleUpload}>Post</button>
+            {
+              <>
+                {
+                  imageUploadLoading || dataUploadLoading ?
+                    <>
+                      {
+                        imageUploadLoading ?
+                          <>
+                            <div className="lottie-loader-container">
+                              <div className="lottie-loader-inner-wrapper">
+                                <Lottie animationData={loader} loop={true} />
+                                <h2 style={{ textAlign: 'center' }}>Uploading images...</h2>
+                              </div>
+                            </div>
+                          </>
+                          :
+                          <>
+                            <div className="lottie-loader-container">
+                              <div className="lottie-loader-inner-wrapper">
+                                <Lottie animationData={loader} loop={true} />
+                                <h2 style={{ textAlign: 'center' }}>Uploading The product...</h2>
+                              </div>
+                            </div>
+                          </>
+                      }
+                    </>
+                    :
+                    <Item
+                      show={true}
+                      name={formData.title}
+                      description={formData.description}
+                      price={formData.price}
+                      date={0}
+                      image={previewSource}
+                      category={formData.category}
+                      userImage={user.photoUrl}
+                      userName={user.name}
+                      wishlistData={() => { }}
+                      sendToast={() => { }}
+                      productId={'p._id'}
+                    />
+                }
+                <button className='sell-preview-btn' style={{ fontSize: "1.2rem", opacity: imageUploadLoading || dataUploadLoading ? '0.4' : '1' }} onClick={handleUpload}>
+                  {imageUploadLoading || dataUploadLoading ?
+                    <BeatLoader color="white" size={10} />
+                    : 'Post'}
+                </button>
+              </>
+            }
           </Modal>
 
         </div>

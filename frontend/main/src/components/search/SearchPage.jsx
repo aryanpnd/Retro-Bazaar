@@ -70,7 +70,7 @@ export default function SearchPage() {
 
                 <div className="search-head">
                     <div className="results-container">
-                        <span style={{ marginRight: '10%', fontWeight: '900',background:"grey",padding:"5px",borderRadius:"8px" }}>
+                        <span style={{ marginRight: '10%', fontWeight: '900', background: "grey", padding: "5px", borderRadius: "8px" }}>
                             {searchedProductsCount + " "}results found for "{params.query}"
                         </span>
                     </div>
@@ -89,11 +89,17 @@ export default function SearchPage() {
                     <div className="products-card-wrapper">
                         {fetching ?
                             searchedProducts.length === 0 ?
-                                <div className='no-result-found' >
-                                    <div>
-                                    <Lottie animationData={noResultFound} loop={true} />
+                                <div className="lottie-loader-container">
+                                    <div className="lottie-loader-inner-wrapper">
+                                        <Lottie animationData={noResultFound} loop={true} />
+                                        <h2 style={{ textAlign: 'center' }}>Uploading The product...</h2>
                                     </div>
                                 </div>
+                                // <div className='no-result-found' >
+                                //     <div>
+                                //     <Lottie animationData={noResultFound} loop={true} />
+                                //     </div>
+                                // </div>
                                 :
                                 searchedProducts.map(p =>
                                     <Item
