@@ -3,17 +3,6 @@
     --user-profile-bg-color-card:#13111c;
 }
 
-.lottie-loader-container{
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-}
-
-.lottie-loader-inner-wrapper{
-    width: calc(20*var(--product-page-font-size));
-    margin: auto;
-}
 
 .user-profile-container{
     font-size: calc(1*var(--userprofile-font-size));   

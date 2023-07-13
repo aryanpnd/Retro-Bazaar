@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 
 const productSchema = new Schema({
-    title: { type: String, required: [true, "please enter valid title"] },
+    title: { type: String},
     description: String,
     price: { type: Number, min: 1, required: [true, "please enter valid price"] },
     quantity: { type: Number, min: 1, required: [true, "Quantity required"] },

@@ -7,6 +7,7 @@ import axios from "axios";
 import { apiURL } from "../../App";
 import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
+import { toast } from "react-toastify";
 
 function Product() {
   const params = useParams();
@@ -31,7 +32,19 @@ function Product() {
         setData(res.data.data);
         setLoading(false);
       } else {
-        alert("No data Found");
+        toast.error(`No data found for this product`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        })
+        setTimeout(() => {
+          navigate('/')
+        }, 3000);
       }
     } catch (err) {
       console.log("error", err);

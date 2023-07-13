@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-between;
     height: 15%;
+    padding: 1rem 1rem 0rem 1rem;
     font-size: 3rem;
     font-weight: 900;
     color: beige;
