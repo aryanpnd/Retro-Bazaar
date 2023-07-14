@@ -10,6 +10,7 @@ import { productsContext } from '../../contexts/productsContext';
 import FilterButtonModal from '../miscellaneous/modal/filterButtonModal';
 import Searchbar from '../miscellaneous/searchbar/Searchbar';
 import { Slide, toast } from 'react-toastify';
+import logo from '../../assets/img/logo.png'
 
 function Navbar() {
     const { setProductData } = useContext(productsContext)
@@ -66,7 +67,7 @@ function Navbar() {
         appLoads()
     }, [])
 
-    const handleUnderDev = ()=>{
+    const handleUnderDev = () => {
         toast("🛠️ This feature is still under developent 🛠️", {
             position: "top-right",
             autoClose: 2500,
@@ -74,27 +75,29 @@ function Navbar() {
             closeOnClick: true,
             pauseOnHover: true,
             draggable: true,
-            transition:Slide,
+            transition: Slide,
             theme: "light",
-          })
+        })
     }
 
     return (
         <>
             {/* mobile navbar */}
             <div className="top-nav-container-mob">
-                <div className="top-nav-title" style={{ display: search ? 'none' : '' }} > retroBazaar </div>
+                <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
+                <div className="top-nav-title" style={{ display: search ? 'none' : '' }} >
+                    <img src={logo} alt="" style={{ width: '100%', height: "100%" }} />
+                </div>
 
                 <Searchbar search={search} setSearch={setSearch} />
 
-                <span style={{ display: home? search ? 'none' : '':'none' }} onClick={() => setModal(!modal)}>
-                    <FilterOutlined style={{ color: '#ffffff', fontSize: '1rem' }} />
-                    <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
+                <span style={{ display: home ? search ? 'none' : '' : 'none', background: "white", color: 'black', padding: '0.4rem', borderRadius: '8px', fontSize: '0.8rem' }} onClick={() => setModal(!modal)}>
+                    <FilterOutlined style={{ fontSize: '1rem' }} />
                     Filter
                 </span>
             </div>
 
-            <div className={ show ? 'bottom-nav-container-mob slideBottom' : 'bottom-nav-container-mob-none'}>
+            <div className={show ? 'bottom-nav-container-mob slideBottom' : 'bottom-nav-container-mob-none'}>
                 <button style={{ background: home ? '#8b2be2' : 'transparent', color: '#ffffff', fontSize: '1.5rem' }} className={`bottom-nav-container-mob-button`} onClick={() => navigate('/')}>
                     {home ? <HomeFilled /> : <HomeOutlined />}
                 </button>
@@ -103,24 +106,28 @@ function Navbar() {
                     <MessageOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
                 </button>
 
-                <button className='sellBtn' onClick={() => navigate('/sell')}>Sell Now</button>
+                <span style={{ height: '80%', width: "25%" }}>
+                    <button className='sellBtn' onClick={() => navigate('/sell')}>Sell Now</button>
+                </span>
 
                 <button style={{ background: wishlist ? '#8b2be2' : 'transparent', color: '#ffffff', fontSize: '1.5rem' }} className={`bottom-nav-container-mob-button`} onClick={() => navigate('/wishlist')}>
                     {wishlist ? <HeartFilled /> : <HeartOutlined />}
                 </button>
 
-                <button className='bottom-nav-container-mob-button'>
+                <span className='bottom-nav-container-mob-button'>
                     <ProfileDropdown position={'top'}>
                         <img style={{ width: "2.2rem", borderRadius: "100%" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                     </ProfileDropdown>
-                </button>
+                </span>
             </div>
 
             {/* pc navbar */}
 
             <div div className="navbar-container-pc" >
                 <div className="navbar-container-pc-left">
-                    retroBazaar
+                    <div className="top-nav-title" style={{ display: search ? 'none' : '' }} >
+                        <img src={logo} alt="" style={{ width: '100%', height: "100%" }} />
+                    </div>
                     <Searchbar />
                 </div>
 

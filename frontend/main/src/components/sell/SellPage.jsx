@@ -229,24 +229,15 @@ export default function SellPage() {
                   imageUploadLoading || dataUploadLoading ?
                     <>
                       {
-                        imageUploadLoading ?
-                          <>
-                            <div className="lottie-loader-container">
-                              <div className="lottie-loader-inner-wrapper">
-                                <Lottie animationData={loader} loop={true} />
-                                <h2 style={{ textAlign: 'center' }}>Uploading images...</h2>
-                              </div>
+                        <>
+                          <div className="lottie-loader-container">
+                            <div className="lottie-loader-inner-wrapper">
+                              <Lottie animationData={loader} loop={true} />
+                              <h2 style={{ textAlign: 'center' }}>{
+                                imageUploadLoading ? 'Uploading images...' : 'Uploading your product...'}</h2>
                             </div>
-                          </>
-                          :
-                          <>
-                            <div className="lottie-loader-container">
-                              <div className="lottie-loader-inner-wrapper">
-                                <Lottie animationData={loader} loop={true} />
-                                <h2 style={{ textAlign: 'center' }}>Uploading The product...</h2>
-                              </div>
-                            </div>
-                          </>
+                          </div>
+                        </>
                       }
                     </>
                     :
@@ -256,6 +247,7 @@ export default function SellPage() {
                       description={formData.description}
                       price={formData.price}
                       date={0}
+                      location={formData.location}
                       image={previewSource}
                       category={formData.category}
                       userImage={user.photoUrl}
