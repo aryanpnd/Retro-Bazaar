@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import './modal.css';
 import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
 
-const Modal = ({ children, title, modal, setModal, height, width }) => {
+const Modal = ({ children, title, modal, setModal, height, width, noCloseBtn, borderR,noHead }) => {
 
     const closeModal = () => {
         setModal(false)
@@ -14,10 +14,10 @@ const Modal = ({ children, title, modal, setModal, height, width }) => {
                 <div className={` app ${modal ? 'modal-open' : ''} modal`}>
 
 
-                    <div className="modal-content scaleBigAnim" style={{ height: height, width: width }} >
-                        <div className='modal-heading'>
+                    <div className="modal-content scaleBigAnim" style={{ height: height, width: width, borderRadius: borderR }} >
+                        <div className='modal-heading' style={{display:noHead?'none':''}}>
                             {title}
-                            <button className='closeModal' onClick={closeModal}><CloseOutlined style={{ color: 'white', fontSize: '2rem', fontWeight: 'bolder' }} /></button>
+                            {!noCloseBtn && <button className='closeModal' onClick={closeModal}><CloseOutlined style={{ color: 'white', fontSize: '2rem', fontWeight: 'bolder' }} /></button>}
                         </div>
 
                         <div className='modal-body'>

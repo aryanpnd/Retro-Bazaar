@@ -29,9 +29,3 @@
     border: none;
     border-radius: 8px;
 }
-
-.no-result-found {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}

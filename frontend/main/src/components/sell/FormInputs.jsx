@@ -130,7 +130,7 @@ export default function FormInputs({ handleModal,setFormData }) {
                 <br />
                 <input name='price'
                     type="number"
-                    placeholder="Price (required)"
+                    placeholder="Price in ₹ rupees (required)"
                     required
                     value={priceInput}
                     onChange={(e) => handleLimit(e, 6, setPriceInput)}

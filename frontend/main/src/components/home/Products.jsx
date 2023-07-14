@@ -87,6 +87,7 @@ function Products() {
                   description={p.description}
                   price={p.price}
                   date={p.date}
+                  location={p.location}
                   image={p.thumbnail}
                   category={p.category}
                   userImage={p.postedBy.photoURL}

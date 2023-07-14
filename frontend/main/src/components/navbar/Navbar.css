@@ -36,61 +36,21 @@
     background-color: #1b1925;
     align-items: center;
     color: white;
+    justify-content: space-evenly;
 }
+
+.bottom-nav-container-mob-button{
+    border: none;
+    width: 2.5rem;
+    background-color: transparent;
+    height: 2.5rem;
+    border-radius: 10px;
+}
+
 .bottom-nav-container-mob-none {
 display: none;
 }
 
-.bottom-nav-container-mob ul {
-    position: relative;
-    display: flex;
-    width: 100%;
-    padding-left: 0;
-    justify-content: space-around;
-}
-
-.bottom-nav-container-mob ul li {
-    position: relative;
-    display: flex;
-    list-style: none;
-    width: 20%;
-}
-
-.bottom-nav-container-mob ul li .linkspan {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-    text-align: center;
-    font-weight: 500;
-    user-select: none;
-}
-
-.bottom-nav-container-mob ul li .linkspan .bottom-nav-icon {
-    position: relative;
-    display: block;
-    transition: 0.5s;
-}
-
-.bottom-nav-container-mob ul li.active {
-    /* background-color: rgb(44,44,44);
-    border-radius: 100%; */
-    transform: translateY(-8px);
-}
-
-.bottom-nav-container-mob ul li .text {
-    position: absolute;
-    opacity: 0;
-    font-weight: 600;
-    font-size: 0.7rem;
-    color: white;
-    transition: 0.5s;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transform: translateY(0px);
-}
 
 .filterBtn-mob-none{
     display: none;

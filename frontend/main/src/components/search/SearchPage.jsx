@@ -83,24 +83,15 @@ export default function SearchPage() {
                     </div>
                 </div>
 
-
-                <div className="products-list">
-
-                    <div className="products-card-wrapper">
-                        {fetching ?
-                            searchedProducts.length === 0 ?
-                                <div className="lottie-loader-container">
-                                    <div className="lottie-loader-inner-wrapper">
-                                        <Lottie animationData={noResultFound} loop={true} />
-                                        <h2 style={{ textAlign: 'center' }}>Uploading The product...</h2>
-                                    </div>
-                                </div>
-                                // <div className='no-result-found' >
-                                //     <div>
-                                //     <Lottie animationData={noResultFound} loop={true} />
-                                //     </div>
-                                // </div>
-                                :
+                {searchedProducts.length === 0 ?
+                        <div className="lottie-loader-inner-wrapper">
+                            <Lottie animationData={noResultFound} loop={true} />
+                            <h2 style={{ textAlign: 'center' }}>No results found for "{params.query}"</h2>
+                    </div>
+                    :
+                    <div className="products-list">
+                        <div className="products-card-wrapper">
+                            {fetching ?
                                 searchedProducts.map(p =>
                                     <Item
                                         key={p._id}
@@ -110,6 +101,7 @@ export default function SearchPage() {
                                         description={p.description}
                                         price={p.price}
                                         date={p.date}
+                                        location={p.location}
                                         image={p.thumbnail}
                                         category={p.category}
                                         userImage={p.postedBy.photoURL}
@@ -118,11 +110,13 @@ export default function SearchPage() {
                                         sendToast={sendToast}
                                     />
                                 )
-                            :
-                            <ProductsCardSkeleton count={9} />
-                        }
+                                :
+                                <ProductsCardSkeleton count={9} />
+                            }
+                        </div>
                     </div>
-                </div>
+                }
+
             </div>
         </>
     )

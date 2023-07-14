@@ -13,7 +13,7 @@ function Item({
   description,
   price,
   category,
-  date,
+  date,location,
   image,
   userImage,
   userName,
@@ -102,13 +102,13 @@ function Item({
           </div>
 
           <div className="item-img-product-info">
-            <div></div>
+            <div style={{background:location==='Inside LPU'?'#ef7f1a':'ef2a1a'}} className="postedDate">{location}</div>
             <div className="postedDate">{dateAgo} Days ago</div>
           </div>
         </div>
         <div className="item-title-header-container">
           <div className="item-title">{name}</div>
-          <div className="item-price">{price}</div>
+          <div className="item-price">₹{price}</div>
         </div>
         <div className="item-description-container">
           <div className="item-description">{description}</div>
