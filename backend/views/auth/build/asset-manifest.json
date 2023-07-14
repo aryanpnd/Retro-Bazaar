@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/auth/static/css/main.4f3fd701.css",
-    "main.js": "/auth/static/js/main.cbbf82f5.js",
+    "main.js": "/auth/static/js/main.dbeafd61.js",
     "static/js/787.6cf5c74a.chunk.js": "/auth/static/js/787.6cf5c74a.chunk.js",
     "static/media/logoTransparent.png": "/auth/static/media/logoTransparent.d548612d4db184b5b2d2.png",
     "static/media/googleLogo.svg": "/auth/static/media/googleLogo.9a7800d06783d80a1c12249a8ca58e9d.svg",
@@ -9,11 +9,11 @@
     "static/media/blobBall1.svg": "/auth/static/media/blobBall1.8c810fa3f0852fe4f2e6ec29c48ade64.svg",
     "static/media/blobBall2.svg": "/auth/static/media/blobBall2.a8a413744dec060bed3b08a09f971d58.svg",
     "main.4f3fd701.css.map": "/auth/static/css/main.4f3fd701.css.map",
-    "main.cbbf82f5.js.map": "/auth/static/js/main.cbbf82f5.js.map",
+    "main.dbeafd61.js.map": "/auth/static/js/main.dbeafd61.js.map",
     "787.6cf5c74a.chunk.js.map": "/auth/static/js/787.6cf5c74a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4f3fd701.css",
-    "static/js/main.cbbf82f5.js"
+    "static/js/main.dbeafd61.js"
   ]
 }
