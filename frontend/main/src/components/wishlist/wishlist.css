@@ -1,11 +1,11 @@
-:root{
-    --wishlist-font-size : 12px;
+:root {
+    --wishlist-font-size: 12px;
     --wishlist-light-color: #a0a0a0f0;
     --wishlist-dark-color: black;
     --wishlist-bright-color: #FFFFFF;
 }
 
-.wishlist-header-container{
+.wishlist-header-container {
     margin-top: 5.5rem;
     padding: 0 4% 0.5rem 4%;
     display: flex;
@@ -14,12 +14,12 @@
     border-bottom: 1px solid rgba(137, 137, 137, 0.392);
 }
 
-.wishlist-heading{
+.wishlist-heading {
     font-size: calc(2*var(--wishlist-font-size));
     font-weight: bold;
 }
 
-.wishlist-count-span{
+.wishlist-count-span {
     font-size: calc(1.8*var(--wishlist-font-size));
     color: var(--wishlist-light-color);
 }
@@ -29,6 +29,7 @@
     padding: calc(0.5*var(--wishlist-font-size));
     margin-left: 1rem;
 }
+
 .wishlist-heading-span-btn:hover {
     cursor: pointer;
     background-color: #c90000;
@@ -36,25 +37,18 @@
     color: white;
 }
 
-/* .wishlist-cards-wrapper{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
+.wishlist-cards-container {
 
-.wishlist-cards-container{
-    
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 1rem;
-  padding-bottom: 4rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    padding-bottom: 4rem;
 }
 
-.addProductBtn{
+.addProductBtn {
     border: none;
     color: white;
     width: 100%;
@@ -63,4 +57,29 @@
     height: 48%;
     border-radius: 8px;
     background: #7d00a1;
+}
+
+.modal-delete-btn-box {
+    display: flex;
+    justify-content: space-between;
+}
+.modal-delete-btn-box button {
+    border-radius: 6px;
+    border: none;
+    height: 2rem;
+    width: 100%;
+}
+
+@media(max-width:1000px) {
+    .modal-delete-btn-box {
+        flex-direction: column;
+    }
+    .modal-delete-btn-box button {
+        margin-top: 5%;
+    }
+}
+@media(min-width:1000px) {
+    .modal-delete-btn-box button {
+        width: 7rem;
+    }
 }

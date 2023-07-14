@@ -71,7 +71,7 @@ export default function ({ search, setSearch }) {
               <form className='mob-search-container' onSubmit={handleSearch}>
                 <input
                   style={{ height: "70%", width: '60%' }}
-                  className='pc-left-navbar-input' type="text" placeholder='Search'
+                  className='pc-left-navbar-input scaleBigAnim' type="text" placeholder='Search'
                   onChange={handleInput}
                 />
 
@@ -83,7 +83,7 @@ export default function ({ search, setSearch }) {
                 <CloseOutlined style={{ fontSize: "1.5rem", color: "#00ffff99" }} onClick={() => setSearch(false)} />
               </form>
               :
-              <button className='mob-search' onClick={() => setSearch(!search)}>
+              <button className='mob-search scaleBigAnim' onClick={() => setSearch(!search)}>
                 <SearchOutlined />Search
               </button>
             }

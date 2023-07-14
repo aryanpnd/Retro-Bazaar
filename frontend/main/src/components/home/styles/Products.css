@@ -41,7 +41,6 @@
   height: 7%;
   border-radius: 8px;
 }
-.filter-button:active{ transform: scale(0.9);}
 
 .products-categories {
   width: 85%;
@@ -61,8 +60,7 @@
   color: white;
   background: transparent;
   border: 1px solid #808080ba;
-  width: inherit;
-  padding: 1%;
+  padding: 0.6rem;
   border-radius: 11px;
   cursor: pointer;
 }
@@ -73,15 +71,11 @@
   transition: ease 0.2s;
 }
 
-.category-button:active {
-  transform: scale(0.9);
-}
 
 .selected-category-button {
   display: block;
   color: white;
-  width: inherit;
-  padding: 1%;
+  padding: 0.6rem;
   border-radius: 11px;
   background: linear-gradient(to left, rgb(121, 40, 202), rgb(255, 0, 128));
   border: none;

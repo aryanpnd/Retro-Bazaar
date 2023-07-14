@@ -14,7 +14,7 @@ export default function Card({
   description,
   price,
   category,
-  date,
+  date, location,
   userImage, userName, wishlistArray, setWishlistArray
 }) {
 
@@ -77,7 +77,7 @@ export default function Card({
           </div>
 
           <div className='item-img-product-info'>
-            <div></div>
+            <div style={{background:location==='Inside LPU'?'#ef7f1a':'ef2a1a'}} className='postedDate'>{location}</div>
             <div className='postedDate'>{dateAgo} Days ago</div>
           </div>
 

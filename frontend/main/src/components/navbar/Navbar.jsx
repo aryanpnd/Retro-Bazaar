@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Navbar.css'
 import './sellButton.css'
-import { FilterOutlined, HeartOutlined, HomeFilled, HomeOutlined, MessageOutlined, SearchOutlined } from '@ant-design/icons';
+import { FilterOutlined, HeartFilled, HeartOutlined, HomeFilled, HomeOutlined, MessageOutlined, SearchOutlined } from '@ant-design/icons';
 import { apiURL } from '../../App';
 import axios from 'axios';
 import ProfileDropdown from '../miscellaneous/dropdowns/ProfileDropdown';
@@ -9,9 +9,10 @@ import { useMatch, useNavigate } from 'react-router-dom';
 import { productsContext } from '../../contexts/productsContext';
 import FilterButtonModal from '../miscellaneous/modal/filterButtonModal';
 import Searchbar from '../miscellaneous/searchbar/Searchbar';
+import { Slide, toast } from 'react-toastify';
 
 function Navbar() {
-    const {  setProductData } = useContext(productsContext)
+    const { setProductData } = useContext(productsContext)
     const navigate = useNavigate()
 
     const [modal, setModal] = useState(false)
@@ -50,7 +51,6 @@ function Navbar() {
     }, [lastScrollY]);
 
 
-
     const appLoads = () => {
         axios.get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
             .then((response) => {
@@ -64,9 +64,20 @@ function Navbar() {
     }
     useEffect(() => {
         appLoads()
-
     }, [])
 
+    const handleUnderDev = ()=>{
+        toast("🛠️ This feature is still under developent 🛠️", {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            transition:Slide,
+            theme: "light",
+          })
+    }
 
     return (
         <>
@@ -76,51 +87,33 @@ function Navbar() {
 
                 <Searchbar search={search} setSearch={setSearch} />
 
-                <MessageOutlined style={{ display: search ? 'none' : '', color: 'aqua' }} />
+                <span style={{ display: home? search ? 'none' : '':'none' }} onClick={() => setModal(!modal)}>
+                    <FilterOutlined style={{ color: '#ffffff', fontSize: '1rem' }} />
+                    <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
+                    Filter
+                </span>
             </div>
 
-            <div className={show ? 'bottom-nav-container-mob' : 'bottom-nav-container-mob-none'}>
-                <ul>
-                    <li className={`bottom-nav-list ${home ? "active" : ""} `} onClick={() => navigate('/')}>
-                        <span className='linkspan'>
-                            <span className='bottom-nav-icon'>
-                                <HomeOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
-                            </span>
-                            <span className='text'>Home</span>
-                        </span>
-                    </li>
+            <div className={ show ? 'bottom-nav-container-mob slideBottom' : 'bottom-nav-container-mob-none'}>
+                <button style={{ background: home ? '#8b2be2' : 'transparent', color: '#ffffff', fontSize: '1.5rem' }} className={`bottom-nav-container-mob-button`} onClick={() => navigate('/')}>
+                    {home ? <HomeFilled /> : <HomeOutlined />}
+                </button>
 
-                    <li >
-                        <span className='linkspan'>
-                            <span className={wishlist ? 'filterBtn-mob-none' : ''} onClick={() => setModal(!modal)}>
-                                <FilterOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
-                            </span>
-                            <FilterButtonModal setProductData={setProductData} modal={modal} setModal={setModal} />
-                        </span>
-                    </li>
+                <button className={`bottom-nav-container-mob-button`} onClick={handleUnderDev}>
+                    <MessageOutlined style={{ color: '#ffffff', fontSize: '1.5rem' }} />
+                </button>
 
-                    <li >
-                        <span className='linkspan'>
-                            <button className='sellBtn' onClick={()=>navigate('/sell')}>Sell Now</button>
-                        </span>
-                    </li>
+                <button className='sellBtn' onClick={() => navigate('/sell')}>Sell Now</button>
 
-                    <li className={`bottom-nav-list ${wishlist ? "active" : ""} `} onClick={() => navigate('/wishlist')}>
-                        <span className='linkspan'>
-                            <span className='bottom-nav-icon'>
-                                <HeartOutlined style={{ fontSize: '1.5rem' }} />
-                            </span>
-                            <span className='text'>Wishlist</span>
-                        </span>
-                    </li>
-                    <li>
-                        <span className='linkspan'>
-                            <ProfileDropdown position={'top'}>
-                                <img style={{ height: "2.2rem", width: "2.2rem", borderRadius: "100%" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
-                            </ProfileDropdown>
-                        </span>
-                    </li>
-                </ul>
+                <button style={{ background: wishlist ? '#8b2be2' : 'transparent', color: '#ffffff', fontSize: '1.5rem' }} className={`bottom-nav-container-mob-button`} onClick={() => navigate('/wishlist')}>
+                    {wishlist ? <HeartFilled /> : <HeartOutlined />}
+                </button>
+
+                <button className='bottom-nav-container-mob-button'>
+                    <ProfileDropdown position={'top'}>
+                        <img style={{ width: "2.2rem", borderRadius: "100%" }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
+                    </ProfileDropdown>
+                </button>
             </div>
 
             {/* pc navbar */}
@@ -142,15 +135,15 @@ function Navbar() {
                         <div className='pc-navbar-icon-text'>wishlist</div>
                     </div>
 
-                    <div className='pc-center-navbar-element'>
+                    <div className='pc-center-navbar-element' onClick={handleUnderDev}>
                         {<MessageOutlined style={{ color: '#ffffff', fontSize: '1.4rem' }} />}
                         <div className='pc-navbar-icon-text'>chat</div>
                     </div>
                 </div>
                 <div className="navbar-container-pc-right">
-                    <button className='sellBtn' onClick={()=>navigate('/sell')}>Sell Now</button>
+                    <button className='sellBtn' onClick={() => navigate('/sell')}>Sell Now</button>
                     <ProfileDropdown position={'bottom'}>
-                        <img style={{ height: "3rem", width: "3rem", borderRadius: "25px", border: "2px solid",transform:'scale(0.9)' }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
+                        <img style={{ height: "3rem", width: "3rem", borderRadius: "25px", border: "2px solid", transform: 'scale(0.9)' }} src={`${userData ? userData : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`}`} alt='' />
                     </ProfileDropdown>
                 </div>
             </div >

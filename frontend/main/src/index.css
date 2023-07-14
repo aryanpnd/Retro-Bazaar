@@ -37,3 +37,7 @@ img,
 div {
   -webkit-tap-highlight-color: transparent;
 }
+
+button:active{
+  transform: scale(0.9);
+}
