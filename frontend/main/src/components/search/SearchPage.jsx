@@ -83,15 +83,15 @@ export default function SearchPage() {
                     </div>
                 </div>
 
-                {searchedProducts.length === 0 ?
-                        <div className="lottie-loader-inner-wrapper">
-                            <Lottie animationData={noResultFound} loop={true} />
-                            <h2 style={{ textAlign: 'center' }}>No results found for "{params.query}"</h2>
-                    </div>
-                    :
+                {
                     <div className="products-list">
                         <div className="products-card-wrapper">
-                            {fetching ?
+                            {fetching ? searchedProducts.length === 0 ?
+                                <div className="lottie-loader-inner-wrapper">
+                                    <Lottie animationData={noResultFound} loop={true} />
+                                    <h2 style={{ textAlign: 'center' }}>No results found for "{params.query}"</h2>
+                                </div>
+                                :
                                 searchedProducts.map(p =>
                                     <Item
                                         key={p._id}

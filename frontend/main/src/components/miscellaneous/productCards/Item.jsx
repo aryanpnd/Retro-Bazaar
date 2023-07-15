@@ -59,7 +59,6 @@ function Item({
           setSpinnerLoading(false);
         });
     } else {
-      console.log(`${apiURL}/api/deleteOneFromWishlist`);
       await axios
         .delete(`${apiURL}/api/deleteOneFromWishlist?productId=${id}`, {
           withCredentials: true,

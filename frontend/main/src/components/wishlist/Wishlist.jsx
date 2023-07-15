@@ -44,7 +44,6 @@ export default function Wishlist() {
     }).then((res)=>{
       setloading(false);
       setWishlistArray([])
-      console.log(res);
       toast.success(`Wishlist has been deleted successfully`, {
         position: "top-center",
         autoClose: 3000,

@@ -62,7 +62,6 @@ export default function SellPage() {
       })
       return;
     }
-    console.log(formData);
     setModal(!modal)
     previewFile(image[0])
   }
@@ -100,7 +99,7 @@ export default function SellPage() {
           formData,
           {
             onUploadProgress: (ProgressEvent) => {
-              console.log((ProgressEvent.loaded / ProgressEvent.total) * 100);
+              // console.log((ProgressEvent.loaded / ProgressEvent.total) * 100);
             },
           }
         ).then((res) => {
