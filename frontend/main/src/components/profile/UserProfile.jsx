@@ -71,7 +71,6 @@ function UserProfile() {
       if (res.status === 200) {
         window.location.reload();
       }
-      console.log("res", res);
     } catch (err) {
       console.log(err);
     }

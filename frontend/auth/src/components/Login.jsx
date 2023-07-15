@@ -187,7 +187,7 @@ export default function Login() {
                         <Button className='btn' borderRadius={'14px'} h={'40%'} variant='ghost' 
                         bg={{ base: 'white',sm:'white', md: 'white', lg: 'black',xl:'black','2xl':'black' }}
                         color={{ base: 'black',sm:'black', md: 'black', lg: 'white',xl:'white','2xl':'white' }}
-                        fontSize={'1.3rem'} fontWeight={'semibold'} _hover={{ background: 'whitesmoke'}} _active={{ transform: ' scale(0.8)' }}
+                        fontSize={'1.3rem'} fontWeight={'semibold'} _hover={{ background: 'whitesmoke',color:'black'}} _active={{ transform: ' scale(0.8)' }}
                             onClick={() => window.location.href = '/authapi/google'}
                             rightIcon={
                                 <img draggable={false} style={{ width: '2rem' }} src={googleLogo} alt="" />

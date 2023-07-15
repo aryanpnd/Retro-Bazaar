@@ -28,7 +28,6 @@ const FilterButtonModal = ({ setProductData, modal, setModal, search,searchQuery
             })
             
         } else {
-            console.log('hi');
             setloading(true)
             await axios.get(`${apiURL}/api/products?sortby=${sortby}&order=${orderby}&category=${selectedCategory}`, { withCredentials: true }).then((data) => {
                 setProductData(data.data)

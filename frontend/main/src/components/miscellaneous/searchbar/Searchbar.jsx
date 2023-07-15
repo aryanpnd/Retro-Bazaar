@@ -29,7 +29,6 @@ export default function ({ search, setSearch }) {
 
   const handleInput = (e) => {
     setSearchInput(e.target.value)
-    console.log(searchInput);
   }
   
   const handleSearch = (e) => {
