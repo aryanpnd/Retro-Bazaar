@@ -58,23 +58,37 @@ export default function Login() {
 
       const handleSubmit = () => {
         setLoading(true)
-        axios.post(`${hostUrl}/authapi/local/login`, inputData).then((res) => {
-            setLoading(false)
-            console.log(res)
-            toast({
-                title: res.data.message,
-                status: 'success',
-                duration: 2000,
-                isClosable: true,
-                position: 'top-right',
-                variant: 'solid',
-                containerStyle: { fontSize: '14px', },
+        try {
+            axios.post(`${hostUrl}/authapi/local/login`, inputData).then((res) => {
+                setLoading(false)
+                console.log(res)
+                toast({
+                    title: res.data.message,
+                    status: 'success',
+                    duration: 2000,
+                    isClosable: true,
+                    position: 'top-right',
+                    variant: 'solid',
+                    containerStyle: { fontSize: '14px', },
+                })
+                window.location.href = '/'
+            }).catch((err) => {
+                console.log(err)
+                toast({
+                    title: err.response.data.message,
+                    description:'Try Again',
+                    status: 'error',
+                    duration: 4000,
+                    isClosable: true,
+                    position: 'top-right',
+                    variant: 'solid',
+                    containerStyle: { fontSize: '15px', },
+                })
+                setLoading(false)
             })
-            window.location.href = '/'
-        }).catch((err) => {
-            console.log(err)
+        } catch (error) {
             toast({
-                title: err.response.data.message,
+                title: 'Wrong details, Try again',
                 description:'Try Again',
                 status: 'error',
                 duration: 4000,
@@ -84,7 +98,7 @@ export default function Login() {
                 containerStyle: { fontSize: '15px', },
             })
             setLoading(false)
-        })
+        }
 
     }
 
