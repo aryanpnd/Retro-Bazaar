@@ -38,7 +38,7 @@ passport.use(
                 }
             })
             .catch(err => {
-                return done(null, false, { message: err });
+                return done(null, false, { message: 'Wrong email' });
             });
     })
 );
@@ -46,20 +46,24 @@ passport.use(
 
 
 localAuthRoutes.post("/login", function(req, res, next) {
-    passport.authenticate("local", function(err, user, info) {
-      if (err) {
-        return res.status(500).json({ message: "Internal server error" });
-      }
-      if (!user) {
-        return res.status(401).send(info);
-      }
-      req.logIn(user, function(err) {
-        if (err) {
-          return res.status(500).json({ message: "Internal server error" });
-        }
-        return res.status(200).json({ message: "Login successful" });
-      });
-    })(req, res, next);
+    try {
+        passport.authenticate("local", function(err, user, info) {
+          if (err) {
+            return res.status(500).json({ message: "Internal server error" });
+          }
+          if (!user) {
+            return res.status(401).send(info);
+          }
+          req.logIn(user, function(err) {
+            if (err) {
+              return res.status(500).json({ message: "Internal server error" });
+            }
+            return res.status(200).json({ message: "Login successful" });
+          });
+        })(req, res, next);
+    } catch (error) {
+        console.log(error)
+    }
   });
 
 localAuthRoutes.post('/signup', async (req, res, next) => {
