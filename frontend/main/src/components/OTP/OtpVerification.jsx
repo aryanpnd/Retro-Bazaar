@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import "../styles/otpVerification.css";
+import "./otpVerification.css";
 import OTPInput from "otp-input-react";
 
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 // Phoone Auth
-import { auth } from "../config/firebase.config";
+import { auth } from "../../config/firebase.config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
-export default function OtpVerification() {
+export default function OtpVerification({ setPhoneVerified }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [footerBtnType, setFooterBtnType] = useState("Send OTP");
@@ -21,7 +21,6 @@ export default function OtpVerification() {
 
   const handleSendOtpBtn = () => {
     if (!loading) {
-      console.log(phoneNumber);
       if (phoneNumber.toString().length !== 12) {
         setOtpMessage({ msg: "Invalid phone number", success: false });
       } else {
@@ -56,6 +55,7 @@ export default function OtpVerification() {
           },
           "expired-callback": () => {},
         },
+
         auth
       );
     }
@@ -64,6 +64,7 @@ export default function OtpVerification() {
   function onSignup() {
     setLoading(true);
     onCaptchVerify();
+    console.log("done");
 
     const appVerifier = window.recaptchaVerifier;
 
@@ -91,6 +92,8 @@ export default function OtpVerification() {
       .then(async (res) => {
         setOtpMessage({ msg: "Phone number verified.", success: true });
         setLoading(false);
+        // window.location.reload();
+        setPhoneVerified(true);
       })
       .catch((err) => {
         console.log(err);
