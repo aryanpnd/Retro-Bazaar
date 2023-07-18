@@ -8,8 +8,9 @@ import "react-phone-input-2/lib/style.css";
 // Phoone Auth
 import { auth } from "../../config/firebase.config";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { toast } from "react-toastify";
 
-export default function OtpVerification({ setPhoneVerified }) {
+export default function OtpVerification() {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
   const [footerBtnType, setFooterBtnType] = useState("Send OTP");
@@ -21,6 +22,7 @@ export default function OtpVerification({ setPhoneVerified }) {
 
   const handleSendOtpBtn = () => {
     if (!loading) {
+      console.log(phoneNumber);
       if (phoneNumber.toString().length !== 12) {
         setOtpMessage({ msg: "Invalid phone number", success: false });
       } else {
@@ -45,26 +47,38 @@ export default function OtpVerification({ setPhoneVerified }) {
   const [loading, setLoading] = useState(false);
 
   function onCaptchVerify() {
-    if (!window.recaptchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(
-        "recaptcha-container",
-        {
-          size: "invisible",
-          callback: (response) => {
-            onSignup();
+    try {
+      
+      if (!window.recaptchaVerifier) {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+          "recaptcha-container",
+          {
+            size: "invisible",
+            callback: (response) => {
+              onSignup();
+            },
+            "expired-callback": () => {},
           },
-          "expired-callback": () => {},
-        },
-
-        auth
-      );
+          auth
+        );
+      }
+    } catch (error) {
+      toast.success(`${error}`, {
+        position: "top-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+    })
     }
   }
 
   function onSignup() {
     setLoading(true);
     onCaptchVerify();
-    console.log("done");
 
     const appVerifier = window.recaptchaVerifier;
 
@@ -92,8 +106,6 @@ export default function OtpVerification({ setPhoneVerified }) {
       .then(async (res) => {
         setOtpMessage({ msg: "Phone number verified.", success: true });
         setLoading(false);
-        // window.location.reload();
-        setPhoneVerified(true);
       })
       .catch((err) => {
         console.log(err);
