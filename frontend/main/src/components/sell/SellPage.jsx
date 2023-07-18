@@ -11,14 +11,14 @@ import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
 import { BeatLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-
+import OtpVerification from "../OTP/OtpVerification";
 
 export default function SellPage() {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
-
-  const [modal, setModal] = useState(false)
-  const [user, setuser] = useState({ name: '', photoUrl: '' })
+  const [phoneVerified, setPhoneVerified] = useState(false);
+  const [modal, setModal] = useState(false);
+  const [user, setuser] = useState({ name: "", photoUrl: "" });
   const [previewSource, setPreviewSource] = useState(null);
   const [image, setImage] = useState([]);
   const [formData, setFormData] = useState({
@@ -31,21 +31,29 @@ export default function SellPage() {
     location: null,
     thumbnail: null,
     images: [],
-    imagesPublicId: []
+    imagesPublicId: [],
   });
-  let images = []
-  let imagesPublicId = []
-  const [imageUploadLoading, setImageUploadLoading] = useState(false)
-  const [dataUploadLoading, setDataUploadLoading] = useState(false)
+  let images = [];
+  let imagesPublicId = [];
+  const [imageUploadLoading, setImageUploadLoading] = useState(false);
+  const [dataUploadLoading, setDataUploadLoading] = useState(false);
 
   // getting user data for preview card
   useEffect(() => {
-    axios.get(`${apiURL}/api/getUserInfo`, { withCredentials: true }).then((res) => {
-      setuser(res.data.data)
-    })
-  }, [])
-
-
+    axios
+      .get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
+      .then((res) => {
+        if (res.data.data.phoneNo) {
+          setPhoneVerified(true);
+        } else {
+          setPhoneVerified(false);
+        }
+        return res;
+      })
+      .then((res) => {
+        setuser(res.data.data);
+      });
+  }, []);
 
   // handling modal and error toasts
   const handleModal = () => {
@@ -59,13 +67,12 @@ export default function SellPage() {
         draggable: true,
         progress: undefined,
         theme: "light",
-      })
+      });
       return;
     }
-    setModal(!modal)
-    previewFile(image[0])
-  }
-
+    setModal(!modal);
+    previewFile(image[0]);
+  };
 
   // preview image in modal
   const previewFile = (file) => {
@@ -78,15 +85,13 @@ export default function SellPage() {
     if (file) {
       reader.readAsDataURL(file);
     } else {
-      setPreviewSource('');
+      setPreviewSource("");
     }
   };
 
-
-
-  // handling image upload 
+  // handling image upload
   const handleImageUpload = async () => {
-    setImageUploadLoading(true)
+    setImageUploadLoading(true);
     for (const img of image) {
       const formData = new FormData();
       formData.append("file", img);
@@ -94,35 +99,38 @@ export default function SellPage() {
       formData.append("cloud_name", "dnoycwhjx");
 
       try {
-        await axios.post(
-          "https://api.cloudinary.com/v1_1/dnoycwhjx/image/upload/",
-          formData,
-          {
-            onUploadProgress: (ProgressEvent) => {
-              // console.log((ProgressEvent.loaded / ProgressEvent.total) * 100);
-            },
-          }
-        ).then((res) => {
-          images = [...images, res.data.secure_url]
-          imagesPublicId = [...imagesPublicId, res.data.public_id]
-          setImageUploadLoading(false)
-        }).catch((err) => {
-          console.error(err);
-          setImageUploadLoading(false)
-          toast.error(`Some error occurred while uploading the images`, {
-            position: "top-center",
-            autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+        await axios
+          .post(
+            "https://api.cloudinary.com/v1_1/dnoycwhjx/image/upload/",
+            formData,
+            {
+              onUploadProgress: (ProgressEvent) => {
+                // console.log((ProgressEvent.loaded / ProgressEvent.total) * 100);
+              },
+            }
+          )
+          .then((res) => {
+            images = [...images, res.data.secure_url];
+            imagesPublicId = [...imagesPublicId, res.data.public_id];
+            setImageUploadLoading(false);
           })
-        })
+          .catch((err) => {
+            console.error(err);
+            setImageUploadLoading(false);
+            toast.error(`Some error occurred while uploading the images`, {
+              position: "top-center",
+              autoClose: 3000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "dark",
+            });
+          });
       } catch (error) {
         console.error(error);
-        setImageUploadLoading(false)
+        setImageUploadLoading(false);
         toast.error(`Some error occurred while uploading the images`, {
           position: "top-center",
           autoClose: 3000,
@@ -132,31 +140,33 @@ export default function SellPage() {
           draggable: true,
           progress: undefined,
           theme: "dark",
-        })
+        });
       }
     }
-
   };
-
 
   // submitting data to server
   const handleSubmitData = async () => {
-    setDataUploadLoading(true)
+    setDataUploadLoading(true);
     await axios
-      .post(`${apiURL}/api/addproduct`, {
-        title: formData.title,
-        description: formData.description,
-        category: formData.category,
-        price: formData.price,
-        quantity: formData.quantity,
-        brand: formData.brand,
-        location: formData.location,
-        thumbnail: images[0],
-        images: images,
-        imagesPublicId: imagesPublicId
-      }, { withCredentials: true })
+      .post(
+        `${apiURL}/api/addproduct`,
+        {
+          title: formData.title,
+          description: formData.description,
+          category: formData.category,
+          price: formData.price,
+          quantity: formData.quantity,
+          brand: formData.brand,
+          location: formData.location,
+          thumbnail: images[0],
+          images: images,
+          imagesPublicId: imagesPublicId,
+        },
+        { withCredentials: true }
+      )
       .then((res) => {
-        setDataUploadLoading(false)
+        setDataUploadLoading(false);
         toast.success(`Your product has been added successfully`, {
           position: "top-center",
           autoClose: 4000,
@@ -166,14 +176,14 @@ export default function SellPage() {
           draggable: true,
           progress: undefined,
           theme: "dark",
-        })
+        });
         setTimeout(() => {
-          navigate('/')
+          navigate("/");
         }, 1000);
       })
       .catch((err) => {
-        console.log(err)
-        setDataUploadLoading(false)
+        console.log(err);
+        setDataUploadLoading(false);
         toast.error(`Some error occurred while uploading the product`, {
           position: "top-center",
           autoClose: 3000,
@@ -183,25 +193,24 @@ export default function SellPage() {
           draggable: true,
           progress: undefined,
           theme: "dark",
-        })
-      })
-  }
-
-
-  // doing this separating and using normal array instead of usestate is because of async behaviour during data post 
-  const handleUpload = async () => {
-    await handleImageUpload();
-    await handleSubmitData()
+        });
+      });
   };
 
+  // doing this separating and using normal array instead of usestate is because of async behaviour during data post
+  const handleUpload = async () => {
+    await handleImageUpload();
+    await handleSubmitData();
+  };
 
-  return (
+  return !phoneVerified ? (
+    <OtpVerification setPhoneVerified={setPhoneVerified} />
+  ) : (
     <div className="sell-container">
       <div className="fake-container-sell"></div>
       <div className="sell-heading">Sell a product</div>
 
       <div className="sell-body">
-
         <div className="sell-image-container">
           <div className="sell-product-details-heading">Upload images</div>
 
@@ -217,54 +226,76 @@ export default function SellPage() {
 
         <div className="sell-form-container">
           <div className="sell-product-details-heading">Product details</div>
-          <FormInputs modal={modal} setModal={setModal} handleModal={handleModal} setFormData={setFormData} />
+          <FormInputs
+            modal={modal}
+            setModal={setModal}
+            handleModal={handleModal}
+            setFormData={setFormData}
+          />
 
           {/* <button className='sell-preview-btn' onClick={upload}>Preview</button> */}
 
-          <Modal setModal={setModal} modal={modal} title={'Preview'} height={'100%'} width={'100%'}>
+          <Modal
+            setModal={setModal}
+            modal={modal}
+            title={"Preview"}
+            height={"100%"}
+            width={"100%"}
+          >
             {
               <>
-                {
-                  imageUploadLoading || dataUploadLoading ?
-                    <>
-                      {
-                        <>
-                          <div className="lottie-loader-container">
-                            <div className="lottie-loader-inner-wrapper">
-                              <Lottie animationData={loader} loop={true} />
-                              <h2 style={{ textAlign: 'center' }}>{
-                                imageUploadLoading ? 'Uploading images...' : 'Uploading your product...'}</h2>
-                            </div>
+                {imageUploadLoading || dataUploadLoading ? (
+                  <>
+                    {
+                      <>
+                        <div className="lottie-loader-container">
+                          <div className="lottie-loader-inner-wrapper">
+                            <Lottie animationData={loader} loop={true} />
+                            <h2 style={{ textAlign: "center" }}>
+                              {imageUploadLoading
+                                ? "Uploading images..."
+                                : "Uploading your product..."}
+                            </h2>
                           </div>
-                        </>
-                      }
-                    </>
-                    :
-                    <Item
-                      show={true}
-                      name={formData.title}
-                      description={formData.description}
-                      price={formData.price}
-                      date={0}
-                      location={formData.location}
-                      image={previewSource}
-                      category={formData.category}
-                      userImage={user.photoUrl}
-                      userName={user.name}
-                      wishlistData={() => { }}
-                      sendToast={() => { }}
-                      productId={'p._id'}
-                    />
-                }
-                <button className='sell-preview-btn' style={{ fontSize: "1.2rem", opacity: imageUploadLoading || dataUploadLoading ? '0.4' : '1' }} onClick={handleUpload}>
-                  {imageUploadLoading || dataUploadLoading ?
+                        </div>
+                      </>
+                    }
+                  </>
+                ) : (
+                  <Item
+                    show={true}
+                    name={formData.title}
+                    description={formData.description}
+                    price={formData.price}
+                    date={0}
+                    location={formData.location}
+                    image={previewSource}
+                    category={formData.category}
+                    userImage={user.photoUrl}
+                    userName={user.name}
+                    wishlistData={() => {}}
+                    sendToast={() => {}}
+                    productId={"p._id"}
+                  />
+                )}
+                <button
+                  className="sell-preview-btn"
+                  style={{
+                    fontSize: "1.2rem",
+                    opacity:
+                      imageUploadLoading || dataUploadLoading ? "0.4" : "1",
+                  }}
+                  onClick={handleUpload}
+                >
+                  {imageUploadLoading || dataUploadLoading ? (
                     <BeatLoader color="white" size={10} />
-                    : 'Post'}
+                  ) : (
+                    "Post"
+                  )}
                 </button>
               </>
             }
           </Modal>
-
         </div>
       </div>
       <div className="fake-container-sell-2"></div>
