@@ -4,14 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ProductsContextProvider } from "./contexts/productsContext";
-import { Link, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./components/home/Home";
 import Wishlist from "./components/wishlist/Wishlist";
-import Navbar from "./components/navbar/Navbar";
 import SearchPage from "./components/search/SearchPage";
 import SellPage from "./components/sell/SellPage";
 import Product from "./components/product/Product";
 import UserProfile from "./components/profile/UserProfile";
+import OtpVerification from "./components/miscellaneous/otpVerification/OtpVerification";
 
 const router = createBrowserRouter([
   {
@@ -42,8 +42,12 @@ const router = createBrowserRouter([
         path: "/myprofile",
         element: <UserProfile />,
       },
+      {
+        path:"/phone",
+        element:<OtpVerification/>
+      }
     ],
-  },
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

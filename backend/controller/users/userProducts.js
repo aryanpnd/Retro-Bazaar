@@ -1,4 +1,5 @@
 const { Product } = require("../../model/products");
+const { User } = require("../../model/user");
 
 // get a user's product
 const getUserProducts = async (req, res) => {
@@ -14,17 +15,24 @@ const getUserProducts = async (req, res) => {
 
 // add a product
 const addProduct = async (req, res, next) => {
-  const product = new Product(req.body);
-  product.date = Date.now();
-  product.postedBy = req.session.passport.user.id;
-  await product
-    .save()
-    .then((docs) => {
-      res.status(200).send(`Query has been saved `);
-    })
-    .catch((err) => {
-      res.status(400).send(`Some error occured <br/> ${err}`);
-    });
+  await User.findById(req.session.passport.user.id).then(async (data)=>{
+    if(data.phoneNo){
+      const product = new Product(req.body);
+      product.date = Date.now();
+      product.postedBy = req.session.passport.user.id;
+      await product
+        .save()
+        .then((docs) => {
+          res.status(200).send(`Your product has been added successfully`);
+        })
+        .catch((err) => {
+          res.status(400).send(`Some error occured ${err}`);
+        });
+    }
+    else{
+      res.status(200).json({code:"f",message:"Phone number is not verified"});
+    }
+  })
 };
 
 // delete a product

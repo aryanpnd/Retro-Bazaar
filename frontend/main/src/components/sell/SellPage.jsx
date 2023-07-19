@@ -11,13 +11,14 @@ import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
 import { BeatLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-import OtpVerification from "../OTP/OtpVerification";
+import OtpVerification from "../miscellaneous/otpVerification/OtpVerification";
 
 export default function SellPage() {
   const navigate = useNavigate();
 
-  const [phoneVerified, setPhoneVerified] = useState(false);
   const [modal, setModal] = useState(false);
+  const [previewLoading, setPreviewLoading] = useState(false)
+  const [phoneModal, setPhoneModal] = useState(false);
   const [user, setuser] = useState({ name: "", photoUrl: "" });
   const [previewSource, setPreviewSource] = useState(null);
   const [image, setImage] = useState([]);
@@ -43,17 +44,18 @@ export default function SellPage() {
     axios
       .get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
       .then((res) => {
-        if (res.data.data.phoneNo) {
-          setPhoneVerified(true);
-        } else {
-          setPhoneVerified(false);
-        }
-        return res;
-      })
-      .then((res) => {
         setuser(res.data.data);
       });
   }, []);
+  useEffect(() => {
+    setPreviewLoading(true)
+    axios
+      .get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
+      .then((res) => {
+        setuser(res.data.data);
+        setPreviewLoading(false)
+      });
+  }, [modal]);
 
   // handling modal and error toasts
   const handleModal = () => {
@@ -70,9 +72,11 @@ export default function SellPage() {
       });
       return;
     }
-    setModal(!modal);
+    user.phoneNo ? setModal(!modal) : setPhoneModal(!phoneModal)
     previewFile(image[0]);
+    setPreviewLoading(false)
   };
+
 
   // preview image in modal
   const previewFile = (file) => {
@@ -166,8 +170,24 @@ export default function SellPage() {
         { withCredentials: true }
       )
       .then((res) => {
+        if (res.data.code) {
+          setDataUploadLoading(false);
+          setImageUploadLoading(false)
+          toast.error(`${res.data.message}`, {
+            position: "top-center",
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          return
+        }
+
         setDataUploadLoading(false);
-        toast.success(`Your product has been added successfully`, {
+        toast.success(`${res.data}`, {
           position: "top-center",
           autoClose: 4000,
           hideProgressBar: false,
@@ -203,9 +223,7 @@ export default function SellPage() {
     await handleSubmitData();
   };
 
-  return !phoneVerified ? (
-    <OtpVerification setPhoneVerified={setPhoneVerified} />
-  ) : (
+  return (
     <div className="sell-container">
       <div className="fake-container-sell"></div>
       <div className="sell-heading">Sell a product</div>
@@ -231,9 +249,8 @@ export default function SellPage() {
             setModal={setModal}
             handleModal={handleModal}
             setFormData={setFormData}
+            previewLoading={previewLoading}
           />
-
-          {/* <button className='sell-preview-btn' onClick={upload}>Preview</button> */}
 
           <Modal
             setModal={setModal}
@@ -273,30 +290,35 @@ export default function SellPage() {
                     category={formData.category}
                     userImage={user.photoUrl}
                     userName={user.name}
-                    wishlistData={() => {}}
-                    sendToast={() => {}}
+                    wishlistData={() => { }}
+                    sendToast={() => { }}
                     productId={"p._id"}
                   />
                 )}
                 <button
                   className="sell-preview-btn"
-                  style={{
-                    fontSize: "1.2rem",
-                    opacity:
-                      imageUploadLoading || dataUploadLoading ? "0.4" : "1",
-                  }}
+                  style={{ fontSize: "1.2rem", opacity: imageUploadLoading || dataUploadLoading ? "0.4" : "1", }}
                   onClick={handleUpload}
                 >
                   {imageUploadLoading || dataUploadLoading ? (
                     <BeatLoader color="white" size={10} />
-                  ) : (
-                    "Post"
-                  )}
+                  ) : ("Post")
+                  }
                 </button>
               </>
             }
           </Modal>
         </div>
+
+        {/* phone modal */}
+        <Modal setModal={setPhoneModal}
+          modal={phoneModal}
+          title={"Verify phone"}
+          height={"100%"}
+          width={"100%"}>
+          <OtpVerification setModal={setModal} setPhoneModal={setPhoneModal} setuser={setuser} />
+        </Modal>
+
       </div>
       <div className="fake-container-sell-2"></div>
     </div>

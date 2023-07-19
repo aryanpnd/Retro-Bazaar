@@ -3,8 +3,9 @@ import { useState } from 'react'
 import './styles/FormInputs.css'
 import { ArrowRightOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
+import { BeatLoader } from 'react-spinners';
 
-export default function FormInputs({ handleModal,setFormData }) {
+export default function FormInputs({ handleModal, setFormData, previewLoading }) {
 
 
     // input field values
@@ -58,7 +59,7 @@ export default function FormInputs({ handleModal,setFormData }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if(!locationInput || titleInput.val.length<5 || descriptionInput.val.length<20){
+        if (!locationInput || titleInput.val.length < 5 || descriptionInput.val.length < 20) {
             toast.warning(`Please fill the required as mentioned`, {
                 position: "top-center",
                 autoClose: 3000,
@@ -68,8 +69,8 @@ export default function FormInputs({ handleModal,setFormData }) {
                 draggable: true,
                 progress: undefined,
                 theme: "light",
-              })
-              return
+            })
+            return
         }
         setFormData({
             title: titleInput.val,
@@ -79,10 +80,10 @@ export default function FormInputs({ handleModal,setFormData }) {
             quantity: quantityInput,
             brand: brandInput,
             location: locationInput,
-            thumbnail:[],
-            images:[],
-            imagesSecureUrl:[],
-            imagesPublicId:[]
+            thumbnail: [],
+            images: [],
+            imagesSecureUrl: [],
+            imagesPublicId: []
         })
 
         handleModal()
@@ -160,7 +161,7 @@ export default function FormInputs({ handleModal,setFormData }) {
                     <label htmlFor="nearlpu">Near the LPU</label>
                 </div>
 
-                <button className="sell-preview-btn" type='submit'>Preview <ArrowRightOutlined/></button>
+                <button className="sell-preview-btn" type='submit'>{previewLoading ? <BeatLoader color="white" size={10} /> : (<>Preview <ArrowRightOutlined /></>)}</button>
 
                 <div className="fake-form-div"></div>
             </form>

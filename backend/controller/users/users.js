@@ -17,6 +17,14 @@ const changeUserName = async (req, res) => {
 }
 
 
+// change user name
+const addUserPhone = async (req, res) => {
+    await User.findByIdAndUpdate(req.session.passport.user.id, { phoneNo: req.body.phonenumber }).then((data) => {
+        res.status(200).json({message:"phone number updated successfully",data:data});
+    }).catch((err) => { res.status(401).send("Unauthorized") })
+}
+
+
 // // Signout the User (destroying session)
 const signOutUser = (req, res) => {
     try {
@@ -30,4 +38,4 @@ const signOutUser = (req, res) => {
 
 
 
-module.exports = { getUserInfo, changeUserName,signOutUser }
+module.exports = { getUserInfo, changeUserName,signOutUser,addUserPhone }
