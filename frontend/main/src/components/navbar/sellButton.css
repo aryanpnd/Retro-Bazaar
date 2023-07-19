@@ -10,7 +10,7 @@
     font-weight: 500;
     color: #fff;
     z-index: 2;
-    transform: scale(0.9);
+    transform: scale(0.8);
     cursor: pointer;
 }
    
@@ -58,12 +58,12 @@
    
    .sellBtn, .sellBtn::after {
     box-sizing: border-box;
-    transform: scale(0.9);
+    transform: scale(0.8);
 }
    
    .sellBtn:active {
     --border-width: 5px;
-    transform: scale(0.8);
+    transform: scale(0.7);
    }
 
  

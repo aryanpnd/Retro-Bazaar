@@ -3,10 +3,14 @@ const { productRoutes } = require('./product/products');
 const { UserRoutes } = require('./user/users');
 const { WishlistRoutes } = require('./user/wishlist');
 
-const allApiRoutes = express.Router()
+const protectedApiRoutes = express.Router()
+const unprotectedApiRoutes = express.Router()
 
-allApiRoutes.use('/',
-    productRoutes, UserRoutes,WishlistRoutes
+protectedApiRoutes.use('/',
+    UserRoutes,WishlistRoutes
+)
+unprotectedApiRoutes.use('/',
+    productRoutes
 )
 
-module.exports = { allApiRoutes }
+module.exports = { protectedApiRoutes,unprotectedApiRoutes }

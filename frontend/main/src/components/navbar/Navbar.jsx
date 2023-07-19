@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import "./Navbar.css";
 import "./sellButton.css";
+import "./loginBtn.css";
 import {
   FilterOutlined,
   HeartFilled,
@@ -20,7 +21,7 @@ import { Slide, toast } from "react-toastify";
 import logo from "../../assets/img/logo.png";
 
 function Navbar() {
-  const { setProductData } = useContext(productsContext);
+  const { setProductData, isAuth, setLModal } = useContext(productsContext);
   const navigate = useNavigate();
 
   const [modal, setModal] = useState(false);
@@ -61,15 +62,20 @@ function Navbar() {
   }, [lastScrollY]);
 
   const appLoads = () => {
-    axios
-      .get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
-      .then((response) => {
-        setUserData(response.data.data.photoURL);
-        setUserName(response.data.data.name);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    try {
+      axios
+        .get(`${apiURL}/api/getUserInfo`, { withCredentials: true })
+        .then((response) => {
+          setUserData(response.data.data.photoURL);
+          setUserName(response.data.data.name);
+        })
+        .catch((error) => {
+          console.log(error);
+          return
+        });
+    } catch (err) {
+      return
+    }
   };
   useEffect(() => {
     appLoads();
@@ -151,9 +157,7 @@ function Navbar() {
         <span style={{ height: "80%", width: "25%" }}>
           <button
             className="sellBtn"
-            onClick={() => {
-              navigate("/sell");
-            }}
+            onClick={() => { isAuth ? navigate("/sell") : setLModal(true) }}
           >
             Sell Now
           </button>
@@ -166,24 +170,28 @@ function Navbar() {
             fontSize: "1.5rem",
           }}
           className={`bottom-nav-container-mob-button`}
-          onClick={() => navigate("/wishlist")}
+          onClick={() => isAuth ?  navigate("/wishlist"):setLModal(true)}
         >
           {wishlist ? <HeartFilled /> : <HeartOutlined />}
         </button>
 
-        <span className="bottom-nav-container-mob-button">
-          <ProfileDropdown position={"top"}>
-            <img
-              style={{ width: "2.2rem", borderRadius: "100%" }}
-              src={`${
-                userData
-                  ? userData
-                  : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
-              }`}
-              alt=""
-            />
-          </ProfileDropdown>
-        </span>
+        {
+          isAuth ?
+            <span className="bottom-nav-container-mob-button">
+              <ProfileDropdown position={"top"}>
+                <img
+                  style={{ width: "2.2rem", borderRadius: "100%" }}
+                  src={`${userData
+                    ? userData
+                    : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
+                    }`}
+                  alt=""
+                />
+              </ProfileDropdown>
+            </span>
+            :
+            <button className="loginBtn" onClick={() => window.location.href = '/auth'}>Login</button>
+        }
       </div>
 
       {/* pc navbar */}
@@ -204,15 +212,15 @@ function Navbar() {
             className={`pc-center-navbar-element${home ? "-selected" : ""}`}
             onClick={() => navigate("/")}
           >
-            {home?<HomeFilled style={{ color: "white", fontSize: "1.4rem" }} />:<HomeOutlined style={{ color: "white", fontSize: "1.4rem" }} />}
+            {home ? <HomeFilled style={{ color: "white", fontSize: "1.4rem" }} /> : <HomeOutlined style={{ color: "white", fontSize: "1.4rem" }} />}
             <div className="pc-navbar-icon-text">home</div>
           </div>
 
           <div
             className={`pc-center-navbar-element${wishlist ? "-selected" : ""}`}
-            onClick={() => navigate("/wishlist")}
+            onClick={() => isAuth ? navigate("/wishlist"):setLModal(true) }
           >
-            {wishlist?<HeartFilled style={{ color: "#ffffff", fontSize: "1.4rem" }} />:<HeartOutlined style={{ color: "#ffffff", fontSize: "1.4rem" }} />}
+            {wishlist ? <HeartFilled style={{ color: "#ffffff", fontSize: "1.4rem" }} /> : <HeartOutlined style={{ color: "#ffffff", fontSize: "1.4rem" }} />}
             <div className="pc-navbar-icon-text">wishlist</div>
           </div>
 
@@ -228,29 +236,31 @@ function Navbar() {
         <div className="navbar-container-pc-right">
           <button
             className="sellBtn"
-            onClick={() => {
-              navigate("/sell");
-            }}
+            onClick={() => { isAuth ? navigate("/sell") : setLModal(true) }}
           >
             Sell Now
           </button>
-          <ProfileDropdown position={"bottom"}>
-            <img
-              style={{
-                height: "3rem",
-                width: "3rem",
-                borderRadius: "25px",
-                border: "2px solid",
-                transform: "scale(0.9)",
-              }}
-              src={`${
-                userData
-                  ? userData
-                  : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
-              }`}
-              alt=""
-            />
-          </ProfileDropdown>
+          {
+            isAuth ?
+              <ProfileDropdown position={"bottom"}>
+                <img
+                  style={{
+                    height: "3rem",
+                    width: "3rem",
+                    borderRadius: "25px",
+                    border: "2px solid",
+                    transform: "scale(0.9)",
+                  }}
+                  src={`${userData
+                    ? userData
+                    : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
+                    }`}
+                  alt=""
+                />
+              </ProfileDropdown>
+              :
+              <button className="loginBtn" onClick={() => window.location.href = '/auth'}>Login</button>
+          }
         </div>
       </div>
     </>

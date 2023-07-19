@@ -1,0 +1,28 @@
+.pnf-main {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.pnf-main img {
+    height: 70%;
+    width: 45%;
+}
+
+.pfp-text{
+    text-align: center;
+    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+}
+
+@media(max-width:1000px) {
+    .pnf-main img{
+        height: 40%;
+        width: 80%;
+    }
+}

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./ProfileDropdown.css";
-import { UserOutlined, LogoutOutlined } from "@ant-design/icons";
+import { UserOutlined, LogoutOutlined, LoadingOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { apiURL } from "../../../App";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { productsContext } from "../../../contexts/productsContext";
+import { toast } from "react-toastify";
 
 export default function ProfileDropdown({ children, position }) {
   const navigate = useNavigate();
-
+  const { setIsAuth } = useContext(productsContext);
+  const [loading, setLoading] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -41,12 +45,33 @@ export default function ProfileDropdown({ children, position }) {
   }
 
   const signOut = () => {
+    setLoading(true)
     axios
       .get(`${apiURL}/api/signOutUser`, { withCredentials: true })
       .then(() => {
-        window.location.href = "/auth";
+        setIsAuth(false)
+        setLoading(false)
+        toast.success("Logout successfully", {
+          position: "top-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
       })
       .catch((error) => {
+        setLoading(false)
+        toast.error("Error occurred, Logout failed", {
+          position: "top-right",
+          autoClose: 2500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+        });
         console.log(error);
       });
   };
@@ -72,7 +97,10 @@ export default function ProfileDropdown({ children, position }) {
             {" "}
             <LogoutOutlined />{" "}
           </span>
-          Logout
+          {
+            loading ? <LoadingOutlined /> :
+              ('Logout')
+          }
         </button>
       </div>
     </div>

@@ -1,0 +1,66 @@
+.l-modal-content {
+    background: #161420;
+    height: 50%;
+    width: 30%;
+    border-radius: 14px;
+}
+
+.l-modal {
+    position: fixed;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background: #13111ccf;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.l-modal-body {
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+    padding: 1rem;
+    height: 70%;
+}
+
+.l-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0.5rem 0.5rem 0rem 0.5rem;
+    background: linear-gradient(to left, rgb(121, 40, 202), rgb(255, 0, 128));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 200%;
+    font-weight: 900;
+}
+
+.login-texts{
+    text-align: center;
+}
+
+.l-modal-body button{
+    height: 20%;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600
+}
+
+.google-btn-div{
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+@media(max-width:1000px) {
+    .l-modal-content {
+        width: 88%;
+    }
+}
