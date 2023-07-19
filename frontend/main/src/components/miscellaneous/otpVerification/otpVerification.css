@@ -1,29 +1,10 @@
-:root{
-    --root-font-size-OTP: 12px;
-    --otp-container-color: #0f0f13;
-    --otp-container-font-color : #FFFFFF;
-    --otp-container-font-color-dim : #969696c0;
-    --otp-container-phone-input-color : #282832e9;
-}
-
-.phone-validation-outer-wrapper{
-    display: flex;
-    width: 100vw;
-    height: 100vh;
-}
-
 .phone-validation-container{
     background-color: var(--otp-container-color);
-    width: 70vw;
     border-radius: 10px;
-    margin: auto;
-    margin-top: 10rem;
-    color: var(--otp-container-font-color);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 5%;   
-    gap: calc(1.5*var(--root-font-size-OTP));
+    gap: calc(1.5rem);
 }
 
 .phone-validation-heading{
@@ -76,6 +57,7 @@
 .phone-validation-buttons-container{
     display: flex;
     margin-bottom: 1rem;
+    width: 100%;
 }
 
 .phone-validation-sendOtpBtn, .phone-validation-backBtn{
@@ -90,7 +72,7 @@
     background-image: linear-gradient(to right, #1c263c 0%, #181e2b 51%, #232c3e 100%);
     box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
     border: none; 
-    
+    width: 100%;
 }
 
 .phone-validation-sendOtpBtn:hover, .phone-validation-backBtn:hover{
@@ -101,18 +83,6 @@
 .phone-validation-backBtn{
     margin-right: 1rem;
 }
-
-.phone-validation-footer-msg{
-    text-align: center;
-    color: var(--otp-container-font-color-dim);
-    margin-bottom: 2rem;
-}
-
-.phone-validation-footer-msg span{
-    text-decoration: underline;
-    font-size: calc(1.05*var(--root-font-size-OTP));
-}
-
 @media only screen and (min-width:500px){
     :root{
         --root-font-size-OTP: 13px;

@@ -9,7 +9,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
-    "firebase": "^10.0.0",
+    "firebase": "^9.23.0",
     "lottie-react": "^2.4.0",
     "otp-input-react": "^0.3.0",
     "react": "^18.2.0",

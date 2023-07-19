@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUserInfo, signOutUser, changeUserName } = require('../../../controller/users/users');
+const { getUserInfo, signOutUser, changeUserName,addUserPhone } = require('../../../controller/users/users');
 const { getUserProducts,addProduct, deleteProduct, deleteAllProducts } = require('../../../controller/users/userProducts');
 
 const UserRoutes = express.Router()
@@ -12,6 +12,7 @@ UserRoutes
     .delete("/deleteProduct", deleteProduct)
     .delete("/deleteAllProducts", deleteAllProducts)
     .put("/changeUserName", changeUserName)
+    .put("/addUserPhone", addUserPhone)
     .get("/signOutUser", signOutUser)
 
 
