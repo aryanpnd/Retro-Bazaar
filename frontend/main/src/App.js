@@ -8,8 +8,8 @@ import { useContext, useEffect } from "react";
 import { productsContext } from "./contexts/productsContext";
 import axios from "axios";
 
-export const apiURL = "http://localhost:8080";
-// export const apiURL = "";
+// export const apiURL = "http://localhost:8080";
+export const apiURL = "";
 
 function App() {
   const { setCategory } = useContext(productsContext);
