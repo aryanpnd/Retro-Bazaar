@@ -204,7 +204,7 @@ function Navbar() {
             className={`pc-center-navbar-element${home ? "-selected" : ""}`}
             onClick={() => navigate("/")}
           >
-            {<HomeFilled style={{ color: "white", fontSize: "1.4rem" }} />}
+            {home?<HomeFilled style={{ color: "white", fontSize: "1.4rem" }} />:<HomeOutlined style={{ color: "white", fontSize: "1.4rem" }} />}
             <div className="pc-navbar-icon-text">home</div>
           </div>
 
@@ -212,7 +212,7 @@ function Navbar() {
             className={`pc-center-navbar-element${wishlist ? "-selected" : ""}`}
             onClick={() => navigate("/wishlist")}
           >
-            {<HeartOutlined style={{ color: "#ffffff", fontSize: "1.4rem" }} />}
+            {wishlist?<HeartFilled style={{ color: "#ffffff", fontSize: "1.4rem" }} />:<HeartOutlined style={{ color: "#ffffff", fontSize: "1.4rem" }} />}
             <div className="pc-navbar-icon-text">wishlist</div>
           </div>
 
