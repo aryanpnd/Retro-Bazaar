@@ -1,0 +1,22 @@
+.loginBtn{
+    border-radius: 10px;
+    padding: 4% 10%;
+    border: 1px solid;
+    background-color: transparent;
+    margin-right: 9%;
+    font-weight: 500;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+@media(max-width:1000px) {
+.loginBtn{
+    border-radius: 6px;
+    padding: 2% 1%;
+    margin: 0;
+    border: 2px solid  white;
+    color: white;
+    height: 2.5rem;
+}
+}

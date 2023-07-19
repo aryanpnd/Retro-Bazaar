@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 // import { Heart, HeartOutline } from 'react-ionicons'
 import "./Item.css";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
@@ -6,6 +6,7 @@ import axios from "axios";
 import { apiURL } from "../../../App";
 import { ClipLoader, ClockLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
+import { productsContext } from "../../../contexts/productsContext";
 
 function Item({
   id,
@@ -13,7 +14,7 @@ function Item({
   description,
   price,
   category,
-  date,location,
+  date, location,
   image,
   userImage,
   userName,
@@ -22,6 +23,7 @@ function Item({
   productId,
   show
 }) {
+  const { isAuth, setLModal } = useContext(productsContext);
   const navigate = useNavigate();
   const [wishlist, setWishlist] = useState(false);
   const [spinnerLoading, setSpinnerLoading] = useState(false);
@@ -43,7 +45,7 @@ function Item({
   }, []);
 
   async function toggleWishlist() {
-    if(show) return
+    if (show) return
     setSpinnerLoading(true);
 
     if (!wishlist) {
@@ -76,7 +78,7 @@ function Item({
       <div className="item-container">
         <div className="item-img-wrapper">
           <img className="item-img" src={image} alt="" />
-          <div className="item-img-wishlist" onClick={toggleWishlist}>
+          <div className="item-img-wishlist" onClick={() => isAuth ? toggleWishlist() : setLModal(true)}>
             {wishlist ? (
               spinnerLoading ? (
                 <ClockLoader
@@ -101,7 +103,7 @@ function Item({
           </div>
 
           <div className="item-img-product-info">
-            <div style={{background:location==='Inside LPU'?'#ef7f1a':'#ef2a1a'}} className="postedDate">{location}</div>
+            <div style={{ background: location === 'Inside LPU' ? '#ef7f1a' : '#ef2a1a' }} className="postedDate">{location}</div>
             <div className="postedDate">{dateAgo} Days ago</div>
           </div>
         </div>
@@ -120,7 +122,7 @@ function Item({
           <button
             className="item-view-now-btn"
             onClick={() => {
-              if(show)return
+              if (show) return
               navigate("/viewproduct/" + productId);
             }}
           >
@@ -135,8 +137,8 @@ function Item({
               border: "1px solid",
             }}
             src={`${userImage
-                ? userImage
-                : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
+              ? userImage
+              : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
               }`}
             alt=""
           />

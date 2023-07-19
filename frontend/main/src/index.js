@@ -12,11 +12,13 @@ import SellPage from "./components/sell/SellPage";
 import Product from "./components/product/Product";
 import UserProfile from "./components/profile/UserProfile";
 import OtpVerification from "./components/miscellaneous/otpVerification/OtpVerification";
+import NotFound from "./components/notFoundPage/NotFound";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    errorElement:<NotFound/>,
     children: [
       {
         path: "",

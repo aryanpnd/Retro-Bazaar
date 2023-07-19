@@ -14,7 +14,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s ease;
 }
 
 .filter-modal-content {

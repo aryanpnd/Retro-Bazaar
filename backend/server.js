@@ -10,7 +10,7 @@ const googleAuthRouter = require("./routes/auth/googleAuth");
 const cookieParser = require("cookie-parser");
 const { localAuthRoutes } = require("./routes/auth/localAuth");
 const { User } = require("./model/user");
-const { allApiRoutes } = require("./routes/api/allApiRoutes");
+const { protectedApiRoutes, unprotectedApiRoutes } = require("./routes/api/allApiRoutes");
 
 // initializing express
 const app = express();
@@ -61,35 +61,50 @@ app.use(
   })
 );
 
+// serving main page
+app.use("/", express.static(path.join(__dirname, "views/site/build")));
+
+// unprotected api routes
+app.use("/api/", unprotectedApiRoutes);
+
+
 // intializing passport middlewares
 // app.enable('trust proxy') // required when deploying
 app.use(passport.authenticate("session"));
 app.use(passport.session());
 app.use(passport.initialize());
 
+// get request to check if user is authenticated
+app.use("/api/checkAuth", (req, res) => {
+  req.isAuthenticated() ? res.send(true) : res.send(false)
+});
+
 // auth pages
 app.use("/auth", express.static(path.join(__dirname, "views/auth/build")));
-app.get("/auth/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "views/auth/build/index.html"));
-});
+
 
 // auth routes and middlewares
 app.use("/authapi/local", localAuthRoutes);
 app.use("/authapi/google", googleAuthRouter);
 
+
 // checking if user is authorized
 app.use("/", (req, res, next) => {
-  req.isAuthenticated() ? next() : res.status(401).redirect("/auth");
+  req.isAuthenticated() ? next() : res.status(401).redirect("/");
 });
 
 // rest apis
-app.use("/api", allApiRoutes);
+app.use("/api", protectedApiRoutes);
 
-// main dashboard pages
-app.use("/", express.static(path.join(__dirname, "views/site/build")));
+
+// handling main and auth page not found routes
+app.get("/auth/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "views/auth/build/index.html"));
+});
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "views/site/build/index.html"));
 });
+
 
 // declaring express listener
 app.listen(process.env.PORT, () => {
