@@ -12,6 +12,7 @@ import loader from "../../assets/lottie/cart-icon-loader.json";
 import { BeatLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 import OtpVerification from "../miscellaneous/otpVerification/OtpVerification";
+import { InfoCircleFilled } from "@ant-design/icons";
 
 export default function SellPage() {
   const navigate = useNavigate();
@@ -226,7 +227,10 @@ export default function SellPage() {
   return (
     <div className="sell-container">
       <div className="fake-container-sell"></div>
-      <div className="sell-heading">Sell a product</div>
+      {!user.phoneNo &&
+        <div style={{height:'min-content',textAlign:"center",background:"#d43303"}}><InfoCircleFilled/> Your phone number is not verified, you will be asked for the verification</div>
+      }
+      <div style={{ height: user.phoneNo ? '10%' : '8%' }} className="sell-heading">Sell a product</div>
 
       <div className="sell-body">
         <div className="sell-image-container">

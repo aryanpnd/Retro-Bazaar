@@ -60,7 +60,7 @@ export default function FormInputs({ handleModal, setFormData, previewLoading })
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!locationInput || titleInput.val.length < 5 || descriptionInput.val.length < 20) {
-            toast.warning(`Please fill the required as mentioned`, {
+            toast.warning(`Please fill the required fields as mentioned`, {
                 position: "top-center",
                 autoClose: 3000,
                 hideProgressBar: false,
