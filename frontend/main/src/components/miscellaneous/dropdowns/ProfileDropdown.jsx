@@ -60,6 +60,7 @@ export default function ProfileDropdown({ children, position }) {
           draggable: true,
           theme: "dark",
         });
+        navigate('/')
       })
       .catch((error) => {
         setLoading(false)
@@ -93,13 +94,15 @@ export default function ProfileDropdown({ children, position }) {
           My profile
         </button>
         <button onClick={signOut}>
-          <span>
-            {" "}
-            <LogoutOutlined />{" "}
-          </span>
-          {
-            loading ? <LoadingOutlined /> :
-              ('Logout')
+          {loading ?
+              <LoadingOutlined />:
+            <>
+              <span>
+                {" "}
+                <LogoutOutlined />{" "}
+              </span>
+              Logout
+            </>
           }
         </button>
       </div>
