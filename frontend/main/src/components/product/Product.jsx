@@ -3,7 +3,7 @@ import "./product.css";
 import {
   LeftCircleOutlined,
   MailOutlined,
-  PhoneOutlined,
+  PhoneFilled,
   WhatsAppOutlined,
 } from "@ant-design/icons";
 import MyCarousel from "./Carousel";
@@ -86,7 +86,7 @@ function Product() {
             <MyCarousel imageArray={data.images} />
           </div>
           <div className="product-details">
-            <div
+            {/* <div
               className="product-back-btn"
               onClick={() => {
                 navigate("/");
@@ -94,7 +94,7 @@ function Product() {
             >
               <LeftCircleOutlined />
               <span>Back to product list</span>
-            </div>
+            </div> */}
             <div className="product-category-path">
               Category {">"} {data.category}
             </div>
@@ -102,38 +102,17 @@ function Product() {
               <div className="product-title">{data.title}</div>
               <div className="product-description">{data.description}</div>
             </div>
-            <div className="product-info-card">
-              <div className="product-upload-date">
-                On sale from: <span>{data.date.split("T")[0]}</span>
-              </div>
+            <div className="product-info-card" style={{display:"flex",justifyContent:"space-between"}}>
+              <div className="product-title"><span style={{fontWeight:"100"}}>Quantity</span> {data.quantity}</div>
+              <div className="product-title">₹{data.price}</div>
             </div>
-
-            <div className="product-extra-card-container">
-              <div className="product-price product-small-card">
-                <div className="product-small-card-title"> Price</div>
-                <div className="product-small-card-text product-circle-bg-big">
-                  {data.price} INR
-                </div>
+            <div className="product-info-card" style={{display:"flex",justifyContent:"space-between"}}>
+              <div className="product-upload-date">
+                On sale from: <div>{data.date.split("T")[0]}</div>
               </div>
-              <div className="product-quantity product-small-card">
-                <div className="product-small-card-title"> Quantity</div>
-                <div className="product-small-card-text product-circle-bg-big">
-                  {data.quantity}
-                </div>
+              <div className="product-upload-date">
+                Brand: <div>{data.brand}</div>
               </div>
-              {data.brand ? (
-                <div className="product-quantity product-small-card">
-                  <div className="product-small-card-title">Brand</div>
-                  <div
-                    style={{ marginTop: "2rem" }}
-                    className="product-small-card-text"
-                  >
-                    {data.brand}
-                  </div>
-                </div>
-              ) : (
-                ""
-              )}
             </div>
 
             <div className="product-info-card">
@@ -144,23 +123,7 @@ function Product() {
                     Posted By:{" "}
                     <span className="product-owner">{data.postedBy.name}</span>
                   </div>
-                  {/* <div className="product-owner-details">
-                    Email: <span>{data.postedBy.email}</span>
-                    <span className="icon">
-                      <MailOutlined />
-                    </span>
-                  </div>
-                  <div className="product-owner-details">
-                    Phone number:{" "}
-                    <span>
-                      {data.postedBy.phoneNo
-                        ? data.postedBy.phoneNo % 10000000000
-                        : "N/A"}
-                    </span>
-                    <span className="icon">
-                      <PhoneOutlined />
-                    </span>
-                  </div> */}
+
                   <div className="product-owner-contact-wrapper">
                     <a
                       onClick={() => {
@@ -180,7 +143,7 @@ function Product() {
                       }}
                       href={`tel:+${data.postedBy.phoneNo}`}
                     >
-                      <PhoneOutlined />
+                      <PhoneFilled />
                     </a>
                     <a
                       onClick={() => {
