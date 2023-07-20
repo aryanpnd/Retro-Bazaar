@@ -10,23 +10,22 @@ import axios from "axios";
 import LoginModal from "./components/miscellaneous/loginModal/LoginModal";
 import { useState } from "react";
 
-// export const apiURL = "http://localhost:8080";
-export const apiURL = "";
+export const apiURL = "http://localhost:8080";
+// export const apiURL = "";
 
 function App() {
-  const { setCategory, setIsAuth,lModal, setLModal } = useContext(productsContext);
+  const { setCategory, setIsAuth, lModal, setLModal } =
+    useContext(productsContext);
 
   useEffect(() => {
     axios
-      .get(
-        `${apiURL}/api/checkAuth`,
-        {withCredentials:true}
-      )
+      .get(`${apiURL}/api/checkAuth`, { withCredentials: true })
       .then((res) => {
-        setIsAuth(res.data)
-      }).catch(()=>{
-        setIsAuth(false)
+        setIsAuth(res.data);
       })
+      .catch(() => {
+        setIsAuth(false);
+      });
 
     axios
       .get(
@@ -41,7 +40,7 @@ function App() {
   return (
     <>
       <ToastContainer />
-      <LoginModal setModal={setLModal} modal={lModal}/>
+      <LoginModal setModal={setLModal} modal={lModal} />
       <Navbar />
       <Outlet />
     </>
