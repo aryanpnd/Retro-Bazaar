@@ -56,7 +56,7 @@ export default function ImageUpload({ num ,setImage, image}) {
                     <span style={{ textAlign: 'center' }}>Click to upload images</span>
                 </div>
             </label>
-            <input style={{ display: 'none' }} className='upload-image-box' type="file" name="" id={`preview-upload-input-${num}`} onChange={handleFileInputChange} />
+            <input style={{ display: 'none' }} className='upload-image-box' type="file" name="" id={`preview-upload-input-${num}`} onChange={handleFileInputChange} accept='.jpeg, .jpg, .png'/>
 
             <button className='image-delete-btn' style={{ display: previewSource ? '' : 'none' }} onClick={deleteImage}> <DeleteFilled /> Delete</button>
 
