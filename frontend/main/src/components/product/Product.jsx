@@ -189,7 +189,7 @@ function Product() {
                         );
                         sendToast("Whatsapp number copied to clipboard!");
                       }}
-                      href={`https://wa.me/${data.postedBy.phoneNo}`}
+                      href={`https://wa.me/+${data.postedBy.phoneNo}`}
                       target="blank"
                     >
                       <WhatsAppOutlined />
