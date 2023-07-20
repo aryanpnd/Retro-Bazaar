@@ -1,9 +1,16 @@
 :root{
-    --product-page-font-size : 16px;
+    --product-page-font-size : 14px;
     --product-page-font-color: #FFFFFF;
     --product-page-font-color-2 : #8b2be2;
     --product-page-card-color: #13111c;
 }
+
+
+@keyframes tilt-shaking {
+    50% { transform: rotate(10deg); }
+    100% { transform: rotate(-10deg); }
+}
+
 
 .lottie-loader-container{
     width: 100vw;
@@ -43,7 +50,7 @@
     margin-top: 4px;
     color: var(--product-page-font-color-2);
     font-size: calc(1.2*var(--product-page-font-size));
-    margin-left: 7px;
+    
 }
 .product-back-btn:hover{
     transition: 0.4s;
@@ -127,11 +134,38 @@
     justify-content: center;
 }
 
-.product-owner{
-    font-weight: normal;
+.product-seller-heading{
+    font-weight: bold;
+    font-size: calc(2*var(--product-page-font-size));
+    text-align: center;
+    margin-bottom: calc(1*var(--product-page-font-size));
 }
 
-.product-owner-details{
+.product-seller-page-outer-wrapper{
+    display: flex;
+}
+
+.product-seller-details-warapper-left{
+    width: 80%;
+}
+
+
+.product-page-profile-img-container{
+    background: #000;
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+}
+
+
+.product-owner{
+    font-weight: normal;
+    
+}
+
+/* .product-owner-details{
     font-weight:bold;
     font-size: calc(1.2*var(--product-page-font-size));
     margin-top: calc(1*var(--product-page-font-size));;
@@ -141,11 +175,30 @@
     font-weight: normal;
     font-size: calc(1.1*var(--product-page-font-size));
     margin-left: 3px;
+} */
+
+.product-owner-contact-wrapper{
+    margin-top: calc(1*var(--product-page-font-size));
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    padding-left: 10px;
 }
+
+.product-owner-contact-wrapper a{
+    font-size: calc(2*var(--product-page-font-size));
+    color: var(--product-page-font-color-2);
+}
+
+.product-owner-contact-wrapper a:hover{
+    animation: tilt-shaking 0.2s infinite;
+    cursor: pointer;
+}
+
 
 @media (max-width: 1240px){
     :root{
-        --product-page-font-size : 14px;
+        --product-page-font-size : 13px;
     }
 }
 
