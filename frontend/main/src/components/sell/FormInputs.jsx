@@ -191,8 +191,8 @@ export default function FormInputs({
             type="radio"
             id="nearlpu"
             name="location"
-            value="Near the LPU"
-            // checked={locationInput === 'Near the LPU'}
+            value="Near LPU"
+            // checked={locationInput === 'Near LPU'}
             onChange={handleLocationChange}
           />
           <label htmlFor="nearlpu">Near LPU</label>
