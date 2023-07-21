@@ -159,7 +159,7 @@ function Navbar() {
             className="sellBtn"
             onClick={() => { isAuth ? navigate("/sell") : setLModal(true) }}
           >
-            Sell Now
+            Sell
           </button>
         </span>
 
