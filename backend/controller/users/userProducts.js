@@ -40,7 +40,6 @@ const addProduct = async (req, res, next) => {
 const deleteProduct = async (req, res) => {
   const userId = req.session.passport.user.id;
   const productId = req.body.productid;
-  console.log(productId);
   await Product.find({ postedBy: userId })
     .then(async (docs) => {
       const isUserProduct = docs.find((id) => id._id.equals(productId)); //we're using equals() because the _id is a class so it will give blank value if we use "==="

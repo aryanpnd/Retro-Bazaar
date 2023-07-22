@@ -134,6 +134,7 @@
     .user-profile-container .right{
         width: 100%;
         overflow-y: visible;
+        height: auto;
     }
 
 }

@@ -29,6 +29,10 @@ function UserProfile() {
     getProductsByUser();
   }, []);
 
+  useEffect(() => {
+    setProductCount(productData.length);
+  }, [productData]);
+
   const getUserDetails = async () => {
     try {
       const res = await axios.get(apiURL + "/api/getUserInfo", {
@@ -90,7 +94,7 @@ function UserProfile() {
             description={item.description}
             price={item.price}
             category={item.category}
-            date={item.date}
+            date={item.date.split("T")[0]}
             location={item.location}
             userImage={userInfo.photoURL}
             userName={name}

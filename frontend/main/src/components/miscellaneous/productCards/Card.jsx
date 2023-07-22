@@ -59,7 +59,7 @@ export default function Card({
   const deleteItemFromUserProfile = async () => {
     setLoading(true);
     await axios
-      .delete(
+      .post(
         `${apiURL}/api/deleteProduct`,
         {
           productid: id,
@@ -85,7 +85,8 @@ export default function Card({
           theme: "dark",
         });
         setLoading(false);
-      });
+      })
+      .catch(setLoading(false));
   };
 
   useEffect(() => {
