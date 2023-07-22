@@ -3,14 +3,11 @@ import "./userprofile.css";
 import { EditOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { apiURL } from "../../App";
-import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
 import Card from "../miscellaneous/productCards/Card";
 
 function UserProfile() {
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(true);
   const [editable, setEditable] = useState(false);
   const [productCount, setProductCount] = useState(0);
