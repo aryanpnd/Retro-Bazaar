@@ -3,10 +3,13 @@
     --user-profile-bg-color-card:#13111c;
 }
 
+.user-profile-outer-box{
+    margin-top: calc(6*var(--userprofile-font-size));
+}
 
 .user-profile-container{
     font-size: calc(1*var(--userprofile-font-size));   
-    margin-top: calc(4*var(--userprofile-font-size));
+    
     padding: calc(2*var(--userprofile-font-size));  
     display: flex; 
 }
@@ -33,6 +36,8 @@
     flex-direction: column;
     align-items: center;
     padding-bottom: calc(3*var(--userprofile-font-size));
+    padding-top: calc(2*var(--userprofile-font-size));
+
 }
 
 .user-profile-card .profile-photo-container{
@@ -92,14 +97,14 @@
     cursor: pointer;
 }
 
-.user-profile-container .right .total-products{
+.user-profile-container .right .total-products, .user-profile-outer-box .total-products{
     font-size: calc(1.4*var(--userprofile-font-size));   
     font-weight: bold;
     text-align: center;
     margin-bottom: 8px;
 }
 
-.user-profile-container .right .total-products span{
+.user-profile-container .right .total-products span , .user-profile-outer-box .total-products span{
     font-weight: 500;
 }
 
@@ -147,5 +152,8 @@
 
     .user-profile-card{
         width: 90%;
+    }
+    .user-profile-outer-box{
+        margin-top: calc(8*var(--userprofile-font-size));
     }
 }

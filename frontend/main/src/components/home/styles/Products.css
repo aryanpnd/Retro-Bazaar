@@ -1,18 +1,24 @@
+:root{
+  --products-font-size:16px;
+}
+
 .products-container {
-  margin: auto;
   width: 100%;
   height: 100%;
   color: white;
   padding-top: 4.2rem;
 }
 
+.products-list{
+  padding: calc(1*var(--products-font-size)) 2%;
+}
+
 .products-card-wrapper {
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  /* margin: 50px; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit ,minmax(calc(18*var(--item-card-font-size)), 1fr));
+  grid-gap: 10px;
 }
 
 

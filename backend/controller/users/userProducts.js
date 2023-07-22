@@ -15,8 +15,8 @@ const getUserProducts = async (req, res) => {
 
 // add a product
 const addProduct = async (req, res, next) => {
-  await User.findById(req.session.passport.user.id).then(async (data)=>{
-    if(data.phoneNo){
+  await User.findById(req.session.passport.user.id).then(async (data) => {
+    if (data.phoneNo) {
       const product = new Product(req.body);
       product.date = Date.now();
       product.postedBy = req.session.passport.user.id;
@@ -28,17 +28,19 @@ const addProduct = async (req, res, next) => {
         .catch((err) => {
           res.status(400).send(`Some error occured ${err}`);
         });
+    } else {
+      res
+        .status(200)
+        .json({ code: "f", message: "Phone number is not verified" });
     }
-    else{
-      res.status(200).json({code:"f",message:"Phone number is not verified"});
-    }
-  })
+  });
 };
 
 // delete a product
 const deleteProduct = async (req, res) => {
   const userId = req.session.passport.user.id;
   const productId = req.body.productid;
+  console.log(productId);
   await Product.find({ postedBy: userId })
     .then(async (docs) => {
       const isUserProduct = docs.find((id) => id._id.equals(productId)); //we're using equals() because the _id is a class so it will give blank value if we use "==="

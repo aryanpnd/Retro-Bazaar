@@ -59,9 +59,15 @@ export default function Card({
   const deleteItemFromUserProfile = async () => {
     setLoading(true);
     await axios
-      .delete(`${apiURL}/api/deleteProduct?productid=${id}`, {
-        withCredentials: true,
-      })
+      .delete(
+        `${apiURL}/api/deleteProduct`,
+        {
+          productid: id,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((res) => {
         setProductsArray(
           productsArray.filter((item) => {
