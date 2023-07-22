@@ -6,19 +6,22 @@ import { apiURL } from "../../App";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
+import Card from "../miscellaneous/productCards/Card";
 
 function UserProfile() {
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
-  const [editable, setEditable] = useState("false");
+  const [editable, setEditable] = useState(false);
   const [productCount, setProductCount] = useState(0);
   const [productData, setProductData] = useState([]);
   const [userInfo, setUserInfo] = useState({
+    photoURL: "",
     email: "N/A",
-    name: "N/A",
-    phone: "N/A",
+    name: "NA",
+    phoneNo: "N/A",
   });
+  const [name, setName] = useState(userInfo.name);
 
   useEffect(() => {
     setLoading(true);
@@ -33,6 +36,7 @@ function UserProfile() {
       });
       const data = res.data.data;
       setUserInfo(data);
+      setName(data.name);
     } catch (err) {
       console.log(err);
     }
@@ -55,9 +59,6 @@ function UserProfile() {
   };
 
   const changeUserName = async () => {
-    const name = document.getElementById(
-      "user-profile-page-user-name"
-    ).innerHTML;
     try {
       const res = await axios.put(
         `${apiURL}/api/changeUserName`,
@@ -85,59 +86,243 @@ function UserProfile() {
     </div>
   ) : (
     <div className="user-profile-container">
-      <div className="user-profile-card">
-        <div className="profile-photo-container">
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-            alt="profile img"
-          />
-        </div>
+      <div className="left">
+        <div className="user-profile-card">
+          <div className="profile-photo-container">
+            <img
+              src={
+                userInfo.photoURL
+                  ? userInfo.photoURL
+                  : `https://ui-avatars.com/api/?name=${userInfo.name}&background=e91e63&color=fff&rounded=true`
+              }
+              alt="profile img"
+            />
+          </div>
 
-        <div className="user-profile-details">
-          Name:{" "}
-          <span contenteditable={editable} id="user-profile-page-user-name">
-            {userInfo.name}
-          </span>
-          <span className="user-profile-edit-btn">
-            {editable === "true" ? (
-              <UploadOutlined
-                onClick={() => {
-                  setEditable("false");
-                  changeUserName();
-                }}
-              />
-            ) : (
-              <EditOutlined onClick={() => setEditable("true")} />
-            )}
-          </span>
-        </div>
-        <div className="user-profile-details">
-          Email: <span>{userInfo.email}</span>
-        </div>
-        <div className="user-profile-details">
-          Phone number: <span>{userInfo.phone ? userInfo.phone : "N/A"}</span>
+          <div className="user-profile-details">
+            Name:{" "}
+            <span style={{ display: !editable ? "inline" : "none" }}>
+              {userInfo.name}
+            </span>
+            <input
+              autoFocus
+              type="text"
+              id="user-profile-page-user-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={{ display: editable ? "inline" : "none" }}
+            />
+            <span className="user-profile-edit-btn">
+              {editable === "true" ? (
+                <UploadOutlined
+                  onClick={() => {
+                    setEditable("false");
+                    changeUserName();
+                  }}
+                />
+              ) : (
+                <EditOutlined onClick={() => setEditable("true")} />
+              )}
+            </span>
+          </div>
+          <div className="user-profile-details">
+            Email: <span>{userInfo.email}</span>
+          </div>
+          <div className="user-profile-details">
+            Phone number:{" "}
+            <span>
+              {userInfo.phoneNo ? userInfo.phoneNo % 10000000000 : "N/A"}
+            </span>
+          </div>
         </div>
       </div>
 
       {/* products uploaded by user */}
-      <div className="user-profile-product-wrapper user-profile-card">
-        <div className="user-profile-number-products ">
-          Number of products uploaded: <span>{productCount}</span>
+      <div className="right">
+        <div className="total-products">
+          Total Products Posted: <span>10</span>
         </div>
-
-        <div>
-          {productData.map((p) => {
-            return (
-              <div
-                className="link-to-self-product"
-                onClick={() => {
-                  navigate("/viewproduct/" + p._id);
-                }}
-              >
-                Product: {p._id}
-              </div>
-            );
-          })}
+        <div className="product-cards-wrapper">
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
+          <Card
+            id={1}
+            thumbnail={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            title={"Product1"}
+            description={"HGLASHF GLJA FLJH LDF F DFSFD"}
+            price={100}
+            category={"Electronics"}
+            date={"12-10-2023"}
+            location={"Outside LPU"}
+            userImage={
+              "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg"
+            }
+            userName={"Sam"}
+            wishlistArray={[]}
+            setWishlistArray={() => {}}
+            productsArray={[]}
+            setProductsArray={() => {}}
+          />
         </div>
       </div>
     </div>

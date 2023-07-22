@@ -10,8 +10,8 @@ import axios from "axios";
 import LoginModal from "./components/miscellaneous/loginModal/LoginModal";
 import { useState } from "react";
 
-// export const apiURL = "http://localhost:8080";
-export const apiURL = "";
+export const apiURL = "http://localhost:8080";
+// export const apiURL = "";
 
 function App() {
   const { setCategory, setIsAuth, lModal, setLModal } =

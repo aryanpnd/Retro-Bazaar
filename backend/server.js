@@ -10,7 +10,10 @@ const googleAuthRouter = require("./routes/auth/googleAuth");
 const cookieParser = require("cookie-parser");
 const { localAuthRoutes } = require("./routes/auth/localAuth");
 const { User } = require("./model/user");
-const { protectedApiRoutes, unprotectedApiRoutes } = require("./routes/api/allApiRoutes");
+const {
+  protectedApiRoutes,
+  unprotectedApiRoutes,
+} = require("./routes/api/allApiRoutes");
 
 // initializing express
 const app = express();
@@ -31,6 +34,7 @@ app.use(cookieParser());
 mongoose
   .connect(
     "mongodb+srv://mongodbPractice:QU12xqT2OLjqa5BB@cluster0.8sxvwko.mongodb.net/ecommerce?retryWrites=true&w=majority"
+    // "mongodb://127.0.0.1:27017/ecommerce"
   )
   .then(() => {
     console.log("Database connected...");
@@ -67,7 +71,6 @@ app.use("/", express.static(path.join(__dirname, "views/site/build")));
 // unprotected api routes
 app.use("/api/", unprotectedApiRoutes);
 
-
 // intializing passport middlewares
 // app.enable('trust proxy') // required when deploying
 app.use(passport.authenticate("session"));
@@ -76,17 +79,15 @@ app.use(passport.initialize());
 
 // get request to check if user is authenticated
 app.use("/api/checkAuth", (req, res) => {
-  req.isAuthenticated() ? res.send(true) : res.send(false)
+  req.isAuthenticated() ? res.send(true) : res.send(false);
 });
 
 // auth pages
 app.use("/auth", express.static(path.join(__dirname, "views/auth/build")));
 
-
 // auth routes and middlewares
 app.use("/authapi/local", localAuthRoutes);
 app.use("/authapi/google", googleAuthRouter);
-
 
 // checking if user is authorized
 app.use("/", (req, res, next) => {
@@ -96,7 +97,6 @@ app.use("/", (req, res, next) => {
 // rest apis
 app.use("/api", protectedApiRoutes);
 
-
 // handling main and auth page not found routes
 app.get("/auth/*", (req, res) => {
   res.sendFile(path.join(__dirname, "views/auth/build/index.html"));
@@ -104,7 +104,6 @@ app.get("/auth/*", (req, res) => {
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "views/site/build/index.html"));
 });
-
 
 // declaring express listener
 app.listen(process.env.PORT, () => {

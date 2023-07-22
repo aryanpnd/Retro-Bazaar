@@ -11,6 +11,19 @@
     display: flex; 
 }
 
+.user-profile-container .left{
+    /* background: red; */
+    width: 40%;
+    min-height: 80vh;
+    display: flex;
+}
+
+.user-profile-container .right{
+    width: 60%;
+    height: 80vh;
+    overflow-y: scroll;
+}
+
 .user-profile-card{
     margin: auto;
     background: var(--user-profile-bg-color-card);
@@ -52,6 +65,18 @@
     margin-bottom: calc(1.4*var(--userprofile-font-size));   
 }
 
+#user-profile-page-user-name{
+    margin-left: 4px;
+    background: #000;
+    border: none;
+    font-size: calc(1.4*var(--userprofile-font-size));   
+    color: #FFFFFF;
+    padding: 3px;
+    padding-left: 10px;
+    border-radius: 10px;
+    width: 60%;
+}
+
 .user-profile-card .user-profile-details span{
     font-weight: normal;
     margin-left: 3px;
@@ -67,36 +92,45 @@
     cursor: pointer;
 }
 
-.user-profile-product-wrapper{
-    margin: 0 auto;
-}
-
-.user-profile-number-products{
+.user-profile-container .right .total-products{
     font-size: calc(1.4*var(--userprofile-font-size));   
     font-weight: bold;
-    margin-top: calc(1.4*var(--userprofile-font-size)); 
+    text-align: center;
+    margin-bottom: 8px;
 }
 
-.user-profile-number-products span{
-    font-weight:normal;
-    font-weight: bolder;
+.user-profile-container .right .total-products span{
+    font-weight: 500;
 }
 
-.link-to-self-product{
-    font-size: calc(1.2*var(--userprofile-font-size));  
-    margin-top: calc(1*var(--userprofile-font-size));
-    
+.user-profile-container .right .product-cards-wrapper{
+    /* display: flex;
+    flex-wrap: wrap;
+    gap: 3rem; */
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(calc(18*var(--item-card-font-size)), 1fr));
+    grid-gap: 10px;
 }
 
-.link-to-self-product:hover{
-    cursor: pointer;
-}
 
 @media (max-width: 1160px){
     .user-profile-container{
         flex-direction: column;
         gap: 3rem;
     }
+
+    .user-profile-container .left{
+        width: 100%;
+        min-height: auto;
+        margin-top: 10px;
+    }
+
+    .user-profile-container .right{
+        width: 100%;
+        overflow-y: visible;
+    }
+
 }
 
 @media (max-width: 720px){
