@@ -22,6 +22,7 @@ const getWishlist = (req, res, next) => {
     Wishlist.findOne({ uid: req.session.passport.user.id })
         .populate({
             path: 'products',
+            match: { isArchive: false },
             populate: {
                 path: 'postedBy',
                 model: 'User',

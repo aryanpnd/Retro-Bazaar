@@ -136,8 +136,9 @@ export default function Wishlist() {
                 location={item.location}
                 userImage={item.postedBy.photoURL}
                 userName={item.postedBy.name}
-                wishlistArray={wishlistArray}
-                setWishlistArray={setWishlistArray}
+                productsArray={wishlistArray}
+                setProductsArray={setWishlistArray}
+                isWishlist={true}
               />
             ))
           )}

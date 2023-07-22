@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from "react";
 import "./userprofile.css";
-import { EditOutlined, UploadOutlined } from "@ant-design/icons";
+import { CheckOutlined, CloseOutlined, EditOutlined, LoadingOutlined, UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { apiURL } from "../../App";
 import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
 import Card from "../miscellaneous/productCards/Card";
+import { toast } from "react-toastify";
+import ProductsCardSkeleton from "../miscellaneous/productsCardSkeleton/productsCardSkeleton";
 
 function UserProfile() {
   const [loading, setLoading] = useState(true);
+  const [loading2, setLoading2] = useState(false);
   const [editable, setEditable] = useState(false);
   const [productCount, setProductCount] = useState(0);
   const [productData, setProductData] = useState([]);
@@ -62,7 +65,8 @@ function UserProfile() {
 
   const changeUserName = async () => {
     try {
-      const res = await axios.put(
+      setLoading2(true)
+      await axios.put(
         `${apiURL}/api/changeUserName`,
         {
           name: name,
@@ -70,39 +74,47 @@ function UserProfile() {
         {
           withCredentials: true,
         }
-      );
-      if (res.status === 200) {
-        window.location.reload();
-      }
+      ).then((res) => {
+        if (res.status === 200) {
+          setUserInfo({ ...userInfo, name: name })
+          setEditable(false)
+          setLoading2(false)
+          toast.success("Name updated successfully", {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+          });
+        }
+      })
+        .catch(() => {
+          setLoading2(true)
+          toast.error("Unable to update name, Try again", {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: "dark",
+          });
+        })
     } catch (err) {
       console.log(err);
-    }
-    setLoading(false);
-  };
-
-  const makeCards = () => {
-    if (!loading) {
-      return productData.map((item) => {
-        return (
-          <Card
-            id={item._id}
-            thumbnail={item.thumbnail}
-            title={item.title}
-            description={item.description}
-            price={item.price}
-            category={item.category}
-            date={item.date.split("T")[0]}
-            location={item.location}
-            userImage={userInfo.photoURL}
-            userName={name}
-            wishlistArray={[]}
-            setWishlistArray={() => {}}
-            productsArray={productData}
-            setProductsArray={setProductData}
-          />
-        );
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 2500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "dark",
       });
     }
+    setLoading(false);
   };
 
   return loading ? (
@@ -157,18 +169,26 @@ function UserProfile() {
                 onChange={(e) => setName(e.target.value)}
                 style={{ display: editable ? "inline" : "none" }}
               />
-              <span className="user-profile-edit-btn">
-                {editable === "true" ? (
-                  <UploadOutlined
-                    onClick={() => {
-                      setEditable("false");
-                      changeUserName();
-                    }}
-                  />
-                ) : (
-                  <EditOutlined onClick={() => setEditable("true")} />
-                )}
-              </span>
+              {/* edit name icons */}
+              {loading2 ? <LoadingOutlined /> : <>
+                <span className="user-profile-edit-btn">
+                  {editable === "true" ? (
+                    <CheckOutlined style={{color:'#28ca5d'}}
+                      onClick={() => {
+                        setEditable("false");
+                        changeUserName();
+                      }}
+                    />
+                  ) : (
+                    <EditOutlined onClick={() => setEditable("true")} />
+                  )}
+                </span>
+                <span className="user-profile-edit-btn" style={{ display: editable ? "" : "none" }} onClick={() => setEditable(false)}>
+                  <CloseOutlined style={{color:'#ed2121'}} onClick={() => setEditable("true")} />
+                </span>
+              </>
+              }
+
             </div>
             <div className="user-profile-details">
               Email: <span>{userInfo.email}</span>
@@ -190,7 +210,26 @@ function UserProfile() {
           <div className="total-products">
             Total Products Posted: <span>{productCount}</span>
           </div>
-          <div className="product-cards-wrapper">{makeCards()}</div>
+          <div className="product-cards-wrapper">
+            {productData.map((item) => (
+              <Card
+                id={item._id}
+                thumbnail={item.thumbnail}
+                title={item.title}
+                description={item.description}
+                price={item.price}
+                category={item.category}
+                date={item.date.split("T")[0]}
+                location={item.location}
+                userImage={userInfo.photoURL}
+                userName={name}
+                wishlistArray={[]}
+                setWishlistArray={() => { }}
+                productsArray={productData}
+                setProductsArray={setProductData}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
