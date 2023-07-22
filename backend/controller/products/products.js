@@ -15,10 +15,12 @@ const totalProducts = async (req, res) => {
 const getProductSpecificField = async (req, res) => {
     try {
         if (req.query.distinct) {
-            const distinctCategories = await Product.distinct(req.query.field);
+            const distinctCategories = await Product.distinct(req.query.field,{
+                $and: [{ isArchive: false }],
+              });
             res.status(200).json(distinctCategories);
         } else {
-            const distinctCategories = await Product.find().select(req.query.field);
+            const distinctCategories = await Product.find({isArchive:false}).select(req.query.field);
             res.status(200).json(distinctCategories);
         }
     } catch (err) {
@@ -32,7 +34,7 @@ const getProducts = async (req, res) => {
     if (req.query.sortby && req.query.category) {
         const pageSize = req.query.pagesize; // no of data in one page
         const pageNo = req.query.pageno; // which no of page needed
-        const product = Product.find({ category: req.query.category })
+        const product = Product.find({ category: req.query.category,isArchive:false })
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -51,7 +53,7 @@ const getProducts = async (req, res) => {
     else if (req.query.category) {
         const pageSize = req.query.pagesize; // no of data in one page
         const pageNo = req.query.pageno; // which no of page needed
-        const product = Product.find({ category: req.query.category })
+        const product = Product.find({ category: req.query.category,isArchive:false })
             // .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -69,7 +71,7 @@ const getProducts = async (req, res) => {
     else if (req.query.sortby) {
         const pageSize = req.query.pagesize; // no of data in one page
         const pageNo = req.query.pageno; // which no of page needed
-        const product = Product.find()
+        const product = Product.find({isArchive:false})
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -88,7 +90,7 @@ const getProducts = async (req, res) => {
     else {
         const pageSize = req.query.pagesize;
         const pageNo = req.query.pageno;
-        const product = Product.find()
+        const product = Product.find({isArchive:false})
             .sort({ date: -1 })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
@@ -109,12 +111,17 @@ const getProducts = async (req, res) => {
 const searchItems = async (req, res) => {
     const searchQuery = req.query.q;
     const searchLogic = {
-        $or: [
-            { title: { $regex: new RegExp(searchQuery, "i") } },
-            { description: { $regex: new RegExp(searchQuery, "i") } },
-            { category: { $regex: new RegExp(searchQuery, "i") } },
+        $and: [
+          {
+            $or: [
+              { title: { $regex: new RegExp(searchQuery, "i") } },
+              { description: { $regex: new RegExp(searchQuery, "i") } },
+              { category: { $regex: new RegExp(searchQuery, "i") } },
+            ],
+          },
+          { isArchive: false }, 
         ],
-    };
+      };
 
     try {
         Product.countDocuments(searchLogic).then((data) => {
@@ -134,20 +141,22 @@ const searchItems = async (req, res) => {
 
 
 const getSingleProduct = async (req, res) => {
-    const pid = await req.query.pid;
-    await Product.findById(pid)
-        .populate("postedBy", { password: 0, _id: 0,provider:0,accountId:0 })
-        .exec().then((p) => {
-            if (p) {
-                res.json({ success: true, data: p });
-            } else {
-                res.json({ success: false, data: null });
-            }
-        })
-        .catch((err) => {
-            res.status(400).send(`Some error occured <br/> ${err}`);
-        });
-};
+    const pid = req.query.pid;
+    
+    try {
+      const product = await Product.findById(pid)
+        .populate("postedBy", { password: 0, _id: 0, provider: 0, accountId: 0 })
+        .exec();
+  
+      if (product && product.isArchive === false) {
+        res.json({ success: true, data: product });
+      } else {
+        res.json({ success: false, data: null });
+      }
+    } catch (err) {
+      res.status(400).send(`Some error occurred <br/> ${err}`);
+    }
+  };
 
 module.exports = {
     totalProducts,

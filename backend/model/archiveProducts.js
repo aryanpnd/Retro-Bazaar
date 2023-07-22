@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 
-const productSchema = new Schema({
+const archiveProductsSchema = new Schema({
     title: { type: String},
     description: String,
     price: { type: Number, min: 1, required: [true, "please enter valid price"] },
@@ -18,10 +18,10 @@ const productSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    isArchive:{type:Boolean}
+    isArchive:{type:Boolean,default:false}
 });
 
-const Product = mongoose.model('Product', productSchema);
+const ArchiveProduct = mongoose.model('ArchiveProduct', archiveProductsSchema);
 
 
-module.exports = {Product }
+module.exports = { ArchiveProduct }

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 // import { Heart, HeartOutline } from 'react-ionicons'
-import { DeleteFilled } from "@ant-design/icons";
+import { DeleteFilled, LoadingOutlined } from "@ant-design/icons";
 import { apiURL } from "../../../App";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { ClockLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import Modal from "../modal/Modal";
 
 export default function Card({
   id,
@@ -19,75 +19,91 @@ export default function Card({
   location,
   userImage,
   userName,
-  wishlistArray,
-  setWishlistArray,
   setProductsArray,
   productsArray,
+  isWishlist
 }) {
-  const locationURL = useLocation();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
+  const [delLoading, setDelLoading] = useState(false);
+  const [modal, setModal] = useState(false);
   const [dateAgo, setDateAgo] = useState(0);
 
   const deleteItem = async () => {
-    setLoading(true);
-    await axios
-      .delete(`${apiURL}/api/deleteOneFromWishlist?productId=${id}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        setWishlistArray(
-          wishlistArray.filter((item) => {
-            return item._id !== id;
-          })
-        );
-        toast.success(`${title} ${res.data}`, {
-          position: "top-right",
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+    if (isWishlist) {
+      setLoading(true);
+      await axios
+        .delete(`${apiURL}/api/deleteOneFromWishlist?productId=${id}`, {
+          withCredentials: true,
+        })
+        .then((res) => {
+          setProductsArray(
+            productsArray.filter((item) => {
+              return item._id !== id;
+            })
+          );
+          toast.success(`${title} ${res.data}`, {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setLoading(false);
         });
-        setLoading(false);
-      });
+    }
+    else {
+      setDelLoading(true)
+      await axios
+        .put(
+          `${apiURL}/api/archiveProduct`,
+          {
+            productid: id,
+          },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((res) => {
+          setProductsArray(
+            productsArray.filter((item) => {
+              return item._id !== id;
+            })
+          );
+          toast.success(`${title} ${res.data}`, {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          setModal(false)
+          setDelLoading(false);
+        })
+        .catch(()=>{
+          setDelLoading(false)
+          setModal(false)
+          toast.error(`Error occurred while deleting the product`, {
+            position: "top-right",
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+        });
+    }
   };
 
-  const deleteItemFromUserProfile = async () => {
-    setLoading(true);
-    await axios
-      .post(
-        `${apiURL}/api/deleteProduct`,
-        {
-          productid: id,
-        },
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        setProductsArray(
-          productsArray.filter((item) => {
-            return item._id !== id;
-          })
-        );
-        toast.success(`${title} ${res.data}`, {
-          position: "top-right",
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-        });
-        setLoading(false);
-      })
-      .catch(setLoading(false));
-  };
 
   useEffect(() => {
     const nowDate = new Date();
@@ -102,7 +118,7 @@ export default function Card({
         <div className="item-img-wrapper">
           <img className="item-img" src={thumbnail} alt="" />
 
-          <div className="item-img-wishlist">
+          <div className="item-img-wishlist" style={{ display: isWishlist ? '' : 'none' }}>
             {loading ? (
               <ClockLoader
                 color={"grey"}
@@ -113,11 +129,7 @@ export default function Card({
             ) : (
               <DeleteFilled
                 className="delete-icon"
-                onClick={
-                  locationURL.pathname === "/myprofile"
-                    ? deleteItemFromUserProfile
-                    : deleteItem
-                }
+                onClick={deleteItem}
               />
             )}
           </div>
@@ -148,11 +160,13 @@ export default function Card({
         <div className="item-Bottom-container">
           <button
             className="item-view-now-btn"
+            style={{background:isWishlist?'':'#ed2121'}}
             onClick={() => {
-              navigate("/viewproduct/" + id);
+              isWishlist ?
+                navigate("/viewproduct/" + id) : setModal(true)
             }}
           >
-            View details
+            {isWishlist ? 'View details' : 'Delete'}
           </button>
           <img
             className="item-user-profile"
@@ -162,15 +176,35 @@ export default function Card({
               borderRadius: "100%",
               border: "1px solid",
             }}
-            src={`${
-              userImage
-                ? userImage
-                : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
-            }`}
+            src={`${userImage
+              ? userImage
+              : `https://ui-avatars.com/api/?name=${userName}&background=e91e63&color=fff&rounded=true`
+              }`}
             alt=""
           />
         </div>
       </div>
+      <Modal
+        setModal={setModal}
+        modal={modal}
+        noCloseBtn={true}
+        height={"20%"}
+        width={"50%"}
+        borderR={"8px"}
+        noHead={true}
+      >
+        <div>Are you sure you want to delete it ?</div>
+        <div className="modal-delete-btn-box">
+          <button onClick={() => setModal(false)}>cancel</button>
+          <button
+            style={{ background: "#c90000", color: "white" }}
+            onClick={deleteItem}
+          >
+            <DeleteFilled />
+            {delLoading ? <LoadingOutlined /> : "Delete"}
+          </button>
+        </div>
+      </Modal>
     </>
   );
 }
