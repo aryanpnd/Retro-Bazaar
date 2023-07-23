@@ -72,7 +72,6 @@ router.get('/error', (req, res) => res.send('Error logging in via Google..'));
 router.get('/signout', (req, res) => {
     try {
         req.session.destroy(function (err) {
-            console.log('session destroyed.');
         });
         res.send('auth');
     } catch (err) {

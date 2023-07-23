@@ -38,7 +38,7 @@ const getProducts = async (req, res) => {
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
-            .populate("postedBy", { password: 0, _id: 0 })
+            .populate("postedBy", req.session.passport?{ password: 0, _id: 0 }:{ password: 0, _id: 0,email:0,phoneNo:0})
             .exec();
         await product
             .then((docs) => {
@@ -57,7 +57,7 @@ const getProducts = async (req, res) => {
             // .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
-            .populate("postedBy", { password: 0, _id: 0 })
+            .populate("postedBy", req.session.passport?{ password: 0, _id: 0 }:{ password: 0, _id: 0,email:0,phoneNo:0})
             .exec();
         await product
             .then((docs) => {
@@ -75,7 +75,7 @@ const getProducts = async (req, res) => {
             .sort({ [req.query.sortby]: req.query.order })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
-            .populate("postedBy", { password: 0, _id: 0 })
+            .populate("postedBy", req.session.passport?{ password: 0, _id: 0 }:{ password: 0, _id: 0,email:0,phoneNo:0})
             .exec();
         await product
             .then((docs) => {
@@ -94,7 +94,7 @@ const getProducts = async (req, res) => {
             .sort({ date: -1 })
             .skip(pageSize * (pageNo - 1))
             .limit(pageSize)
-            .populate("postedBy", { password: 0, _id: 0 })
+            .populate("postedBy", req.session.passport?{ password: 0, _id: 0 }:{ password: 0, _id: 0,email:0,phoneNo:0})
             .exec();
 
         await product
@@ -126,7 +126,7 @@ const searchItems = async (req, res) => {
     try {
         Product.countDocuments(searchLogic).then((data) => {
             Product.find(searchLogic)
-                .populate("postedBy", { password: 0, _id: 0 })
+                .populate("postedBy", req.session.passport?{ password: 0, _id: 0 }:{ password: 0, _id: 0,email:0,phoneNo:0})
                 .sort({ [req.query.sortby]: req.query.order })
                 .exec()
                 .then((documents) => {
@@ -145,7 +145,7 @@ const getSingleProduct = async (req, res) => {
     
     try {
       const product = await Product.findById(pid)
-        .populate("postedBy", { password: 0, _id: 0, provider: 0, accountId: 0 })
+        .populate("postedBy", req.session.passport?{ password: 0, _id: 0 }:{ password: 0, _id: 0,email:0,phoneNo:0})
         .exec();
   
       if (product && product.isArchive === false) {

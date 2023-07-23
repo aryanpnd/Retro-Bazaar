@@ -21,6 +21,7 @@ const addProduct = async (req, res, next) => {
       const product = new Product(req.body);
       product.date = Date.now();
       product.postedBy = req.session.passport.user.id;
+      product.isArchive = false
       await product
         .save()
         .then((docs) => {

@@ -32,7 +32,6 @@ passport.use(
                     }
 
                 } else {
-                    console.log('User already exists with a different provider.')
                     return done(null, false, { message: "Email already in use" });
 
                 }

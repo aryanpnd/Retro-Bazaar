@@ -77,6 +77,7 @@ app.use(passport.authenticate("session"));
 app.use(passport.session());
 app.use(passport.initialize());
 
+
 // get request to check if user is authenticated
 app.use("/api/checkAuth", (req, res) => {
   req.isAuthenticated() ? res.send(true) : res.send(false);
