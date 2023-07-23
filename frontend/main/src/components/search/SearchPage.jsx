@@ -28,7 +28,7 @@ export default function SearchPage() {
             setWishlistData(data.data.products)
             setFetching(true)
         })
-        axios.get(`${apiURL}/api/products/search?q=${params.query}`, { withCredentials: true }).then((data) => {
+        axios.get(`${apiURL}/api/products/search?q=${params.query}&sortby=date&order=-1`, { withCredentials: true }).then((data) => {
             setSearchedProducts(data.data.products)
             setSearchedProductsCount(data.data.count)
             setFetching(true)

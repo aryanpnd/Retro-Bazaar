@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./product.css";
 import {
   LeftCircleOutlined,
+  LoginOutlined,
   MailOutlined,
   PhoneFilled,
   WhatsAppOutlined,
@@ -13,11 +14,13 @@ import { apiURL } from "../../App";
 import Lottie from "lottie-react";
 import loader from "../../assets/lottie/cart-icon-loader.json";
 import { toast } from "react-toastify";
+import LoginModal from "../miscellaneous/loginModal/LoginModal";
 
 function Product() {
   const params = useParams();
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
+  const [modal, setModal] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,7 +40,7 @@ function Product() {
         progress: undefined,
         theme: "dark",
       });
-    } catch {}
+    } catch { }
   };
 
   const getData = async () => {
@@ -102,11 +105,11 @@ function Product() {
               <div className="product-title">{data.title}</div>
               <div className="product-description">{data.description}</div>
             </div>
-            <div className="product-info-card" style={{display:"flex",justifyContent:"space-between"}}>
-              <div className="product-title"><span style={{fontWeight:"100"}}>Quantity</span> {data.quantity}</div>
+            <div className="product-info-card" style={{ display: "flex", justifyContent: "space-between" }}>
+              <div className="product-title"><span style={{ fontWeight: "100" }}>Quantity</span> {data.quantity}</div>
               <div className="product-title">₹{data.price}</div>
             </div>
-            <div className="product-info-card" style={{display:"flex",justifyContent:"space-between"}}>
+            <div className="product-info-card" style={{ display: "flex", justifyContent: "space-between" }}>
               <div className="product-upload-date">
                 On sale from: <div>{data.date.split("T")[0]}</div>
               </div>
@@ -123,40 +126,47 @@ function Product() {
                     Posted By:{" "}
                     <span className="product-owner">{data.postedBy.name}</span>
                   </div>
-
                   <div className="product-owner-contact-wrapper">
-                    <a
-                      onClick={() => {
-                        navigator.clipboard.writeText(data.postedBy.email);
-                        sendToast("Email Id copied to clipboard!");
-                      }}
-                      href={`mailto:${data.postedBy.email}`}
-                    >
-                      <MailOutlined />
-                    </a>
-                    <a
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          data.postedBy.phoneNo % 10000000000
-                        );
-                        sendToast("Phone number copied to clipboard!");
-                      }}
-                      href={`tel:+${data.postedBy.phoneNo}`}
-                    >
-                      <PhoneFilled />
-                    </a>
-                    <a
-                      onClick={() => {
-                        navigator.clipboard.writeText(
-                          data.postedBy.phoneNo % 10000000000
-                        );
-                        sendToast("Whatsapp number copied to clipboard!");
-                      }}
-                      href={`https://wa.me/+${data.postedBy.phoneNo}`}
-                      target="blank"
-                    >
-                      <WhatsAppOutlined />
-                    </a>
+                    {data.postedBy.phoneNo ?
+                      <>
+                        <a
+                          onClick={() => {
+                            navigator.clipboard.writeText(data.postedBy.email);
+                            sendToast("Email Id copied to clipboard!");
+                          }}
+                          href={`mailto:${data.postedBy.email}`}
+                        >
+                          <MailOutlined />
+                        </a>
+                        <a
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              data.postedBy.phoneNo % 10000000000
+                            );
+                            sendToast("Phone number copied to clipboard!");
+                          }}
+                          href={`tel:+${data.postedBy.phoneNo}`}
+                        >
+                          <PhoneFilled />
+                        </a>
+                        <a
+                          onClick={() => {
+                            navigator.clipboard.writeText(
+                              data.postedBy.phoneNo % 10000000000
+                            );
+                            sendToast("Whatsapp number copied to clipboard!");
+                          }}
+                          href={`https://wa.me/+${data.postedBy.phoneNo}`}
+                          target="blank"
+                        >
+                          <WhatsAppOutlined />
+                        </a>
+                      </>
+                      : 
+                      <>Login to see the details
+                        <button className="pc-center-navbar-element-selected" style={{border:'none',fontWeight:'100'}} onClick={()=>setModal(true)}><LoginOutlined style={{marginLeft:'5px'}}/> </button>
+                      </>
+                    }
                   </div>
                 </div>
 
@@ -177,6 +187,7 @@ function Product() {
           </div>
         </div>
       )}
+      <LoginModal modal={modal} setModal={setModal}/>
     </>
   );
 }
