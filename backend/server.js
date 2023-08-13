@@ -55,8 +55,8 @@ app.use(
       // maxAge: 60000 // 60000 milliseconds or 60 sec
       maxAge: 1000 * 60 * 60 * 24, // one day
 
-      sameSite: 'none', //required when deploying
-      secure:  true //required when deploying
+      // sameSite: 'none', //required when deploying
+      // secure:  true //required when deploying
     },
     // store: new MongoStore({
     //   mongoUrl: mongoose.connection.client.s.url,
