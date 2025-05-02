@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="logo.png" style="border-radius:2rem" alt="Find My Verto Logo" width="200">  
+  <img src="logo.png" style="border-radius:2rem" alt="Retro Bazaar Logo" width="200">  
 </p>
 
-<h1 align="center" style="font-size:3rem">Find My Verto</h1>
+<h1 align="center" style="font-size:3rem">Retro Bazaar</h1>
 
 Welcome to Retro Bazaar! This is a website built using React.js, Express.js, and Chakra UI, designed to provide a platform for university students to buy and sell second-hand products. Whether you're looking for textbooks, electronics, furniture, or anything else, Retro Bazaar aims to connect buyers and sellers within the university community.
 
